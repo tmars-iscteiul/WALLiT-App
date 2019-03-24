@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:context=".LoginActivity"
+    tools:showIn="@layout/login_main">
 
     <TextView
         android:id="@+id/textView"
@@ -28,7 +28,7 @@
         android:layout_height="97dp"
         android:layout_marginStart="65dp"
         android:layout_marginLeft="65dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="96dp"
         android:layout_marginEnd="65dp"
         android:layout_marginRight="65dp"
         android:adjustViewBounds="true"
@@ -38,7 +38,7 @@
         app:srcCompat="@drawable/logo_original" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/username"
         android:layout_width="213dp"
         android:layout_height="45dp"
         android:layout_marginStart="98dp"
@@ -54,7 +54,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/password"
         android:layout_width="213dp"
         android:layout_height="45dp"
         android:layout_marginStart="98dp"
@@ -67,10 +67,11 @@
         android:text="Password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/username" />
 
     <Button
         android:id="@+id/button"
+        style="@style/Widget.AppCompat.Button.Small"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="162dp"
@@ -78,10 +79,11 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="162dp"
         android:layout_marginRight="162dp"
+        android:onClick="loginUser"
         android:text="Login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintTop_toBottomOf="@+id/password" />
 
     <TextView
         android:id="@+id/textView2"
