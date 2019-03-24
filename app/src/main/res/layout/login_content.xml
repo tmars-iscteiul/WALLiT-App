@@ -9,28 +9,20 @@
     tools:showIn="@layout/login_main">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/welcome_text"
         android:layout_width="181dp"
         android:layout_height="19dp"
-        android:layout_marginStart="115dp"
-        android:layout_marginLeft="115dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="115dp"
-        android:layout_marginRight="115dp"
         android:text="Welcome to the WALLiT App"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/wallit_logo" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/wallit_logo"
         android:layout_width="281dp"
         android:layout_height="97dp"
-        android:layout_marginStart="65dp"
-        android:layout_marginLeft="65dp"
-        android:layout_marginTop="96dp"
-        android:layout_marginEnd="65dp"
-        android:layout_marginRight="65dp"
+        android:layout_marginTop="64dp"
         android:adjustViewBounds="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,27 +33,19 @@
         android:id="@+id/username"
         android:layout_width="213dp"
         android:layout_height="45dp"
-        android:layout_marginStart="98dp"
-        android:layout_marginLeft="98dp"
-        android:layout_marginTop="96dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginRight="100dp"
+        android:layout_marginTop="64dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/welcome_text" />
 
     <EditText
         android:id="@+id/password"
         android:layout_width="213dp"
         android:layout_height="45dp"
-        android:layout_marginStart="98dp"
-        android:layout_marginLeft="98dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginRight="100dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="textPassword"
         android:text="Password"
@@ -70,15 +54,11 @@
         app:layout_constraintTop_toBottomOf="@+id/username" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/login_button"
         style="@style/Widget.AppCompat.Button.Small"
-        android:layout_width="0dp"
+        android:layout_width="128dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="162dp"
-        android:layout_marginLeft="162dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="162dp"
-        android:layout_marginRight="162dp"
         android:onClick="loginUser"
         android:text="Login"
         app:layout_constraintEnd_toEndOf="parent"
@@ -89,16 +69,11 @@
         android:id="@+id/textView2"
         android:layout_width="240dp"
         android:layout_height="19dp"
-        android:layout_marginStart="88dp"
-        android:layout_marginLeft="88dp"
-        android:layout_marginTop="115dp"
-        android:layout_marginEnd="83dp"
-        android:layout_marginRight="83dp"
         android:layout_marginBottom="64dp"
+        android:gravity="center"
         android:text="BlackSwan, All rights reserved ® 2019"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".OperationActivity"
+    tools:showIn="@layout/operation_main">
+
+    <ImageView
+        android:id="@+id/wallit_logo"
+        android:layout_width="281dp"
+        android:layout_height="97dp"
+        android:layout_marginStart="65dp"
+        android:layout_marginLeft="65dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="65dp"
+        android:layout_marginRight="65dp"
+        android:adjustViewBounds="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo_original" />
+
+    <TextView
+        android:id="@+id/welcome_text"
+        android:layout_width="411dp"
+        android:layout_height="55dp"
+        android:gravity="center"
+        android:text="Welcome, %username%!"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wallit_logo" />
+
+    <Button
+        android:id="@+id/fund_button"
+        android:layout_width="269dp"
+        android:layout_height="85dp"
+        android:layout_marginTop="32dp"
+        android:text="Fund Information"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcome_text" />
+
+    <Button
+        android:id="@+id/operation_button"
+        android:layout_width="269dp"
+        android:layout_height="85dp"
+        android:layout_marginTop="32dp"
+        android:text="Deposit/Withdraw"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fund_button" />
+
+    <Button
+        android:id="@+id/logout_button"
+        android:layout_width="269dp"
+        android:layout_height="85dp"
+        android:layout_marginTop="32dp"
+        android:text="Logout"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/operation_button" />
+</android.support.constraint.ConstraintLayout>
