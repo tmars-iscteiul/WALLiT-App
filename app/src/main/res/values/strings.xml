@@ -78,4 +78,5 @@
     <!-- Added strings -->
     <string name="title_activity_operation">Your balance</string>
     <string name="login">Login</string>
+    <string name="action_logout">Logout</string>
 </resources>

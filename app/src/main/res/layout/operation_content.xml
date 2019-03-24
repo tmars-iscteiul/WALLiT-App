@@ -10,13 +10,13 @@
 
     <ImageView
         android:id="@+id/wallit_logo"
-        android:layout_width="281dp"
+        android:layout_width="0dp"
         android:layout_height="97dp"
-        android:layout_marginStart="65dp"
-        android:layout_marginLeft="65dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginLeft="64dp"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="65dp"
-        android:layout_marginRight="65dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginRight="64dp"
         android:adjustViewBounds="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +25,7 @@
 
     <TextView
         android:id="@+id/welcome_text"
-        android:layout_width="411dp"
+        android:layout_width="0dp"
         android:layout_height="55dp"
         android:gravity="center"
         android:text="Welcome, %username%!"
@@ -36,39 +36,81 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/wallit_logo" />
 
-    <Button
-        android:id="@+id/fund_button"
-        android:layout_width="269dp"
-        android:layout_height="85dp"
-        android:layout_marginTop="32dp"
-        android:text="Fund Information"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textSize="30sp"
+    <TextView
+        android:id="@+id/current_value_text"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginRight="48dp"
+        android:gravity="center|top"
+        android:text="You currently have %value% in the WALLiT fund."
+        android:textSize="14sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcome_text" />
 
     <Button
-        android:id="@+id/operation_button"
-        android:layout_width="269dp"
-        android:layout_height="85dp"
-        android:layout_marginTop="32dp"
-        android:text="Deposit/Withdraw"
+        android:id="@+id/fund_button"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginLeft="64dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginRight="64dp"
+        android:text="Fund Information"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textSize="30sp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fund_button" />
+        app:layout_constraintTop_toBottomOf="@+id/withdraw_button" />
 
     <Button
-        android:id="@+id/logout_button"
-        android:layout_width="269dp"
-        android:layout_height="85dp"
-        android:layout_marginTop="32dp"
-        android:text="Logout"
+        android:id="@+id/deposit_button"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginLeft="64dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="Deposit"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/withdraw_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText3" />
+
+    <Button
+        android:id="@+id/withdraw_button"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginRight="64dp"
+        android:text="Withdraw"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/deposit_button"
+        app:layout_constraintTop_toBottomOf="@+id/editText3" />
+
+    <EditText
+        android:id="@+id/editText3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="numberSigned"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/operation_button" />
+        app:layout_constraintTop_toBottomOf="@+id/current_value_text" />
+
 </android.support.constraint.ConstraintLayout>
