@@ -1,16 +1,12 @@
 package com.example.wallit_app;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.view.View;
 import android.support.v7.widget.Toolbar;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends ToolBarBasedActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,21 +23,6 @@ public class HomeActivity extends AppCompatActivity {
         textView.setText("Welcome " + username + "!");
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     public void depositScreen(View view)    {
         startActivity(new Intent(this, DepositActivity.class));
     }
@@ -56,10 +37,6 @@ public class HomeActivity extends AppCompatActivity {
 
     public void statsScreen(View view)   {
         startActivity(new Intent(this, StatsActivity.class));
-    }
-
-    public void logoutUser(View view)   {
-
     }
 
 }
