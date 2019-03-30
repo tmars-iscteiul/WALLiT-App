@@ -10,6 +10,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".StatsActivity"
+            android:label="@string/title_activity_stats"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".FundInfoActivity"
+            android:label="@string/title_activity_fund_info"
+            android:parentActivityName=".HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.wallit_app.HomeActivity" />
+        </activity>
+        <activity
             android:name=".WithdrawActivity"
             android:label="@string/title_activity_withdraw"
             android:parentActivityName=".HomeActivity"

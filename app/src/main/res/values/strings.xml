@@ -81,4 +81,6 @@
     <string name="title_activity_home">Home Screen</string>
     <string name="title_activity_deposit">Deposit</string>
     <string name="title_activity_withdraw">Withdraw</string>
+    <string name="title_activity_fund_info">Fund Information</string>
+    <string name="title_activity_stats">Personal Statistics</string>
 </resources>

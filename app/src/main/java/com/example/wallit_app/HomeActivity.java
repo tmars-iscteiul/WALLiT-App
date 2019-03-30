@@ -50,6 +50,14 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(new Intent(this, WithdrawActivity.class));
     }
 
+    public void fundInfoScreen(View view)   {
+        startActivity(new Intent(this, FundInfoActivity.class));
+    }
+
+    public void statsScreen(View view)   {
+        startActivity(new Intent(this, StatsActivity.class));
+    }
+
     public void logoutUser(View view)   {
 
     }

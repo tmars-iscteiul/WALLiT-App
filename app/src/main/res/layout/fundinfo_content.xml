@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".WithdrawActivity"
-    tools:showIn="@layout/withdraw_main">
+    tools:context=".FundInfoActivity"
+    tools:showIn="@layout/fundinfo_main">
 
     <ImageView
         android:id="@+id/wallit_logo"
