@@ -76,7 +76,7 @@
     <string name="pref_title_vibrate">Vibrate</string>
 
     <!-- Added strings -->
-    <string name="title_activity_operation">Your balance</string>
     <string name="login">Login</string>
     <string name="action_logout">Logout</string>
+    <string name="title_activity_home">Home Screen</string>
 </resources>
