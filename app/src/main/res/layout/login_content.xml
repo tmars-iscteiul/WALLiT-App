@@ -33,22 +33,27 @@
         android:id="@+id/username"
         android:layout_width="213dp"
         android:layout_height="45dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
+        app:layout_constraintBottom_toTopOf="@+id/password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcome_text" />
+        app:layout_constraintTop_toBottomOf="@+id/welcome_text"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <EditText
         android:id="@+id/password"
         android:layout_width="213dp"
         android:layout_height="45dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
         android:ems="10"
         android:inputType="textPassword"
         android:text="Password"
+        app:layout_constraintBottom_toTopOf="@+id/login_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/username" />
@@ -58,9 +63,11 @@
         style="@style/Widget.AppCompat.Button.Small"
         android:layout_width="128dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="128dp"
         android:onClick="loginUser"
         android:text="Login"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password" />
