@@ -79,4 +79,6 @@
     <string name="login">Login</string>
     <string name="action_logout">Logout</string>
     <string name="title_activity_home">Home Screen</string>
+    <string name="title_activity_deposit">Deposit</string>
+    <string name="title_activity_withdraw">Withdraw</string>
 </resources>

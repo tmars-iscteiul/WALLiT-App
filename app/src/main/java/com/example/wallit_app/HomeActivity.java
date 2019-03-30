@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.view.View;
 import android.support.v7.widget.Toolbar;
@@ -39,6 +40,14 @@ public class HomeActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void depositScreen(View view)    {
+        startActivity(new Intent(this, DepositActivity.class));
+    }
+
+    public void withdrawScreen(View view)   {
+        startActivity(new Intent(this, WithdrawActivity.class));
     }
 
     public void logoutUser(View view)   {
