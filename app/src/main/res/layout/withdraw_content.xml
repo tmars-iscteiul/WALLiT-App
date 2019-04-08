@@ -44,7 +44,7 @@
         android:layout_marginBottom="128dp"
         android:background="@drawable/withdraw_bg_button"
         android:text="Withdraw"
-        android:textColor="@color/wallit_icon_background"
+        android:textColor="@color/colorAccent"
         android:textSize="30sp"
         android:textStyle="bold"
         android:typeface="normal"
