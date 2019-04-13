@@ -25,7 +25,9 @@ public abstract class ToolBarBasedActivity extends AppCompatActivity {
             startActivity(new Intent(this, SettingsActivity.class));
         }
         if (id == R.id.action_logout)   {
-            startActivity(new Intent(this, LoginActivity.class));
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

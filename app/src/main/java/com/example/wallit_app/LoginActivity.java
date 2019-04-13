@@ -33,7 +33,6 @@ public class LoginActivity extends AppCompatActivity {
         //Changes 'back' button action
         if(keyCode==KeyEvent.KEYCODE_BACK)
         {
-            System.out.println("Back keydown");
             showExitingDialog();
         }
         return true;
