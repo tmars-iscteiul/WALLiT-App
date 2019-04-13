@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void showExitingDialog() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(LoginActivity.this);
-        alertDialog.setTitle("Leave application?");
+        alertDialog.setTitle("Exit Confirmation");
         alertDialog.setMessage("Are you sure you want to leave the application?");
         alertDialog.setPositiveButton("YES",
                 new DialogInterface.OnClickListener() {
