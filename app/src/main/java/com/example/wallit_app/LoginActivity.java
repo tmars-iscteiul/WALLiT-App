@@ -1,10 +1,13 @@
 package com.example.wallit_app;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.app.AlertDialog;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -23,5 +26,35 @@ public class LoginActivity extends AppCompatActivity {
         String username = editText.getText().toString();
         intent.putExtra(LOGIN_USER, username);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        //Changes 'back' button action
+        if(keyCode==KeyEvent.KEYCODE_BACK)
+        {
+            System.out.println("Back keydown");
+            showExitingDialog();
+        }
+        return true;
+    }
+
+    public void showExitingDialog() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(LoginActivity.this);
+        alertDialog.setTitle("Leave application?");
+        alertDialog.setMessage("Are you sure you want to leave the application?");
+        alertDialog.setPositiveButton("YES",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+        alertDialog.setNegativeButton("NO",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        alertDialog.show();
     }
 }
