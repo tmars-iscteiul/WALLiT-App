@@ -2,6 +2,7 @@ package com.example.wallit_app;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.widget.TextView;
 import android.view.View;
 import android.support.v7.widget.Toolbar;
@@ -21,6 +22,16 @@ public class HomeActivity extends ToolBarBasedActivity {
 
         TextView textView = findViewById(R.id.welcome_text);
         textView.setText("Welcome " + username + "!");
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        //Changes 'back' button action
+        if(keyCode==KeyEvent.KEYCODE_BACK)
+        {
+            showLogoutDialog();
+        }
+        return true;
     }
 
     public void depositScreen(View view)    {

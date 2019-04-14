@@ -11,11 +11,11 @@ import android.view.MenuItem;
 
 public abstract class ToolBarBasedActivity extends AppCompatActivity {
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        // Back button on top left
+        //ActionBar actionBar = getSupportActionBar();
+        //actionBar.setDisplayHomeAsUpEnabled(true);
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }

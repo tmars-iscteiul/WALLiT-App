@@ -41,9 +41,11 @@
             android:label="@string/title_activity_deposit"
             android:parentActivityName=".HomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
             android:value="com.example.wallit_app.HomeActivity" />
+
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
@@ -60,9 +62,13 @@
             android:name=".LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
