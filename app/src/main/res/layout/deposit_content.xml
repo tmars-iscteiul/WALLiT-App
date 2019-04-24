@@ -24,12 +24,13 @@
         app:srcCompat="@drawable/logo_original" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/depositValue"
         style="@style/Base.Widget.MaterialComponents.TextInputEditText"
         android:layout_width="213dp"
         android:layout_height="56dp"
         android:layout_marginTop="96dp"
         android:ems="10"
+        android:hint="0"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,6 +44,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginBottom="128dp"
         android:background="@drawable/deposit_bg_button"
+        android:onClick="sendDepositData"
         android:text="Deposit"
         android:textColor="@color/colorBackground"
         android:textSize="36sp"
@@ -51,5 +53,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/depositValue" />
 </android.support.constraint.ConstraintLayout>
