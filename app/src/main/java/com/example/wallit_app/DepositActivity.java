@@ -32,16 +32,14 @@ public class DepositActivity extends ToolBarBasedActivity {
         et.setText("0");
     }
 
-    // Very rough, slow and bad. Terrible in fact. TODO change this later...
+
     public void sendDepositData(View view)  {
         String value = et.getText().toString();
         SimpleDateFormat ft = new SimpleDateFormat ("hh:mm:ss");
         Date date = new Date();
-        String finalData = "[" + ft.format(date) + "] Client wants to deposit: " + value + ".";
+        String finalData = "[" + ft.format(date) + "] Client wants to deposit: " + value + "€.";
         System.out.println("Want to send: " + finalData);
-
         new DataSending(finalData).start();
-        System.out.println("No problem here.");
     }
 
 }
