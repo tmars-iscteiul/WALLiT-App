@@ -1,11 +1,14 @@
 package com.example.wallit_app;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.widget.TextView;
 import android.view.View;
 import android.support.v7.widget.Toolbar;
+
+import com.example.wallit_app.networking.NetworkingService;
 
 public class HomeActivity extends ToolBarBasedActivity {
 
@@ -20,8 +23,14 @@ public class HomeActivity extends ToolBarBasedActivity {
         Intent intent = getIntent();
         String username = intent.getStringExtra(LoginActivity.LOGIN_USER);
 
+        this.username = username;
         TextView textView = findViewById(R.id.welcome_text);
         textView.setText("Welcome " + username + "!");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 
     @Override
