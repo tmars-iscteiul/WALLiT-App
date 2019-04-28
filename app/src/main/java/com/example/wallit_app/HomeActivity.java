@@ -1,8 +1,9 @@
 package com.example.wallit_app;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
+import android.os.RemoteException;
 import android.view.KeyEvent;
 import android.widget.TextView;
 import android.view.View;
@@ -10,7 +11,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.example.wallit_app.networking.NetworkingService;
 
-public class HomeActivity extends ToolBarBasedActivity {
+public class HomeActivity extends ToolBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +24,7 @@ public class HomeActivity extends ToolBarBasedActivity {
         Intent intent = getIntent();
         String username = intent.getStringExtra(LoginActivity.LOGIN_USER);
 
-        this.username = username;
+        super.username = username;
         TextView textView = findViewById(R.id.welcome_text);
         textView.setText("Welcome " + username + "!");
     }
@@ -38,7 +39,7 @@ public class HomeActivity extends ToolBarBasedActivity {
         //Changes 'back' button action
         if(keyCode==KeyEvent.KEYCODE_BACK)
         {
-            showLogoutDialog();
+            super.showLogoutDialog();
         }
         return true;
     }
@@ -59,4 +60,15 @@ public class HomeActivity extends ToolBarBasedActivity {
         startActivity(new Intent(this, StatsActivity.class));
     }
 
+/*
+    public void sayHello(View v) {
+        // Create and send a message to the service, using a supported 'what' value
+        Message msg = Message.obtain(null, NetworkingService.MSG_SAY_HELLO, 0, 0);
+        try {
+            mService.send(msg);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+    */
 }

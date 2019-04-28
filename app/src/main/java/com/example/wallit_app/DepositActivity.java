@@ -5,14 +5,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 
-import com.example.wallit_app.networking.ServerConnectionHandler;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DepositActivity extends ToolBarBasedActivity {
+public class DepositActivity extends ToolBarActivity {
 
-    EditText et;
+    private EditText et;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +29,8 @@ public class DepositActivity extends ToolBarBasedActivity {
         SimpleDateFormat ft = new SimpleDateFormat ("hh:mm:ss");
         Date date = new Date();
         String finalData = "[" + ft.format(date) + "] Client wants to deposit: " + value + "€.";
-        nService.sendDataToHandler(finalData);
+        redirectDataToServer(finalData);
+        // Wait for ACK
     }
 
 }

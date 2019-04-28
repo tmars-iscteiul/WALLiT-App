@@ -1,45 +1,28 @@
 package com.example.wallit_app;
 
-import android.content.ComponentName;
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.IBinder;
 import android.os.StrictMode;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.app.AlertDialog;
 
-import com.example.wallit_app.networking.NetworkingService;
-
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BindingActivity {
 
     public static final String LOGIN_USER = "com.example.wallit_app.LOGINUSER";
-    private NetworkingService nService;
-    private boolean serviceBound = false;
-    private ServiceConnection connection = new ServiceConnection() {
-
-        @Override
-        public void onServiceConnected(ComponentName className, IBinder service) {
-            NetworkingService.LocalBinder binder = (NetworkingService.LocalBinder)service;
-            nService = binder.getService();
-            serviceBound = true;
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-            serviceBound = false;
-        }
-    };
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_main);
+
+        progressDialog = new ProgressDialog(this, ProgressDialog.STYLE_SPINNER);
+        progressDialog.setMessage("Logging in...");
+        progressDialog.setIndeterminate(true);
 
         // TODO Replace this with Async tasks for socket connection (Staying like this is a really bad practice)
         if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -48,32 +31,27 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        // Bind to LocalService
-        Intent intent = new Intent(this, NetworkingService.class);
-        bindService(intent, connection, Context.BIND_AUTO_CREATE);
-        System.out.println("Networking service intent booted!");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        unbindService(connection);
-        nService.terminateConnection();
-        serviceBound = false;
-    }
-
     public void loginUser(View view) {
-        Intent intent = new Intent(this, HomeActivity.class);
         EditText editText = findViewById(R.id.username);
         String username = editText.getText().toString();
+        redirectDataToServer("User wants to login: " + username);
+        progressDialog.show();
+        // TODO Replace the simple YES-NO ACK system to message ack system (so we know why it failed, etc...)
+    }
+
+    @Override
+    protected void handlePositiveAck()    {
+        // Positive login confirmation
+        Intent intent = new Intent(this, HomeActivity.class);
         intent.putExtra(LOGIN_USER, username);
-        nService.sendDataToHandler("User wants to login: " + username);
+        progressDialog.hide();
         startActivity(intent);
     }
 
+    protected void handleNegativeAck()    {
+        progressDialog.hide();
+        showMessageDialog("Couldn't login.");
+    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event){
@@ -85,8 +63,20 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
+    public void showMessageDialog(String text) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(text)
+                .setCancelable(false)
+                .setPositiveButton("OK :(", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
     public void showExitingDialog() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(LoginActivity.this);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setTitle("Exit Confirmation");
         alertDialog.setMessage("Are you sure you want to leave the application?");
         alertDialog.setPositiveButton("YES",

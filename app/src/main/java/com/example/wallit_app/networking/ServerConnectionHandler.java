@@ -3,25 +3,26 @@ package com.example.wallit_app.networking;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 public class ServerConnectionHandler extends Thread {
 
+    private NetworkingService nService;
     private Socket serverSocket;
     private ObjectOutputStream objectOut;
     private ObjectInputStream objectIn;
-    private Queue dataToSend;
+    private Queue<String> dataToSend;
     private boolean running;
+    private boolean receivedLastAck;
 
-    public ServerConnectionHandler() {
+    public ServerConnectionHandler(NetworkingService nService) {
         try {
+            this.nService = nService;
             dataToSend = new LinkedList();
             running = true;
+            receivedLastAck = false;
             serverSocket = new Socket("192.168.1.8", 8080);  // Works only for this static IPv4
             System.out.println("Connected to " + serverSocket.getInetAddress() + ":" + serverSocket.getPort());
             objectOut = new ObjectOutputStream(serverSocket.getOutputStream());
@@ -37,17 +38,24 @@ public class ServerConnectionHandler extends Thread {
      * TODO: App sends infinite IO exceptions to the server after being closed.
      */
     public synchronized void run()   {
+        System.out.println("Connection handler started!");
         while(running) {
             if(!dataToSend.isEmpty())   {
                 try {
-                    System.out.println("Sending data string to java server.");
-                    objectOut.writeObject(dataToSend.peek());
+                    String query = dataToSend.poll();
+                    objectOut.writeObject(query);   // Crashes the app if the server is offline (nullpointerexception)
                     objectOut.reset();
-                    System.out.println("Sent: " + dataToSend.poll());
+                    System.out.println("Sent: " + query);
                     // Wait for ack
+                    // TODO: Waiting forever on ack. Set a timeout
                     try {
                         String ack = (String)objectIn.readObject();
-                        System.out.println("Received ack from server: " + ack);
+                        System.out.println(ack);
+                        if(ack.equals("Ack: " + query))  {
+                            nService.returnAckToActivity(NetworkingService.MSG_ACK_POSITIVE);
+                        }   else    {
+                            nService.returnAckToActivity(NetworkingService.MSG_ACK_NEGATIVE);
+                        }
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -56,32 +64,29 @@ public class ServerConnectionHandler extends Thread {
                 }
             }
             try {
-                System.out.println("Waiting for command...");
                 wait();
-                System.out.println("Command received!");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-        try {
-            objectOut.close();
-            objectIn.close();
-            serverSocket.close();
-            System.err.println("Connection terminated.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public synchronized void sendDataToServer(String data)   {
-        System.out.println("Trying to send \"" + data + "\" to server.");
         dataToSend.add(data);
         notifyAll();
     }
 
     public synchronized void terminateConnection()   {
         System.out.println("Terminating connection to server.");
-        running = false;
+        try {
+            running = false;
+            objectOut.close();
+            objectIn.close();
+            serverSocket.close();
+            System.err.println("Connection terminated successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         notifyAll();
     }
 }
