@@ -1,5 +1,6 @@
 package com.example.wallit_app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -30,7 +31,22 @@ public class DepositActivity extends ToolBarActivity {
         Date date = new Date();
         String finalData = "[" + ft.format(date) + "] Client wants to deposit: " + value + "€.";
         redirectDataToServer(finalData);
-        // Wait for ACK
+        progressDialog.setMessage("Depositing...");
+        progressDialog.show();
+        // TODO: Add a timeout to the progress dialog.
+    }
+
+    @Override
+    protected void handlePositiveAck()    {
+        // Positive login confirmation
+        progressDialog.hide();
+        showMessageDialog("Withdraw operation successful.");
+    }
+
+    @Override
+    protected void handleNegativeAck()    {
+        progressDialog.hide();
+        showMessageDialog("Couldn't withdraw.");
     }
 
 }

@@ -24,14 +24,9 @@ public class HomeActivity extends ToolBarActivity {
         Intent intent = getIntent();
         String username = intent.getStringExtra(LoginActivity.LOGIN_USER);
 
-        super.username = username;
+        this.username = username;
         TextView textView = findViewById(R.id.welcome_text);
         textView.setText("Welcome " + username + "!");
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
     }
 
     @Override
@@ -60,15 +55,4 @@ public class HomeActivity extends ToolBarActivity {
         startActivity(new Intent(this, StatsActivity.class));
     }
 
-/*
-    public void sayHello(View v) {
-        // Create and send a message to the service, using a supported 'what' value
-        Message msg = Message.obtain(null, NetworkingService.MSG_SAY_HELLO, 0, 0);
-        try {
-            mService.send(msg);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-    }
-    */
 }

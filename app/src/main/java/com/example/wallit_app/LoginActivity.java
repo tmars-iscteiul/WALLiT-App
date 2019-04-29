@@ -36,10 +36,10 @@ public class LoginActivity extends BindingActivity {
         String username = editText.getText().toString();
         redirectDataToServer("User wants to login: " + username);
         progressDialog.show();
+        // TODO: Add a timeout to the progress dialog.
         // TODO Replace the simple YES-NO ACK system to message ack system (so we know why it failed, etc...)
     }
 
-    @Override
     protected void handlePositiveAck()    {
         // Positive login confirmation
         Intent intent = new Intent(this, HomeActivity.class);
@@ -63,6 +63,7 @@ public class LoginActivity extends BindingActivity {
         return true;
     }
 
+    // TODO Create the dialog in the onCreate method, and change the text and only show it in this method
     public void showMessageDialog(String text) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(text)

@@ -24,7 +24,7 @@
         app:srcCompat="@drawable/logo_original" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/withdrawValue"
         style="@style/Base.Widget.MaterialComponents.TextInputEditText"
         android:layout_width="213dp"
         android:layout_height="56dp"
@@ -36,13 +36,14 @@
         app:layout_constraintTop_toBottomOf="@+id/wallit_logo" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/withdrawButton"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_marginBottom="128dp"
         android:background="@drawable/withdraw_bg_button"
+        android:onClick="sendWithdrawData"
         android:text="Withdraw"
         android:textColor="@color/colorAccent"
         android:textSize="30sp"
@@ -51,5 +52,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintTop_toBottomOf="@+id/withdrawValue" />
 </android.support.constraint.ConstraintLayout>

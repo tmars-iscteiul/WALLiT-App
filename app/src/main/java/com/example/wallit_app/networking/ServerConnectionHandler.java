@@ -36,6 +36,7 @@ public class ServerConnectionHandler extends Thread {
      * TODO: App doesn't fully close after prompt to close.
      * TODO: App doesn't fully terminate the connection with the server.
      * TODO: App sends infinite IO exceptions to the server after being closed.
+     * TODO: Lots of problems if the server is offline or can't be reached.
      */
     public synchronized void run()   {
         System.out.println("Connection handler started!");

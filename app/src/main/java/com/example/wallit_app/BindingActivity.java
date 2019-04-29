@@ -54,19 +54,12 @@ public abstract class BindingActivity extends AppCompatActivity {
             // service through an IDL interface, so get a client-side
             // representation of that from the raw service object.
             mService = new Messenger(service);
-            // We want to monitor the service for as long as we are
-            // connected to it.
             try {
                 Message msg = Message.obtain(null, NetworkingService.MSG_BIND);
                 msg.replyTo = mMessenger;
                 mService.send(msg);
             } catch (RemoteException e) {
-                // In this case the service has crashed before we could even
-                // do anything with it; we can count on soon being
-                // disconnected (and then reconnected if it can be restarted)
-                // so there is no need to do anything here.
             }
-
             System.out.println("Service connected");
         }
 
@@ -74,7 +67,6 @@ public abstract class BindingActivity extends AppCompatActivity {
             // This is called when the connection with the service has been
             // unexpectedly disconnected -- that is, its process crashed.
             mService = null;
-            // As part of the sample, tell the user what happened.
             System.out.println("Service disconnected");
         }
     };

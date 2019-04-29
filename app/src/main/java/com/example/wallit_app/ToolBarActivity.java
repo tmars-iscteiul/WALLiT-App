@@ -1,18 +1,23 @@
 package com.example.wallit_app;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class ToolBarActivity extends BindingActivity {
 
+    protected ProgressDialog progressDialog;
 
-    protected void handlePositiveAck()    {
-    }
-
-    protected  void handleNegativeAck() {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        progressDialog = new ProgressDialog(this, ProgressDialog.STYLE_SPINNER);
+        progressDialog.setIndeterminate(true);
     }
 
     @Override
@@ -56,5 +61,24 @@ public class ToolBarActivity extends BindingActivity {
                     }
                 });
         alertDialog.show();
+    }
+
+    // TODO Create the dialog in the onCreate method, and change the text and only show it in this method
+    public void showMessageDialog(String text) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(text)
+                .setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    protected void handlePositiveAck()    {
+    }
+
+    protected  void handleNegativeAck() {
     }
 }

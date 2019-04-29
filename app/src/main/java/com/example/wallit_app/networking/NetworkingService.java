@@ -23,14 +23,13 @@ import java.util.ArrayList;
 
 public class NetworkingService extends Service {
 
+    // Communication messages Activities-Service(JavaServer)
     public static final int MSG_UNBIND = -1;
     public static final int MSG_BIND = 0;
     public static final int MSG_ACK_POSITIVE = 1;
     public static final int MSG_ACK_NEGATIVE = 2;
     public static final int MSG_SEND_DATA = 3;
     public static final int MSG_TERMINATE_SERVICE = 4;
-
-
 
     private ArrayList<Messenger> mClients = new ArrayList<Messenger>();
     private int mValue = 0;
@@ -71,13 +70,13 @@ public class NetworkingService extends Service {
     public void onCreate() {
         connectionHandler = new ServerConnectionHandler(this);
         connectionHandler.start();
-        Toast.makeText(this, "Connected to server", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Connected to server.", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onDestroy() {
         connectionHandler.terminateConnection();
-        Toast.makeText(this, "Disconnected from server", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Disconnected from server.", Toast.LENGTH_SHORT).show();
     }
 
     // TODO Duplicated code here and bellow
