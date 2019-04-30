@@ -17,13 +17,13 @@ public class ServerConnectionHandler extends Thread {
     private boolean running;
     private boolean receivedLastAck;
 
-    public ServerConnectionHandler(NetworkingService nService) {
+    public ServerConnectionHandler(NetworkingService nService, String host) {
         try {
             this.nService = nService;
             dataToSend = new LinkedList();
             running = true;
             receivedLastAck = false;
-            serverSocket = new Socket("192.168.1.8", 8080);  // Works only for this static IPv4
+            serverSocket = new Socket(host, 8080);  // Works only for this static port, while the host is provided by an input field from the user
             System.out.println("Connected to " + serverSocket.getInetAddress() + ":" + serverSocket.getPort());
             objectOut = new ObjectOutputStream(serverSocket.getOutputStream());
             objectIn  = new ObjectInputStream(serverSocket.getInputStream());
@@ -47,11 +47,10 @@ public class ServerConnectionHandler extends Thread {
                     objectOut.writeObject(query);   // Crashes the app if the server is offline (nullpointerexception)
                     objectOut.reset();
                     System.out.println("Sent: " + query);
-                    // Wait for ack
                     // TODO: Waiting forever on ack. Set a timeout
                     try {
                         String ack = (String)objectIn.readObject();
-                        System.out.println(ack);
+                        System.out.println("Received from server: \"" + ack + "\".");
                         if(ack.equals("Ack: " + query))  {
                             nService.returnAckToActivity(NetworkingService.MSG_ACK_POSITIVE);
                         }   else    {
@@ -72,19 +71,40 @@ public class ServerConnectionHandler extends Thread {
         }
     }
 
+    public void loginUser(String username)  {
+        try {
+            objectOut.writeObject(username);   // Crashes the app if the server is offline (nullpointerexception)
+            objectOut.reset();
+            String ack = (String)objectIn.readObject();
+            if(ack.equals("POSITIVE_LOGIN_ACK"))  {
+                nService.returnAckToActivity(NetworkingService.MSG_ACK_POSITIVE);
+            }   else    {
+                nService.returnAckToActivity(NetworkingService.MSG_ACK_NEGATIVE);
+            }
+        } catch (ClassNotFoundException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // TODO Could we mix logout and connection termination in one method/process/operation? If the user closes the connection (or it crashes) the server assumes it's a logout and the client forces-logout too?
+    public void logoutUser(String username) {
+        // TODO Add logout message to be sent to the server
+        // For now, we're just closing the socket connection
+        terminateConnection();
+    }
+
     public synchronized void sendDataToServer(String data)   {
         dataToSend.add(data);
         notifyAll();
     }
 
     public synchronized void terminateConnection()   {
-        System.out.println("Terminating connection to server.");
         try {
             running = false;
             objectOut.close();
             objectIn.close();
             serverSocket.close();
-            System.err.println("Connection terminated successfully.");
+            System.out.println("Connection terminated successfully.");
         } catch (IOException e) {
             e.printStackTrace();
         }

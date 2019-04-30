@@ -24,6 +24,8 @@ public class LoginActivity extends BindingActivity {
         progressDialog.setMessage("Logging in...");
         progressDialog.setIndeterminate(true);
 
+        loginOnBind = true;
+
         // TODO Replace this with Async tasks for socket connection (Staying like this is a really bad practice)
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -31,13 +33,20 @@ public class LoginActivity extends BindingActivity {
         }
     }
 
-    public void loginUser(View view) {
+    // Called by pressing the LOGIN button in LoginActivity
+    public void buttonLoginUser(View view) {
         EditText editText = findViewById(R.id.username);
-        String username = editText.getText().toString();
-        redirectDataToServer("User wants to login: " + username);
+        username = editText.getText().toString();
+        bindToNetworkingService();
+        // After it binds, it will send a message to the networking service telling the connection handler to login the user on the server due to the loginOnBind variable.
+        // It's important to follow this sequence and only login after the activity is bound to the service, because the service takes time to establish a connection to the server.
+        // If the activity attempts to login here, the bound and server connection isn't completed yet.
+        // Thus we wait for the binding to be completed, and only then we can be sure that the connection is online.
         progressDialog.show();
+        // TODO: Progress dialog seems to be stuck (not responding), what's happening?
         // TODO: Add a timeout to the progress dialog.
-        // TODO Replace the simple YES-NO ACK system to message ack system (so we know why it failed, etc...)
+        // TODO: Change the way the connection works by having a login: accepting, refusing, connection not found, etc... as ACKs from the service instead of a binary ACK.
+
     }
 
     protected void handlePositiveAck()    {
@@ -49,6 +58,7 @@ public class LoginActivity extends BindingActivity {
     }
 
     protected void handleNegativeAck()    {
+        // Negative login confirmation
         progressDialog.hide();
         showMessageDialog("Couldn't login.");
     }
