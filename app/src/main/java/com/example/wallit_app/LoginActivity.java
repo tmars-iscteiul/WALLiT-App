@@ -51,6 +51,7 @@ public class LoginActivity extends BindingActivity {
 
     protected void handlePositiveAck()    {
         // Positive login confirmation
+        System.out.println("Received positive login ack");
         Intent intent = new Intent(this, HomeActivity.class);
         intent.putExtra(LOGIN_USER, username);
         progressDialog.hide();

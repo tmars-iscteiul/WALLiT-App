@@ -46,12 +46,12 @@ public class ServerConnectionHandler extends Thread {
                     String query = dataToSend.poll();
                     objectOut.writeObject(query);   // Crashes the app if the server is offline (nullpointerexception)
                     objectOut.reset();
-                    System.out.println("Sent: " + query);
-                    // TODO: Waiting forever on ack. Set a timeout
+                    System.out.println("Sent to server: \"" + query + "\".");
+                    // TODO: Waiting forever on an ack. Set a timeout
                     try {
                         String ack = (String)objectIn.readObject();
                         System.out.println("Received from server: \"" + ack + "\".");
-                        if(ack.equals("Ack: " + query))  {
+                        if(ack.equals("POSITIVE_LOGIN_ACK"))  {
                             nService.returnAckToActivity(NetworkingService.MSG_ACK_POSITIVE);
                         }   else    {
                             nService.returnAckToActivity(NetworkingService.MSG_ACK_NEGATIVE);
@@ -68,21 +68,6 @@ public class ServerConnectionHandler extends Thread {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-    public void loginUser(String username)  {
-        try {
-            objectOut.writeObject(username);   // Crashes the app if the server is offline (nullpointerexception)
-            objectOut.reset();
-            String ack = (String)objectIn.readObject();
-            if(ack.equals("POSITIVE_LOGIN_ACK"))  {
-                nService.returnAckToActivity(NetworkingService.MSG_ACK_POSITIVE);
-            }   else    {
-                nService.returnAckToActivity(NetworkingService.MSG_ACK_NEGATIVE);
-            }
-        } catch (ClassNotFoundException | IOException e) {
-            e.printStackTrace();
         }
     }
 

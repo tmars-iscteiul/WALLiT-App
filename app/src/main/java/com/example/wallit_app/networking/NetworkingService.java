@@ -49,7 +49,7 @@ public class NetworkingService extends Service {
             switch (msg.what) {
                 case MSG_LOGIN:
                     mClients.add(msg.replyTo);
-                    connectionHandler.loginUser((String)msg.obj);
+                    connectionHandler.sendDataToServer("login,"+msg.obj);
                     break;
                 case MSG_BIND:
                     mClients.add(msg.replyTo);
