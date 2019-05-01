@@ -61,21 +61,24 @@ public class LoginActivity extends BindingActivity {
 
     }
 
+
+    @Override
     protected void handlePositiveAck()    {
         // Positive login confirmation
-        System.out.println("Received positive login ack");
         Intent intent = new Intent(this, HomeActivity.class);
         intent.putExtra(LOGIN_USER, username);
         progressDialog.hide();
         startActivity(intent);
     }
 
+    @Override
     protected void handleNegativeAck()    {
         // Negative login confirmation
         progressDialog.hide();
         showMessageDialog("Couldn't login.");
     }
 
+    // Overrides the back button's function, to make it ask to exit the app
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event){
         //Changes 'back' button action
@@ -86,16 +89,4 @@ public class LoginActivity extends BindingActivity {
         return true;
     }
 
-    // TODO Create the dialog in the onCreate method, and change the text and only show it in this method
-    public void showMessageDialog(String text) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(text)
-                .setCancelable(false)
-                .setPositiveButton("OK :(", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                    }
-                });
-        AlertDialog alert = builder.create();
-        alert.show();
-    }
 }

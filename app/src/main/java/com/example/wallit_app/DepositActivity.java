@@ -25,7 +25,8 @@ public class DepositActivity extends ToolBarActivity {
         et.setText("0");
     }
 
-    public void sendDepositData(View view)  {
+    // Called when the user presses the deposit button
+    public void buttonSendDepositData(View view)  {
         String value = et.getText().toString();
         SimpleDateFormat ft = new SimpleDateFormat ("hh:mm:ss");
         Date date = new Date();
@@ -38,7 +39,6 @@ public class DepositActivity extends ToolBarActivity {
 
     @Override
     protected void handlePositiveAck()    {
-        // Positive login confirmation
         progressDialog.hide();
         showMessageDialog("Withdraw operation successful.");
     }

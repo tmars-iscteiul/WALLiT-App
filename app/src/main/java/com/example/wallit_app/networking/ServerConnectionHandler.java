@@ -30,7 +30,7 @@ public class ServerConnectionHandler extends Thread {
         }
     }
 
-    /* Current problems
+    /* Current problems with the connection thread
      * TODO: App doesn't fully close after prompt to close.
      * TODO: App doesn't fully terminate the connection with the server.
      * TODO: Lots of problems if the server is offline or can't be reached.
@@ -64,18 +64,13 @@ public class ServerConnectionHandler extends Thread {
         }
     }
 
-    // TODO Could we mix logout and connection termination in one method/process/operation? If the user closes the connection (or it crashes) the server assumes it's a logout and the client forces-logout too?
-    public void logoutUser(String username) {
-        // TODO Add logout message to be sent to the server
-        // For now, we're just closing the socket connection
-        terminateConnection();
-    }
-
+    // Called by the service, when an activity prompted it to send data to the server
     public synchronized void sendDataToServer(String data)   {
         dataToSend.add(data);
         notifyAll();
     }
 
+    // Called when no activity is bound to the service (after user logout or app exit) which will close the socket to avoid memory and networking leaks
     public synchronized void terminateConnection()   {
         try {
             running = false;

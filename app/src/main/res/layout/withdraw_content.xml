@@ -43,7 +43,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginBottom="128dp"
         android:background="@drawable/withdraw_bg_button"
-        android:onClick="sendWithdrawData"
+        android:onClick="buttonSendWithdrawData"
         android:text="Withdraw"
         android:textColor="@color/colorAccent"
         android:textSize="30sp"

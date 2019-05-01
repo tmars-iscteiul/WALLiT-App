@@ -1,7 +1,6 @@
 package com.example.wallit_app.networking;
 
-import android.graphics.Color;
-
+// This will serve as the project's messaging dictionary, where every class can understand each other by having a global unique communication code stored and updated in one single place
 public enum ServiceMessages {
     MSG_UNKNOWN(-1),
     MSG_UNBIND(0),

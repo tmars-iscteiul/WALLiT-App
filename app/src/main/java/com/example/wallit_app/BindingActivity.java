@@ -2,7 +2,6 @@ package com.example.wallit_app;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,8 +14,6 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.example.wallit_app.networking.NetworkingService;
 import com.example.wallit_app.networking.ServiceMessages;
@@ -31,8 +28,11 @@ public abstract class BindingActivity extends AppCompatActivity {
     protected boolean loginOnBind = false;
     protected String username = "%NOT_SET%";
 
+    protected AlertDialog.Builder alertDialogBuilder;
+    protected AlertDialog alertDialog;
     protected ProgressDialog progressDialog;
 
+    // Handles message sent from the service
     class IncomingHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
@@ -43,6 +43,11 @@ public abstract class BindingActivity extends AppCompatActivity {
                     break;
                 case MSG_ACK_NEGATIVE:
                     //System.out.println("Received negative ack from the networking service.");
+                    handleNegativeAck();
+                    break;
+                case MSG_UNKNOWN:
+                    //System.out.println("Received unknown ack from the networking service.");
+                    // Calling negative ACK for now, but should call something else in the future
                     handleNegativeAck();
                     break;
                 case MSG_SEND_DATA:
@@ -82,13 +87,16 @@ public abstract class BindingActivity extends AppCompatActivity {
         }
     };
 
+    // Called by incomingHandler after receiving a positive ack from the service/server
     protected abstract void handlePositiveAck();
 
+    // Called by incomingHandler after receiving a negative ack from the service/server
     protected abstract void handleNegativeAck();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)   {
         super.onCreate(savedInstanceState);
+        alertDialogBuilder = new AlertDialog.Builder(this);
         progressDialog = new ProgressDialog(this, ProgressDialog.STYLE_SPINNER);
         progressDialog.setIndeterminate(true);
     }
@@ -99,6 +107,7 @@ public abstract class BindingActivity extends AppCompatActivity {
         unbindToNetworkingService();
     }
 
+    // Send a message to the service, with the intent of sending data: a constructed string for now.
     protected void redirectDataToServer(String data)   {
         try {
             Message msg = Message.obtain(null, ServiceMessages.MSG_SEND_DATA.getMessageID(), this.hashCode());
@@ -134,4 +143,14 @@ public abstract class BindingActivity extends AppCompatActivity {
         }
     }
 
+    public void showMessageDialog(String text) {
+        alertDialogBuilder.setMessage(text)
+                .setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                    }
+                });
+        alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
 }

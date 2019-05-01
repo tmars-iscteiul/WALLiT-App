@@ -44,7 +44,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginBottom="128dp"
         android:background="@drawable/deposit_bg_button"
-        android:onClick="sendDepositData"
+        android:onClick="buttonSendDepositData"
         android:text="Deposit"
         android:textColor="@color/colorBackground"
         android:textSize="36sp"

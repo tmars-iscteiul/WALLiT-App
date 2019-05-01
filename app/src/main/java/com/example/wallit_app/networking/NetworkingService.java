@@ -1,25 +1,13 @@
 package com.example.wallit_app.networking;
 
-import android.annotation.TargetApi;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Binder;
-import android.os.Build;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.widget.Toast;
-
-
-import com.example.wallit_app.LoginActivity;
-import com.example.wallit_app.R;
 
 import java.util.ArrayList;
 
@@ -33,10 +21,10 @@ public class NetworkingService extends Service {
     private ServerConnectionHandler connectionHandler;
     final Messenger mMessenger = new Messenger(new IncomingHandler());
 
+    // Handles message sent from activities
     class IncomingHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
-            // Handles message sent from activities
             switch (ServiceMessages.getMessageByID(msg.what)) {
                 case MSG_LOGIN:
                     mClients.add(msg.replyTo);
@@ -82,7 +70,7 @@ public class NetworkingService extends Service {
         Toast.makeText(this, "Disconnected from server.", Toast.LENGTH_SHORT).show();
     }
 
-    // Handles ack sent from the server.
+    // Handles ack sent from the server, redirecting it to any bound activities (usually only one is bound at a time)
     public void returnAckToActivity(String rawAck)    {
         Message msg = getMessageFromAck(rawAck);
         for (int i = mClients.size()-1; i>=0; i--) {
@@ -94,6 +82,7 @@ public class NetworkingService extends Service {
         }
     }
 
+    // Consults the ServiceMessages enum to convert a rawAck string into a coherent ServiceMessage value type.
     private Message getMessageFromAck(String rawAck)    {
         int ackCode = ServiceMessages.getMessageByString(rawAck).getMessageID();
         // Add obj to message if ever applicable (Will be once we implement the fund information return)

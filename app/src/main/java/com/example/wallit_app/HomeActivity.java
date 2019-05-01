@@ -39,19 +39,19 @@ public class HomeActivity extends ToolBarActivity {
         return true;
     }
 
-    public void depositScreen(View view)    {
+    public void buttonGoToDepositActivity(View view)    {
         startActivity(new Intent(this, DepositActivity.class));
     }
 
-    public void withdrawScreen(View view)   {
+    public void buttonGoToWithdrawActivity(View view)   {
         startActivity(new Intent(this, WithdrawActivity.class));
     }
 
-    public void fundInfoScreen(View view)   {
+    public void buttonGoToFundInfoActivity(View view)   {
         startActivity(new Intent(this, FundInfoActivity.class));
     }
 
-    public void statsScreen(View view)   {
+    public void buttonGoToStatsActivity(View view)   {
         startActivity(new Intent(this, StatsActivity.class));
     }
 
