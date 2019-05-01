@@ -98,7 +98,6 @@ public abstract class BindingActivity extends AppCompatActivity {
 
     protected void bindToNetworkingService()    {
         Intent intent = new Intent(this, NetworkingService.class);
-        //startService(intent);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         boundToNetworkingService = true;
         // TODO: Set host here from method inputs

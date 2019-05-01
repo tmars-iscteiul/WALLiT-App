@@ -85,14 +85,6 @@ public class NetworkingService extends Service {
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        super.onStartCommand(intent, flags , startId);
-        //this.username = (String) intent.getExtras().get("username");
-
-        return START_NOT_STICKY;    // TODO: Research and see which return statement applies the best
-    }
-
-    @Override
     public void onDestroy() {
         connectionHandler.terminateConnection();
         Toast.makeText(this, "Disconnected from server.", Toast.LENGTH_SHORT).show();
