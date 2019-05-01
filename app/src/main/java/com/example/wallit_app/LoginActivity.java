@@ -43,7 +43,6 @@ public class LoginActivity extends BindingActivity {
         // If the activity attempts to login here, the bound and server connection isn't completed yet.
         // Thus we wait for the binding to be completed, and only then we can be sure that the connection is online.
         progressDialog.show();
-        // TODO: Progress dialog seems to be stuck (not responding), what's happening?
         // TODO: Add a timeout to the progress dialog.
         // TODO: Change the way the connection works by having a login: accepting, refusing, connection not found, etc... as ACKs from the service instead of a binary ACK.
 

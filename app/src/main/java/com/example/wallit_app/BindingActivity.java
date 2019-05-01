@@ -84,17 +84,6 @@ public abstract class BindingActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         unbindToNetworkingService();
-        terminateConnectionHandler();   // TODO: Debug this later. Currently, each activity is closing the connection, but it's not really going through? Why?
-    }
-
-    protected void logoutUser()  {
-        try {
-            Message msg = Message.obtain(null, NetworkingService.MSG_LOGOUT, this.hashCode());
-            msg.obj = username;
-            mService.send(msg);
-        } catch (RemoteException e) {
-            e.getStackTrace();
-        }
     }
 
     protected void redirectDataToServer(String data)   {
@@ -109,7 +98,7 @@ public abstract class BindingActivity extends AppCompatActivity {
 
     protected void bindToNetworkingService()    {
         Intent intent = new Intent(this, NetworkingService.class);
-        startService(intent);
+        //startService(intent);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         boundToNetworkingService = true;
         // TODO: Set host here from method inputs
@@ -130,16 +119,6 @@ public abstract class BindingActivity extends AppCompatActivity {
             unbindService(mConnection);
             System.out.println("Networking service intent unbound to " + this.toString());
             boundToNetworkingService = false;
-        }
-    }
-
-    private void terminateConnectionHandler()   {
-        try {
-            Message msg = Message.obtain(null, NetworkingService.MSG_TERMINATE_SERVICE);
-            msg.replyTo = mMessenger;
-            mService.send(msg);
-        } catch (RemoteException e) {
-            e.getStackTrace();
         }
     }
 

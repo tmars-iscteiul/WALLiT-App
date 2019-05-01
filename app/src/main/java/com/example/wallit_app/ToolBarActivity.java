@@ -59,7 +59,7 @@ public class ToolBarActivity extends BindingActivity {
         alertDialog.setPositiveButton("YES",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        logoutUser();   // TODO: Is this needed (terminating it)? Since we're going back to the LoginActivity, everything unbinds, so it should automatically close right?
+                        // TODO Needs to terminate the service HERE
                         startActivity(intent);
                     }
                 });

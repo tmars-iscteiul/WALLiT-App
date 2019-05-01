@@ -34,8 +34,7 @@ public class NetworkingService extends Service {
     public static final int MSG_ACK_NEGATIVE = 2;
     public static final int MSG_SEND_DATA = 3;
     public static final int MSG_LOGIN = 4;
-    public static final int MSG_LOGOUT = 5;
-    public static final int MSG_TERMINATE_SERVICE = 6;
+    public static final int MSG_TERMINATE_SERVICE = 5;
 
     private ArrayList<Messenger> mClients = new ArrayList<>();
     private int mValue = 0;
@@ -62,9 +61,6 @@ public class NetworkingService extends Service {
                     connectionHandler.sendDataToServer((String)msg.obj);
                     System.out.println("Received data from activity " + mValue + ": \""  + msg.obj + "\".");
                     break;
-                case MSG_LOGOUT:
-                    connectionHandler.logoutUser((String)msg.obj);
-                    break;
                 case MSG_TERMINATE_SERVICE:
                     terminateConnection();
                     break;
@@ -80,14 +76,19 @@ public class NetworkingService extends Service {
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        super.onStartCommand(intent, flags , startId);
-        //this.username = (String) intent.getExtras().get("username");
+    public void onCreate()   {
         if(connectionHandler == null)   {
             connectionHandler = new ServerConnectionHandler(this, host);
             connectionHandler.start();
             Toast.makeText(this, "Connected to server.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        super.onStartCommand(intent, flags , startId);
+        //this.username = (String) intent.getExtras().get("username");
+
         return START_NOT_STICKY;    // TODO: Research and see which return statement applies the best
     }
 
@@ -99,11 +100,9 @@ public class NetworkingService extends Service {
 
     // TODO Duplicated code here and bellow
     public void returnAckToActivity(int networkingServiceMsg)    {
-        System.out.println("Trying to return ack message type " + networkingServiceMsg + " back to bound activities.");
         Message msg = Message.obtain(null, networkingServiceMsg, this.hashCode());
         for (int i = mClients.size()-1; i>=0; i--) {
             try {
-                System.out.println("Sending message type " + networkingServiceMsg + " back to ONE activity.");
                 mClients.get(i).send(msg);
             } catch (RemoteException e) {
                 mClients.remove(i);
