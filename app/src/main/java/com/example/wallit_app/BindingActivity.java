@@ -2,6 +2,7 @@ package com.example.wallit_app;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.wallit_app.networking.NetworkingService;
+import com.example.wallit_app.networking.ServiceMessages;
 
 
 public abstract class BindingActivity extends AppCompatActivity {
@@ -34,17 +36,17 @@ public abstract class BindingActivity extends AppCompatActivity {
     class IncomingHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case NetworkingService.MSG_ACK_POSITIVE:
-                    System.out.println("Received positive ack from the networking service.");
+            switch (ServiceMessages.getMessageByID(msg.what)) {
+                case MSG_ACK_POSITIVE:
+                    //System.out.println("Received positive ack from the networking service.");
                     handlePositiveAck();
                     break;
-                case NetworkingService.MSG_ACK_NEGATIVE:
-                    System.out.println("Received negative ack from the networking service.");
+                case MSG_ACK_NEGATIVE:
+                    //System.out.println("Received negative ack from the networking service.");
                     handleNegativeAck();
                     break;
-                case NetworkingService.MSG_SEND_DATA:
-                    System.out.println("Received from service: " + msg.arg1);
+                case MSG_SEND_DATA:
+                    //System.out.println("Received from service: " + msg.arg1);
                     // TODO: Finish this
                     break;
                 default:
@@ -59,10 +61,10 @@ public abstract class BindingActivity extends AppCompatActivity {
             mService = new Messenger(service);
             Message msg;
             if(loginOnBind) {
-                msg = Message.obtain(null, NetworkingService.MSG_LOGIN);
+                msg = Message.obtain(null, ServiceMessages.MSG_LOGIN.getMessageID());
                 msg.obj = username;
             }   else    {
-                msg = Message.obtain(null, NetworkingService.MSG_BIND);
+                msg = Message.obtain(null, ServiceMessages.MSG_BIND.getMessageID());
             }
             try {
                 msg.replyTo = mMessenger;
@@ -99,7 +101,7 @@ public abstract class BindingActivity extends AppCompatActivity {
 
     protected void redirectDataToServer(String data)   {
         try {
-            Message msg = Message.obtain(null, NetworkingService.MSG_SEND_DATA, this.hashCode());
+            Message msg = Message.obtain(null, ServiceMessages.MSG_SEND_DATA.getMessageID(), this.hashCode());
             msg.obj = data;
             mService.send(msg);
         } catch (RemoteException e) {
@@ -119,7 +121,7 @@ public abstract class BindingActivity extends AppCompatActivity {
         if(boundToNetworkingService)    {
             if (mService != null) {
                 try {
-                    Message msg = Message.obtain(null, NetworkingService.MSG_UNBIND);
+                    Message msg = Message.obtain(null, ServiceMessages.MSG_UNBIND.getMessageID());
                     msg.replyTo = mMessenger;
                     mService.send(msg);
                 } catch (RemoteException e) {

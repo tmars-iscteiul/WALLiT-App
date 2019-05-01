@@ -25,16 +25,7 @@ import java.util.ArrayList;
 
 public class NetworkingService extends Service {
 
-    private String host = "192.168.1.8";
-
-    // Communication messages Activities-Service(JavaServer)
-    public static final int MSG_UNBIND = -1;
-    public static final int MSG_BIND = 0;
-    public static final int MSG_ACK_POSITIVE = 1;
-    public static final int MSG_ACK_NEGATIVE = 2;
-    public static final int MSG_SEND_DATA = 3;
-    public static final int MSG_LOGIN = 4;
-    public static final int MSG_TERMINATE_SERVICE = 5;
+    private String host = "192.168.1.8";    // Static host hardcoded here. TODO: Add a manual input in LoginActivity
 
     private ArrayList<Messenger> mClients = new ArrayList<>();
     private int mValue = 0;
@@ -45,7 +36,8 @@ public class NetworkingService extends Service {
     class IncomingHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what) {
+            // Handles message sent from activities
+            switch (ServiceMessages.getMessageByID(msg.what)) {
                 case MSG_LOGIN:
                     mClients.add(msg.replyTo);
                     connectionHandler.sendDataToServer("login,"+msg.obj);
@@ -59,7 +51,7 @@ public class NetworkingService extends Service {
                 case MSG_SEND_DATA:
                     mValue = msg.arg1;
                     connectionHandler.sendDataToServer((String)msg.obj);
-                    System.out.println("Received data from activity " + mValue + ": \""  + msg.obj + "\".");
+                    //System.out.println("Received data from activity " + mValue + ": \""  + msg.obj + "\".");
                     break;
                 case MSG_TERMINATE_SERVICE:
                     terminateConnection();
@@ -90,9 +82,9 @@ public class NetworkingService extends Service {
         Toast.makeText(this, "Disconnected from server.", Toast.LENGTH_SHORT).show();
     }
 
-    // TODO Duplicated code here and bellow
-    public void returnAckToActivity(int networkingServiceMsg)    {
-        Message msg = Message.obtain(null, networkingServiceMsg, this.hashCode());
+    // Handles ack sent from the server.
+    public void returnAckToActivity(String rawAck)    {
+        Message msg = getMessageFromAck(rawAck);
         for (int i = mClients.size()-1; i>=0; i--) {
             try {
                 mClients.get(i).send(msg);
@@ -102,17 +94,11 @@ public class NetworkingService extends Service {
         }
     }
 
-    protected void sendDataToBoundActivities(String data) throws RemoteException   {
-        Message msg = Message.obtain(null, NetworkingService.MSG_SEND_DATA, this.hashCode());
-        msg.obj = data;
-        mValue = msg.arg1;
-        for (int i = mClients.size()-1; i>=0; i--) {
-            try {
-                mClients.get(i).send(msg);
-            } catch (RemoteException e) {
-                mClients.remove(i);
-            }
-        }
+    private Message getMessageFromAck(String rawAck)    {
+        int ackCode = ServiceMessages.getMessageByString(rawAck).getMessageID();
+        // Add obj to message if ever applicable (Will be once we implement the fund information return)
+        // Perhaps add an if(ackCode == MSG_SEND_DATA) and do work there
+        return Message.obtain(null, ackCode, this.hashCode());
     }
 
     public ServerConnectionHandler getConnectionHandler()   {

@@ -15,14 +15,12 @@ public class ServerConnectionHandler extends Thread {
     private ObjectInputStream objectIn;
     private Queue<String> dataToSend;
     private boolean running;
-    private boolean receivedLastAck;
 
     public ServerConnectionHandler(NetworkingService nService, String host) {
         try {
             this.nService = nService;
             dataToSend = new LinkedList();
             running = true;
-            receivedLastAck = false;
             serverSocket = new Socket(host, 8080);  // Works only for this static port, while the host is provided by an input field from the user
             System.out.println("Connected to " + serverSocket.getInetAddress() + ":" + serverSocket.getPort());
             objectOut = new ObjectOutputStream(serverSocket.getOutputStream());
@@ -35,7 +33,6 @@ public class ServerConnectionHandler extends Thread {
     /* Current problems
      * TODO: App doesn't fully close after prompt to close.
      * TODO: App doesn't fully terminate the connection with the server.
-     * TODO: App sends infinite IO exceptions to the server after being closed.
      * TODO: Lots of problems if the server is offline or can't be reached.
      */
     public synchronized void run()   {
@@ -51,12 +48,7 @@ public class ServerConnectionHandler extends Thread {
                     try {
                         String ack = (String)objectIn.readObject();
                         System.out.println("Received from server: \"" + ack + "\".");
-                        // TODO: Implement full message acks
-                        if(ack.equals("POSITIVE_LOGIN_ACK"))  {
-                            nService.returnAckToActivity(NetworkingService.MSG_ACK_POSITIVE);
-                        }   else    {
-                            nService.returnAckToActivity(NetworkingService.MSG_ACK_NEGATIVE);
-                        }
+                        nService.returnAckToActivity(ack);
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     }
