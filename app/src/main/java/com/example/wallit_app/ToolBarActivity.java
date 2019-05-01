@@ -14,7 +14,9 @@ import com.example.wallit_app.networking.NetworkingService;
 
 public class ToolBarActivity extends BindingActivity {
 
-    protected ProgressDialog progressDialog;
+    protected AlertDialog.Builder alertDialogBuilder;
+    protected AlertDialog alertDialog;
+    protected AlertDialog.Builder logoutDialog;
 
     @Override
     protected void onStart() {
@@ -25,8 +27,25 @@ public class ToolBarActivity extends BindingActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        progressDialog = new ProgressDialog(this, ProgressDialog.STYLE_SPINNER);
-        progressDialog.setIndeterminate(true);
+
+        alertDialogBuilder = new AlertDialog.Builder(this);
+        final Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        logoutDialog = new AlertDialog.Builder(this);
+        logoutDialog.setTitle("Logout Confirmation");
+        logoutDialog.setMessage("Are you sure you want to logout from your account?");
+        logoutDialog.setPositiveButton("YES",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity(intent);
+                    }
+                });
+        logoutDialog.setNegativeButton("NO",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
     }
 
     @Override
@@ -51,38 +70,18 @@ public class ToolBarActivity extends BindingActivity {
     }
 
     public void showLogoutDialog() {
-        final Intent intent = new Intent(this, LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setTitle("Logout Confirmation");
-        alertDialog.setMessage("Are you sure you want to logout from your account?");
-        alertDialog.setPositiveButton("YES",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // TODO Needs to terminate the service HERE
-                        startActivity(intent);
-                    }
-                });
-        alertDialog.setNegativeButton("NO",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-        alertDialog.show();
+        logoutDialog.show();
     }
 
-    // TODO Create the dialog in the onCreate method, and change the text and only show it in this method
     public void showMessageDialog(String text) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(text)
+         alertDialogBuilder.setMessage(text)
                 .setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                     }
                 });
-        AlertDialog alert = builder.create();
-        alert.show();
+        alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     protected void handlePositiveAck()    {

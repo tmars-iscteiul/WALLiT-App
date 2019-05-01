@@ -51,6 +51,7 @@ public class ServerConnectionHandler extends Thread {
                     try {
                         String ack = (String)objectIn.readObject();
                         System.out.println("Received from server: \"" + ack + "\".");
+                        // TODO: Implement full message acks
                         if(ack.equals("POSITIVE_LOGIN_ACK"))  {
                             nService.returnAckToActivity(NetworkingService.MSG_ACK_POSITIVE);
                         }   else    {

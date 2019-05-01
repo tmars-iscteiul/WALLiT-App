@@ -45,6 +45,6 @@ public class WithdrawActivity extends ToolBarActivity {
     @Override
     protected void handleNegativeAck()    {
         progressDialog.hide();
-        showMessageDialog("Couldn't deposit.");
+        showMessageDialog("Couldn't withdraw.");
     }
 }

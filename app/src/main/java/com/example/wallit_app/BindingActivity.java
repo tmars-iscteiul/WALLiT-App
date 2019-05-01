@@ -1,11 +1,13 @@
 package com.example.wallit_app;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -26,6 +28,8 @@ public abstract class BindingActivity extends AppCompatActivity {
     private boolean boundToNetworkingService = false;
     protected boolean loginOnBind = false;
     protected String username = "%NOT_SET%";
+
+    protected ProgressDialog progressDialog;
 
     class IncomingHandler extends Handler {
         @Override
@@ -79,6 +83,13 @@ public abstract class BindingActivity extends AppCompatActivity {
     protected abstract void handlePositiveAck();
 
     protected abstract void handleNegativeAck();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)   {
+        super.onCreate(savedInstanceState);
+        progressDialog = new ProgressDialog(this, ProgressDialog.STYLE_SPINNER);
+        progressDialog.setIndeterminate(true);
+    }
 
     @Override
     protected void onStop() {
