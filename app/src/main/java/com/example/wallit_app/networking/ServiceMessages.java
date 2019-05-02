@@ -10,7 +10,7 @@ public enum ServiceMessages {
     MSG_SEND_DATA(4),
     MSG_LOGIN(5),
     MSG_TERMINATE_SERVICE(6),
-
+    MSG_CONNECTION_TIMEOUT(7),
     ;
 
     private final int messageID;

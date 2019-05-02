@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.app.AlertDialog;
 
+import com.example.wallit_app.networking.ServiceMessages;
+
 public class LoginActivity extends BindingActivity {
 
     public static final String LOGIN_USER = "com.example.wallit_app.LOGINUSER";
@@ -57,25 +59,51 @@ public class LoginActivity extends BindingActivity {
         progressDialog.setMessage("Logging in...");
         progressDialog.show();
         // TODO: Add a timeout to the progress dialog.
-        // TODO: Change the way the connection works by having a login: accepting, refusing, connection not found, etc... as ACKs from the service instead of a binary ACK.
-
     }
 
+    @Override
+    protected void handleAck(ServiceMessages ackCode)   {
+        switch(ackCode) {
+            case MSG_ACK_POSITIVE:
+                handlePositiveAck();
+                break;
+            case MSG_ACK_NEGATIVE:
+                handleNegativeAck();
+                break;
+            case MSG_CONNECTION_TIMEOUT:
+                handleTimeoutAck();
+                break;
+            default:
+                break;
+        }
+    }
 
     @Override
-    protected void handlePositiveAck()    {
+    protected void handleDataAck(ServiceMessages ackCode, String data)  {
+        // Do something if needed (most likely not)
+    }
+
+    private void handlePositiveAck()    {
         // Positive login confirmation
+        userLoggedIn = true;
         Intent intent = new Intent(this, HomeActivity.class);
         intent.putExtra(LOGIN_USER, username);
         progressDialog.hide();
         startActivity(intent);
     }
 
-    @Override
-    protected void handleNegativeAck()    {
+    private void handleNegativeAck()    {
         // Negative login confirmation
+        unbindToNetworkingService();
         progressDialog.hide();
-        showMessageDialog("Couldn't login.");
+        showMessageDialog("Login failed. Please, try again.");
+    }
+
+    private void handleTimeoutAck()    {
+        // Timeout login confirmation
+        unbindToNetworkingService();
+        progressDialog.hide();
+        showMessageDialog("Couldn't connect to the server. Try again later.");
     }
 
     // Overrides the back button's function, to make it ask to exit the app

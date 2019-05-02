@@ -2,6 +2,7 @@ package com.example.wallit_app;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -26,36 +27,26 @@ public abstract class BindingActivity extends AppCompatActivity {
 
     private boolean boundToNetworkingService = false;
     protected boolean loginOnBind = false;
+    protected boolean userLoggedIn = false;
     protected String username = "%NOT_SET%";
 
     protected AlertDialog.Builder alertDialogBuilder;
     protected AlertDialog alertDialog;
-    protected ProgressDialog progressDialog;
+    protected ProgressDialog progressDialog;    // TODO Progress dialogs can be clicked out, find a way to block it
 
     // Handles message sent from the service
     class IncomingHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
-            switch (ServiceMessages.getMessageByID(msg.what)) {
-                case MSG_ACK_POSITIVE:
-                    //System.out.println("Received positive ack from the networking service.");
-                    handlePositiveAck();
-                    break;
-                case MSG_ACK_NEGATIVE:
-                    //System.out.println("Received negative ack from the networking service.");
-                    handleNegativeAck();
-                    break;
-                case MSG_UNKNOWN:
-                    //System.out.println("Received unknown ack from the networking service.");
-                    // Calling negative ACK for now, but should call something else in the future
-                    handleNegativeAck();
-                    break;
+            ServiceMessages sm = ServiceMessages.getMessageByID(msg.what);
+            switch (sm) {
                 case MSG_SEND_DATA:
-                    //System.out.println("Received from service: " + msg.arg1);
-                    // TODO: Finish this
+                    handleDataAck(sm, (String)msg.obj);
                     break;
                 default:
-                    super.handleMessage(msg);
+                    handleAck(sm);
+                    super.handleMessage(msg);   // What does this do? Test with and without
+                    break;
             }
         }
     }
@@ -76,22 +67,16 @@ public abstract class BindingActivity extends AppCompatActivity {
                 mService.send(msg);
             } catch (RemoteException e) {
             }
-            System.out.println(this.toString() + " activity connected to the networking service.");
+            System.out.println(this.toString() + " activity's messaging system connected to the networking service.");
         }
 
         public void onServiceDisconnected(ComponentName className) {
             // This is called when the connection with the service has been
             // unexpectedly disconnected -- that is, its process crashed.
             mService = null;
-            System.out.println(this.toString() + " activity disconnected to the networking service.");
+            System.out.println(this.toString() + " activity's messaging system disconnected to the networking service.");
         }
     };
-
-    // Called by incomingHandler after receiving a positive ack from the service/server
-    protected abstract void handlePositiveAck();
-
-    // Called by incomingHandler after receiving a negative ack from the service/server
-    protected abstract void handleNegativeAck();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)   {
@@ -107,6 +92,13 @@ public abstract class BindingActivity extends AppCompatActivity {
         unbindToNetworkingService();
     }
 
+    // Called by incomingHandler after receiving an ack from the service/server
+    protected abstract void handleAck(ServiceMessages ackCode);
+
+    // Called by incomingHandler after receiving an ack with data from the service/server
+    protected abstract void handleDataAck(ServiceMessages ackCode, String data);
+
+
     // Send a message to the service, with the intent of sending data: a constructed string for now.
     protected void redirectDataToServer(String data)   {
         try {
@@ -117,6 +109,7 @@ public abstract class BindingActivity extends AppCompatActivity {
             e.getStackTrace();
         }
     }
+
 
     protected void bindToNetworkingService()    {
         Intent intent = new Intent(this, NetworkingService.class);

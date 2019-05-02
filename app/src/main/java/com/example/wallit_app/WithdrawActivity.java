@@ -5,6 +5,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.wallit_app.networking.ServiceMessages;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -37,13 +39,32 @@ public class WithdrawActivity extends ToolBarActivity {
     }
 
     @Override
-    protected void handlePositiveAck()    {
+    protected void handleAck(ServiceMessages ackCode)   {
+        // Do something if needed (most likely not)
+        switch(ackCode) {
+            case MSG_ACK_POSITIVE:
+                handlePositiveAck();
+                break;
+            case MSG_ACK_NEGATIVE:
+                handleNegativeAck();
+                break;
+            default:
+                super.handleAck(ackCode);
+                break;
+        }
+    }
+
+    @Override
+    protected void handleDataAck(ServiceMessages ackCode, String data)  {
+        // Do something if needed (most likely not)
+    }
+
+    private void handlePositiveAck()    {
         progressDialog.hide();
         showMessageDialog("Deposit operation successful.");
     }
 
-    @Override
-    protected void handleNegativeAck()    {
+    private void handleNegativeAck()    {
         progressDialog.hide();
         showMessageDialog("Couldn't withdraw.");
     }

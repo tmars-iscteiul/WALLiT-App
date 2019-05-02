@@ -28,7 +28,13 @@ public class NetworkingService extends Service {
             switch (ServiceMessages.getMessageByID(msg.what)) {
                 case MSG_LOGIN:
                     mClients.add(msg.replyTo);
-                    connectionHandler.sendDataToServer("login,"+msg.obj);
+                    if(connectionHandler.isConnected()) {
+                        connectionHandler.sendDataToServer("login,"+msg.obj);
+                        startServerConnection();
+                    }   else    {
+                        connectionHandler = null;
+                        returnAckToActivity("MSG_CONNECTION_TIMEOUT");
+                    }
                     break;
                 case MSG_BIND:
                     mClients.add(msg.replyTo);
@@ -39,7 +45,6 @@ public class NetworkingService extends Service {
                 case MSG_SEND_DATA:
                     mValue = msg.arg1;
                     connectionHandler.sendDataToServer((String)msg.obj);
-                    //System.out.println("Received data from activity " + mValue + ": \""  + msg.obj + "\".");
                     break;
                 case MSG_TERMINATE_SERVICE:
                     terminateConnection();
@@ -57,17 +62,21 @@ public class NetworkingService extends Service {
 
     @Override
     public void onCreate()   {
-        if(connectionHandler == null)   {
+        if(connectionHandler == null)
             connectionHandler = new ServerConnectionHandler(this, host);
-            connectionHandler.start();
-            Toast.makeText(this, "Connected to server.", Toast.LENGTH_SHORT).show();
-        }
     }
 
     @Override
     public void onDestroy() {
-        connectionHandler.terminateConnection();
-        Toast.makeText(this, "Disconnected from server.", Toast.LENGTH_SHORT).show();
+        if(connectionHandler != null) {
+            connectionHandler.terminateConnection();
+            Toast.makeText(this, "Disconnected from server.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void startServerConnection()    {
+        connectionHandler.start();
+        Toast.makeText(this, "Connected to server.", Toast.LENGTH_SHORT).show();
     }
 
     // Handles ack sent from the server, redirecting it to any bound activities (usually only one is bound at a time)
