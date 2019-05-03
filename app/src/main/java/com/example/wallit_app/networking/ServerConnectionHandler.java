@@ -16,23 +16,16 @@ public class ServerConnectionHandler extends Thread {
     private ObjectOutputStream objectOut;
     private ObjectInputStream objectIn;
     private Queue<String> dataToSend;
+    private String host;
     private boolean running;
     private boolean connected;
 
     public ServerConnectionHandler(NetworkingService nService, String host) {
-        try {
-            this.nService = nService;
-            dataToSend = new LinkedList<>();
-            running = true;
-            serverSocket = new Socket();
-            serverSocket.connect(new InetSocketAddress(host, 8080), 5000);  // Works only for this static port, while the host is provided by an input field from the user
-            objectOut = new ObjectOutputStream(serverSocket.getOutputStream());
-            objectIn  = new ObjectInputStream(serverSocket.getInputStream());
-            connected = true;
-            System.out.println("Connected to " + serverSocket.getInetAddress() + ":" + serverSocket.getPort());
-        }   catch (IOException e) {
-            connectionTimeout();
-        }
+        this.nService = nService;
+        this.host = host;
+        dataToSend = new LinkedList<>();
+        running = true;
+        serverSocket = new Socket();
     }
 
     /* Current problems with the connection thread
@@ -41,7 +34,16 @@ public class ServerConnectionHandler extends Thread {
      * TODO: Lots of problems if the server is offline or can't be reached.
      */
     public synchronized void run()   {
-        System.out.println("Connection handler started!");
+        try {
+            serverSocket.connect(new InetSocketAddress(host, 8080), 5000);  // Works only for this static port, while the host is provided by an input field from the user
+            objectOut = new ObjectOutputStream(serverSocket.getOutputStream());
+            objectIn  = new ObjectInputStream(serverSocket.getInputStream());
+        }   catch (IOException e)   {
+            connectionTimeout();
+            return;
+        }
+        connected = true;
+        System.out.println("Connected to " + serverSocket.getInetAddress() + ":" + serverSocket.getPort());
         while(running) {
             if(!dataToSend.isEmpty() && connected)   {
                 try {
@@ -59,8 +61,10 @@ public class ServerConnectionHandler extends Thread {
                     }
                 } catch (NullPointerException e) {
                     connectionTimeout();
+                    return;
                 } catch (IOException e) {
                     connectionTimeout();
+                    return;
                 }
             }
             try {
@@ -82,22 +86,27 @@ public class ServerConnectionHandler extends Thread {
         notifyAll();
     }
 
-    public boolean isConnected()   {
-            return connected;
-    }
-
-    // Called when no activity is bound to the service (after user logout or app exit) which will close the socket to avoid memory and networking leaks
+    // Called when no activity is bound to the service (after user logout, app exit or any connection timeout/termination) which will close the socket to avoid memory and networking leaks
     // TODO This is being called if we minimize the application
     public synchronized void terminateConnection()   {
         try {
-            running = false;
-            objectOut.close();
-            objectIn.close();
-            serverSocket.close();
+
+            if(objectOut != null)
+                objectOut.close();
+            if(objectIn != null)
+                objectIn.close();
+            if(serverSocket != null)
+                serverSocket.close();
             System.out.println("Connection terminated successfully.");
         } catch (IOException e) {
             e.printStackTrace();
         }
+        running = false;
+        connected = false;
         notifyAll();
+    }
+
+    public boolean isConnected()    {
+        return connected;
     }
 }

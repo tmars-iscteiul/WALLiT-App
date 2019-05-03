@@ -9,11 +9,12 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.widget.Toast;
 
+import com.example.wallit_app.BindingActivity;
+
 import java.util.ArrayList;
 
 public class NetworkingService extends Service {
 
-    private String host = "192.168.1.8";    // Static host hardcoded here. TODO: Add a manual input in LoginActivity
 
     private ArrayList<Messenger> mClients = new ArrayList<>();
     private int mValue = 0;
@@ -28,13 +29,8 @@ public class NetworkingService extends Service {
             switch (ServiceMessages.getMessageByID(msg.what)) {
                 case MSG_LOGIN:
                     mClients.add(msg.replyTo);
-                    if(connectionHandler.isConnected()) {
-                        connectionHandler.sendDataToServer("login,"+msg.obj);
-                        startServerConnection();
-                    }   else    {
-                        connectionHandler = null;
-                        returnAckToActivity("MSG_CONNECTION_TIMEOUT");
-                    }
+                    connectionHandler.sendDataToServer("login,"+msg.obj);
+                    connectionHandler.start();
                     break;
                 case MSG_BIND:
                     mClients.add(msg.replyTo);
@@ -57,29 +53,26 @@ public class NetworkingService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
+        if(connectionHandler == null)
+            connectionHandler = new ServerConnectionHandler(this, intent.getStringExtra(BindingActivity.CONNECTION_HOST));
         return mMessenger.getBinder();
     }
 
     @Override
     public void onCreate()   {
-        if(connectionHandler == null)
-            connectionHandler = new ServerConnectionHandler(this, host);
+
     }
 
     @Override
     public void onDestroy() {
         if(connectionHandler != null) {
+            if(connectionHandler.isConnected())
+                Toast.makeText(this, "Disconnected from server.", Toast.LENGTH_SHORT).show();
             connectionHandler.terminateConnection();
-            Toast.makeText(this, "Disconnected from server.", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void startServerConnection()    {
-        connectionHandler.start();
-        Toast.makeText(this, "Connected to server.", Toast.LENGTH_SHORT).show();
-    }
-
-    // Handles ack sent from the server, redirecting it to any bound activities (usually only one is bound at a time)
+    // Handles ack sent from the server, redirecting it to any bound activities (only one SHOULD BE bound at a time)
     public void returnAckToActivity(String rawAck)    {
         Message msg = getMessageFromAck(rawAck);
         for (int i = mClients.size()-1; i>=0; i--) {

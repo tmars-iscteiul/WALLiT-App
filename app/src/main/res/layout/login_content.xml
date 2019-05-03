@@ -14,6 +14,7 @@
         android:layout_height="19dp"
         android:layout_marginTop="16dp"
         android:text="Welcome to the WALLiT App"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/wallit_logo" />
@@ -24,6 +25,7 @@
         android:layout_height="97dp"
         android:layout_marginTop="64dp"
         android:adjustViewBounds="true"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -38,6 +40,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,6 +56,7 @@
         android:ems="10"
         android:inputType="textPassword"
         android:text="Password"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/login_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,13 +68,31 @@
         android:layout_width="128dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="128dp"
+        android:layout_marginBottom="8dp"
         android:onClick="buttonLoginUser"
         android:text="Login"
-        app:layout_constraintBottom_toTopOf="@+id/copyright"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/connectionOptionsButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password" />
+
+    <Button
+        android:id="@+id/connectionOptionsButton"
+        style="@style/Widget.AppCompat.Button.Small"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:onClick="launchConnectionOptionsDialog"
+        android:text="Connection Options"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/copyright"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_button"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/copyright"
@@ -79,6 +101,7 @@
         android:layout_marginBottom="64dp"
         android:gravity="center"
         android:text="BlackSwan, All rights reserved ® 2019"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -22,6 +22,8 @@ import com.example.wallit_app.networking.ServiceMessages;
 
 public abstract class BindingActivity extends AppCompatActivity {
 
+    public static final String CONNECTION_HOST = "com.example.wallit_app.CONNECTIONHOST";
+
     protected Messenger mService = null;
     protected final Messenger mMessenger = new Messenger(new IncomingHandler());
 
@@ -29,6 +31,7 @@ public abstract class BindingActivity extends AppCompatActivity {
     protected boolean loginOnBind = false;
     protected boolean userLoggedIn = false;
     protected String username = "%NOT_SET%";
+    protected String host = "192.168.1.8";
 
     protected AlertDialog.Builder alertDialogBuilder;
     protected AlertDialog alertDialog;
@@ -113,9 +116,9 @@ public abstract class BindingActivity extends AppCompatActivity {
 
     protected void bindToNetworkingService()    {
         Intent intent = new Intent(this, NetworkingService.class);
+        intent.putExtra(CONNECTION_HOST, host);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         boundToNetworkingService = true;
-        // TODO: Set host here from method inputs
         System.out.println("Networking service intent bound to " + this.toString());
     }
 

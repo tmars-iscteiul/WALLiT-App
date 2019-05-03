@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 import android.widget.TextView;
 import android.view.View;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 import com.example.wallit_app.networking.NetworkingService;
 
@@ -27,6 +28,12 @@ public class HomeActivity extends ToolBarActivity {
         this.username = username;
         TextView textView = findViewById(R.id.welcome_text);
         textView.setText("Welcome " + username + "!");
+    }
+
+    @Override
+    protected void onStart() {
+        Toast.makeText(this, "Connected to server.", Toast.LENGTH_SHORT).show();
+        super.onStart();
     }
 
     @Override

@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.StrictMode;
 import android.os.Bundle;
+import android.text.InputType;
+import android.text.Layout;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -16,11 +18,14 @@ public class LoginActivity extends BindingActivity {
 
     public static final String LOGIN_USER = "com.example.wallit_app.LOGINUSER";
     private AlertDialog.Builder exitingDialog;
+    private EditText usernameInputField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_main);
+
+        usernameInputField = findViewById(R.id.username);
 
         loginOnBind = true;
 
@@ -49,16 +54,40 @@ public class LoginActivity extends BindingActivity {
 
     // Called by pressing the LOGIN button in LoginActivity
     public void buttonLoginUser(View view) {
-        EditText editText = findViewById(R.id.username);
-        username = editText.getText().toString();
+        username = usernameInputField.getText().toString();
+        progressDialog.setMessage("Logging in...");
+        progressDialog.show();
         bindToNetworkingService();
         // After it binds, it will send a message to the networking service telling the connection handler to login the user on the server due to the loginOnBind variable.
         // It's important to follow this sequence and only login after the activity is bound to the service, because the service takes time to establish a connection to the server.
         // If the activity attempts to login here, the bound and server connection isn't completed yet.
         // Thus we wait for the binding to be completed, and only then we can be sure that the connection is online.
-        progressDialog.setMessage("Logging in...");
-        progressDialog.show();
         // TODO: Add a timeout to the progress dialog.
+    }
+
+    // Launch the options dialog, updates the host variable with the defined text
+    // TODO Add a host type check (to counter invalid hosts inserted by the user)
+    public void launchConnectionOptionsDialog(View view)    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Connection settings");
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        input.setText(host);
+        builder.setView(input);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                host = input.getText().toString();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
 
     @Override

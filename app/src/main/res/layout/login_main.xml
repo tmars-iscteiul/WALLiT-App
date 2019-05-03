@@ -12,8 +12,10 @@
         android:theme="@style/AppTheme.AppBarOverlay"/>
 
     <include
+        android:id="@+id/main_login_include"
         layout="@layout/login_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:visibility="visible" />
 
 </android.support.design.widget.CoordinatorLayout>
