@@ -23,17 +23,15 @@ public class HomeActivity extends ToolBarActivity {
         setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
-        String username = intent.getStringExtra(LoginActivity.LOGIN_USER);
-
-        this.username = username;
+        host = intent.getStringExtra(CONNECTION_HOST);
+        this.username = intent.getStringExtra(LoginActivity.LOGIN_USER);
         TextView textView = findViewById(R.id.welcome_text);
         textView.setText("Welcome " + username + "!");
-    }
 
-    @Override
-    protected void onStart() {
-        Toast.makeText(this, "Connected to server.", Toast.LENGTH_SHORT).show();
-        super.onStart();
+        if(!host.equals("offline"))
+            Toast.makeText(this, "Connected to server.", Toast.LENGTH_SHORT).show();
+        else
+            showMessageDialog("You are using the application in OFFLINE mode.");
     }
 
     @Override

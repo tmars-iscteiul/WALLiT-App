@@ -102,6 +102,9 @@ public class LoginActivity extends BindingActivity {
             case MSG_CONNECTION_TIMEOUT:
                 handleTimeoutAck();
                 break;
+            case MSG_OFFLINE_ACK:
+                handlePositiveAck();
+                break;
             default:
                 break;
         }
@@ -117,6 +120,7 @@ public class LoginActivity extends BindingActivity {
         userLoggedIn = true;
         Intent intent = new Intent(this, HomeActivity.class);
         intent.putExtra(LOGIN_USER, username);
+        intent.putExtra(CONNECTION_HOST, host);
         progressDialog.hide();
         startActivity(intent);
     }

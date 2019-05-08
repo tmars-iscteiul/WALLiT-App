@@ -19,6 +19,7 @@ public class NetworkingService extends Service {
     private ArrayList<Messenger> mClients = new ArrayList<>();
     private int mValue = 0;
 
+    private boolean offlineMode = false;
     private ServerConnectionHandler connectionHandler;
     final Messenger mMessenger = new Messenger(new IncomingHandler());
 
@@ -29,8 +30,12 @@ public class NetworkingService extends Service {
             switch (ServiceMessages.getMessageByID(msg.what)) {
                 case MSG_LOGIN:
                     mClients.add(msg.replyTo);
-                    connectionHandler.sendDataToServer("login,"+msg.obj);
-                    connectionHandler.start();
+                    if(!offlineMode) {
+                        connectionHandler.sendDataToServer("login,"+msg.obj);
+                        connectionHandler.start();
+                    }   else    {
+                        returnAckToActivity("MSG_OFFLINE_ACK");
+                    }
                     break;
                 case MSG_BIND:
                     mClients.add(msg.replyTo);
@@ -40,7 +45,11 @@ public class NetworkingService extends Service {
                     break;
                 case MSG_SEND_DATA:
                     mValue = msg.arg1;
-                    connectionHandler.sendDataToServer((String)msg.obj);
+                    if(!offlineMode) {
+                        connectionHandler.sendDataToServer((String)msg.obj);
+                    }   else    {
+                        returnAckToActivity("MSG_OFFLINE_ACK");
+                    }
                     break;
                 case MSG_TERMINATE_SERVICE:
                     terminateConnection();
@@ -53,14 +62,13 @@ public class NetworkingService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        if(connectionHandler == null)
-            connectionHandler = new ServerConnectionHandler(this, intent.getStringExtra(BindingActivity.CONNECTION_HOST));
+        if(connectionHandler == null) {
+            if(intent.getStringExtra(BindingActivity.CONNECTION_HOST).equals("offline"))
+                offlineMode = true;
+            else
+                connectionHandler = new ServerConnectionHandler(this, intent.getStringExtra(BindingActivity.CONNECTION_HOST));
+        }
         return mMessenger.getBinder();
-    }
-
-    @Override
-    public void onCreate()   {
-
     }
 
     @Override

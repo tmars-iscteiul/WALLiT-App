@@ -49,6 +49,9 @@ public class DepositActivity extends ToolBarActivity {
             case MSG_ACK_NEGATIVE:
                 handleNegativeAck();
                 break;
+            case MSG_OFFLINE_ACK:
+                handleOfflineAck();
+                break;
             default:
                 super.handleAck(ackCode);
                 break;

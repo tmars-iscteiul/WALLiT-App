@@ -11,6 +11,7 @@ public enum ServiceMessages {
     MSG_LOGIN(5),
     MSG_TERMINATE_SERVICE(6),
     MSG_CONNECTION_TIMEOUT(7),
+    MSG_OFFLINE_ACK(8),
     ;
 
     private final int messageID;
