@@ -9,317 +9,441 @@
     tools:showIn="@layout/stats_main">
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/movement_history_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
-        android:text="Movement History"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/movement_history_table"
+        app:layout_constraintBottom_toTopOf="@+id/movementHistoryTable"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Movement History" />
 
     <TableLayout
-        android:id="@+id/movement_history_table"
+        android:id="@+id/movementHistoryTable"
         android:layout_width="344dp"
-        android:layout_height="205dp"
+        android:layout_height="207dp"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
+        android:background="@drawable/table_cell_shape"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5">
+        app:layout_constraintTop_toBottomOf="@+id/movement_history_text">
+
 
         <TableRow
-            android:id="@+id/HeaderRow"
+            android:id="@+id/headerRow"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="left">
+            android:background="@drawable/table_header_shape"
+            android:gravity="start">
 
             <TextView
                 android:id="@+id/header_date"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/table_header_shape"
-                android:padding="5dp"
-                android:text="Date"
-                android:textColor="@color/colorAccent"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/header_type"
-                android:layout_width="52dp"
+                android:layout_width="122dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/table_header_shape"
-                android:gravity="center"
                 android:padding="5dp"
-                android:text="Type"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/colorBackground"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="Date" />
 
             <TextView
                 android:id="@+id/header_debit2"
-                android:layout_width="96dp"
+                android:layout_width="111dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/table_header_shape"
                 android:gravity="center"
                 android:padding="5dp"
-                android:text="Amount"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/colorBackground"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="Amount" />
 
             <TextView
                 android:id="@+id/header_credit"
-                android:layout_width="96dp"
+                android:layout_width="111dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/table_header_shape"
                 android:gravity="center"
                 android:padding="5dp"
-                android:text="Balance"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/colorBackground"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="Balance" />
 
         </TableRow>
 
+
         <TableRow
-            android:id="@+id/DepositRow"
+            android:id="@+id/row1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/table_cell_shape_deposit"
-            android:gravity="left">
+            android:background="@drawable/table_cell_shape">
 
             <TextView
-                android:id="@+id/deposit_date"
-                android:layout_width="100dp"
+                android:id="@+id/date1"
+                android:layout_width="122dp"
                 android:layout_height="wrap_content"
-                android:text="2019-02-21"
-                android:textColor="@color/colorBackground"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/deposit_type"
-                android:layout_width="52dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Dep."
-                android:textColor="@color/colorBackground"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/deposit_amount"
-                android:layout_width="96dp"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:text="150,00 €"
-                android:textColor="@color/colorBackground"
+                android:textColor="@color/colorAccent"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                tools:text=" 2019-02-21" />
 
             <TextView
-                android:id="@+id/deposit_balance"
-                android:layout_width="94dp"
+                android:id="@+id/amount1"
+                android:layout_width="111dp"
                 android:layout_height="wrap_content"
-                android:gravity="right"
-                android:text="5.672,17 € "
-                android:textColor="@color/colorBackground"
+                android:gravity="end"
+                android:textColor="@color/colorAccent"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="150,00 € " />
+
+            <TextView
+                android:id="@+id/balance1"
+                android:layout_width="111dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:textColor="@color/colorAccent"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:text="5.672,17 € " />
 
         </TableRow>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/colorAccent" />
+
         <TableRow
-            android:id="@+id/WithdrawRow"
+            android:id="@+id/row2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/table_cell_shape_withdraw"
-            android:gravity="left">
+            android:background="@drawable/table_cell_shape">
 
             <TextView
-                android:id="@+id/withdraw_date"
-                android:layout_width="100dp"
+                android:id="@+id/date2"
+                android:layout_width="122dp"
                 android:layout_height="wrap_content"
-                android:text="2019-01-14"
-                android:textColor="@color/colorAccent"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/withdraw_type"
-                android:layout_width="52dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Wit."
-                android:textColor="@color/colorAccent"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/withdraw_amout"
-                android:layout_width="96dp"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:text="80,00 €"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/colorPrimary"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                tools:text=" 2019-01-14" />
 
             <TextView
-                android:id="@+id/withdraw_balance"
-                android:layout_width="94dp"
+                android:id="@+id/amount2"
+                android:layout_width="111dp"
                 android:layout_height="wrap_content"
-                android:gravity="right"
-                android:text="5.492,56 € "
-                android:textColor="@color/colorAccent"
+                android:gravity="end"
+                android:textColor="@color/colorPrimary"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="80,00 € " />
+
+            <TextView
+                android:id="@+id/balance2"
+                android:layout_width="111dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:text="5.492,56 € " />
 
         </TableRow>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/colorAccent" />
+
         <TableRow
-            android:id="@+id/DepositRow"
+            android:id="@+id/row3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/table_cell_shape_deposit"
-            android:gravity="left"
+            android:background="@drawable/table_cell_shape"
             tools:layout_editor_absoluteX="34dp"
             tools:layout_editor_absoluteY="90dp">
 
             <TextView
-                android:id="@+id/deposit_date"
-                android:layout_width="100dp"
+                android:id="@+id/date3"
+                android:layout_width="122dp"
                 android:layout_height="wrap_content"
-                android:text="2018-12-02"
-                android:textColor="@color/colorBackground"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/deposit_type"
-                android:layout_width="52dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Dep."
-                android:textColor="@color/colorBackground"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/deposit_amount"
-                android:layout_width="96dp"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:text="100,00 €"
-                android:textColor="@color/colorBackground"
+                android:textColor="@color/colorAccent"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                tools:text=" 2018-12-02" />
 
             <TextView
-                android:id="@+id/deposit_balance"
-                android:layout_width="94dp"
+                android:id="@+id/amount3"
+                android:layout_width="111dp"
                 android:layout_height="wrap_content"
-                android:gravity="right"
-                android:text="5.558,16 € "
-                android:textColor="@color/colorBackground"
+                android:gravity="end"
+                android:textColor="@color/colorAccent"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="100,00 € " />
+
+            <TextView
+                android:id="@+id/balance3"
+                android:layout_width="111dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:textColor="@color/colorAccent"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:text="5.558,16 € " />
 
         </TableRow>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/colorAccent" />
+
         <TableRow
-            android:id="@+id/DepositRow"
+            android:id="@+id/row4"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/table_cell_shape_deposit"
-            android:gravity="left"
+            android:background="@drawable/table_cell_shape"
             tools:layout_editor_absoluteX="34dp"
             tools:layout_editor_absoluteY="90dp">
 
             <TextView
-                android:id="@+id/deposit_date"
-                android:layout_width="100dp"
+                android:id="@+id/date4"
+                android:layout_width="122dp"
                 android:layout_height="wrap_content"
-                android:text="2018-10-12"
-                android:textColor="@color/colorBackground"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/deposit_type"
-                android:layout_width="52dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Dep."
-                android:textColor="@color/colorBackground"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/deposit_amount"
-                android:layout_width="96dp"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:text="120,00 €"
-                android:textColor="@color/colorBackground"
+                android:textColor="@color/colorAccent"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                tools:text=" 2018-10-12" />
 
             <TextView
-                android:id="@+id/deposit_balance"
-                android:layout_width="94dp"
+                android:id="@+id/amount4"
+                android:layout_width="111dp"
                 android:layout_height="wrap_content"
-                android:gravity="right"
-                android:text="5.426,36 € "
-                android:textColor="@color/colorBackground"
+                android:gravity="end"
+                android:textColor="@color/colorAccent"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="120,00 € " />
+
+            <TextView
+                android:id="@+id/balance4"
+                android:layout_width="111dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:textColor="@color/colorAccent"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:text="5.426,36 € " />
 
         </TableRow>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/colorAccent" />
+
         <TableRow
-            android:id="@+id/WithdrawRow"
+            android:id="@+id/row5"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/table_cell_shape_withdraw"
-            android:gravity="left">
+            android:background="@drawable/table_cell_shape">
 
             <TextView
-                android:id="@+id/withdraw_date"
-                android:layout_width="100dp"
+                android:id="@+id/date5"
+                android:layout_width="122dp"
                 android:layout_height="wrap_content"
-                android:text="2018-08-21	"
-                android:textColor="@color/colorAccent"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/withdraw_type"
-                android:layout_width="52dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Wit."
-                android:textColor="@color/colorAccent"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/withdraw_amout"
-                android:layout_width="96dp"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:text="50,00 €"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/colorPrimary"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                tools:text=" 2018-08-21	" />
 
             <TextView
-                android:id="@+id/withdraw_balance"
-                android:layout_width="94dp"
+                android:id="@+id/amount5"
+                android:layout_width="111dp"
                 android:layout_height="wrap_content"
-                android:gravity="right"
-                android:text="5.398,27 € "
-                android:textColor="@color/colorAccent"
+                android:gravity="end"
+                android:textColor="@color/colorPrimary"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="50,00 € " />
+
+            <TextView
+                android:id="@+id/balance5"
+                android:layout_width="111dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:text="5.398,27 € " />
+
+        </TableRow>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/colorAccent" />
+
+        <TableRow
+            android:id="@+id/row6"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/table_cell_shape">
+
+            <TextView
+                android:id="@+id/date6"
+                android:layout_width="122dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                tools:text=" 2018-08-21	" />
+
+            <TextView
+                android:id="@+id/amount6"
+                android:layout_width="111dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:text="50,00 € " />
+
+            <TextView
+                android:id="@+id/balance6"
+                android:layout_width="111dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:text="5.398,27 € " />
+
+        </TableRow>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/colorAccent" />
+
+        <TableRow
+            android:id="@+id/row7"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/table_cell_shape">
+
+            <TextView
+                android:id="@+id/date7"
+                android:layout_width="122dp"
+                android:layout_height="match_parent"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                tools:text=" 2018-08-21	" />
+
+            <TextView
+                android:id="@+id/amount7"
+                android:layout_width="111dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:text="50,00 € " />
+
+            <TextView
+                android:id="@+id/balance7"
+                android:layout_width="111dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:text="5.398,27 € " />
+
+        </TableRow>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/colorAccent" />
+
+        <TableRow
+            android:id="@+id/row8"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/table_cell_shape">
+
+            <TextView
+                android:id="@+id/date8"
+                android:layout_width="122dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                tools:text=" 2018-08-21	" />
+
+            <TextView
+                android:id="@+id/amount8"
+                android:layout_width="111dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:text="50,00 € " />
+
+            <TextView
+                android:id="@+id/balance8"
+                android:layout_width="111dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:text="5.398,27 € " />
+
+        </TableRow>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/colorAccent" />
+
+        <TableRow
+            android:id="@+id/row9"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/table_cell_shape">
+
+            <TextView
+                android:id="@+id/date9"
+                android:layout_width="122dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                tools:text=" 2018-08-21	" />
+
+            <TextView
+                android:id="@+id/amount9"
+                android:layout_width="111dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:text="50,00 € " />
+
+            <TextView
+                android:id="@+id/balance9"
+                android:layout_width="111dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:text="5.398,27 € " />
 
         </TableRow>
 
@@ -331,11 +455,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:gravity="left"
-        android:text="General Statistics"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/movement_history_table" />
+        app:layout_constraintTop_toBottomOf="@+id/movementHistoryTable"
+        tools:text="General Statistics" />
 
     <TextView
         android:id="@+id/textView6"
@@ -345,10 +469,10 @@
         android:layout_marginLeft="34dp"
         android:layout_marginTop="16dp"
         android:gravity="left"
-        android:text="Current Amount:"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        tools:text="Current Amount:" />
 
     <TextView
         android:id="@+id/textView7"
@@ -358,11 +482,11 @@
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:gravity="right"
-        android:text="614,98€"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        tools:text="614,98€" />
 
     <TextView
         android:id="@+id/textView9"
@@ -372,10 +496,10 @@
         android:layout_marginLeft="34dp"
         android:layout_marginTop="8dp"
         android:gravity="left"
-        android:text="Earnings since last deposit:"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/textView6"
+        tools:text="Earnings since last deposit:" />
 
     <TextView
         android:id="@+id/textView10"
@@ -385,12 +509,12 @@
         android:layout_marginEnd="34dp"
         android:layout_marginRight="34dp"
         android:gravity="right"
-        android:text="-0,14€"
         android:textColor="@android:color/holo_red_dark"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+        app:layout_constraintTop_toBottomOf="@+id/textView7"
+        tools:text="-0,14€" />
 
     <TextView
         android:id="@+id/textView11"
@@ -400,10 +524,10 @@
         android:layout_marginLeft="34dp"
         android:layout_marginTop="8dp"
         android:gravity="left"
-        android:text="All time earnings:"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        app:layout_constraintTop_toBottomOf="@+id/textView9"
+        tools:text="All time earnings:" />
 
     <TextView
         android:id="@+id/textView12"
@@ -413,11 +537,11 @@
         android:layout_marginEnd="34dp"
         android:layout_marginRight="34dp"
         android:gravity="right"
-        android:text="+15,12€"
         android:textColor="@android:color/holo_green_dark"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+        app:layout_constraintTop_toBottomOf="@+id/textView10"
+        tools:text="+15,12€" />
 
 </android.support.constraint.ConstraintLayout>
