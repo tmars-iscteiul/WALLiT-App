@@ -1,17 +1,16 @@
-package com.example.wallit_app;
+package com.example.wallit_app.activity;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.StrictMode;
 import android.os.Bundle;
 import android.text.InputType;
-import android.text.Layout;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.app.AlertDialog;
 
+import com.example.wallit_app.R;
 import com.example.wallit_app.networking.ServiceMessages;
 
 public class LoginActivity extends BindingActivity {

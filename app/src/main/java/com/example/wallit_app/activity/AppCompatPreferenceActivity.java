@@ -1,4 +1,4 @@
-package com.example.wallit_app;
+package com.example.wallit_app.activity;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

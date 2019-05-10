@@ -14,60 +14,60 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".StatsActivity"
+            android:name=".activity.StatsActivity"
             android:label="@string/title_activity_stats"
-            android:parentActivityName=".HomeActivity"
+            android:parentActivityName=".activity.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.wallit_app.HomeActivity" />
+                android:value="com.example.wallit_app.activity.HomeActivity" />
         </activity>
         <activity
-            android:name=".FundInfoActivity"
+            android:name=".activity.FundInfoActivity"
             android:label="@string/title_activity_fund_info"
-            android:parentActivityName=".HomeActivity"
+            android:parentActivityName=".activity.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.wallit_app.HomeActivity" />
+                android:value="com.example.wallit_app.activity.HomeActivity" />
         </activity>
         <activity
-            android:name=".WithdrawActivity"
+            android:name=".activity.WithdrawActivity"
             android:label="@string/title_activity_withdraw"
-            android:parentActivityName=".HomeActivity"
+            android:parentActivityName=".activity.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.wallit_app.HomeActivity" />
+                android:value="com.example.wallit_app.activity.HomeActivity" />
         </activity>
         <activity
-            android:name=".DepositActivity"
+            android:name=".activity.DepositActivity"
             android:label="@string/title_activity_deposit"
-            android:parentActivityName=".HomeActivity"
+            android:parentActivityName=".activity.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value="com.example.wallit_app.HomeActivity" />
+            android:value="com.example.wallit_app.activity.HomeActivity" />
 
         <activity
-            android:name=".HomeActivity"
+            android:name=".activity.HomeActivity"
             android:label="@string/title_activity_home"
-            android:parentActivityName=".LoginActivity"
+            android:parentActivityName=".activity.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".LoginActivity" />
+                android:value=".activity.LoginActivity" />
         </activity>
         <activity
-            android:name=".SettingsActivity"
+            android:name=".activity.SettingsActivity"
             android:label="@string/title_activity_settings" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".activity.LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".SplashActivity"
+            android:name=".activity.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

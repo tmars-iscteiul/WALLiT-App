@@ -1,4 +1,4 @@
-package com.example.wallit_app;
+package com.example.wallit_app.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.wallit_app.R;
 import com.example.wallit_app.networking.ServiceMessages;
 
 public class ToolBarActivity extends BindingActivity {

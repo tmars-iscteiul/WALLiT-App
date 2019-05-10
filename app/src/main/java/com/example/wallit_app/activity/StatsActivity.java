@@ -1,10 +1,10 @@
-package com.example.wallit_app;
+package com.example.wallit_app.activity;
 
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
-import com.levitnudi.legacytableview.LegacyTableView;
+import com.example.wallit_app.R;
 
 public class StatsActivity extends ToolBarActivity {
 

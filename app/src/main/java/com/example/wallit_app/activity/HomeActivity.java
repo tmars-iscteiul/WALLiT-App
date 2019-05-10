@@ -1,16 +1,14 @@
-package com.example.wallit_app;
+package com.example.wallit_app.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
-import android.os.RemoteException;
 import android.view.KeyEvent;
 import android.widget.TextView;
 import android.view.View;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
-import com.example.wallit_app.networking.NetworkingService;
+import com.example.wallit_app.R;
 
 public class HomeActivity extends ToolBarActivity {
 

@@ -1,4 +1,4 @@
-package com.example.wallit_app;
+package com.example.wallit_app.activity;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;

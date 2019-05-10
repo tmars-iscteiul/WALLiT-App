@@ -1,40 +1,40 @@
-package com.example.wallit_app;
+package com.example.wallit_app.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.wallit_app.R;
 import com.example.wallit_app.networking.ServiceMessages;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DepositActivity extends ToolBarActivity {
+public class WithdrawActivity extends ToolBarActivity {
 
     private EditText et;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.deposit_main);
+        setContentView(R.layout.withdraw_main);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        et = findViewById(R.id.depositValue);
+        et = findViewById(R.id.withdrawValue);
         et.setText("0");
     }
 
-    // Called when the user presses the deposit button
-    public void buttonSendDepositData(View view)  {
+    // Called when the user presses the withdraw button
+    public void buttonSendWithdrawData(View view)  {
         String value = et.getText().toString();
         SimpleDateFormat ft = new SimpleDateFormat ("hh:mm:ss");
         Date date = new Date();
-        String finalData = "[" + ft.format(date) + "] Client wants to deposit: " + value + "€.";
+        String finalData = "[" + ft.format(date) + "] Client wants to withdraw: " + value + "€.";
         redirectDataToServer(finalData);
-        progressDialog.setMessage("Depositing...");
+        progressDialog.setMessage("Withdrawing...");
         progressDialog.show();
         // TODO: Add a timeout to the progress dialog.
     }
@@ -61,7 +61,6 @@ public class DepositActivity extends ToolBarActivity {
     @Override
     protected void handleDataAck(ServiceMessages ackCode, String data)  {
         // Do something if needed (most likely not)
-
     }
 
     private void handlePositiveAck()    {
@@ -71,7 +70,6 @@ public class DepositActivity extends ToolBarActivity {
 
     private void handleNegativeAck()    {
         progressDialog.hide();
-        showMessageDialog("Couldn't deposit.");
+        showMessageDialog("Couldn't withdraw.");
     }
-
 }

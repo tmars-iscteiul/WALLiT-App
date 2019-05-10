@@ -9,7 +9,7 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.widget.Toast;
 
-import com.example.wallit_app.BindingActivity;
+import com.example.wallit_app.activity.BindingActivity;
 
 import java.util.ArrayList;
 
