@@ -5,15 +5,6 @@ import java.util.ArrayList;
 
 public class MovementEntryChunk implements Serializable	{
 
-    /* Each chunk is composed of 9 entries (to match the fixed table's display lines)
-     * Each entry has 3 values: Date, Amount and Balance
-     * This data chunk is delivered by the server being serializable. This class will also be present in the android app
-     * Server sends an ArrayList<FundInfoDataChunk> to the app after being requested.
-     *
-     * Data needs to be stored in memory after it's requested to the server (so it doesn't request every time the StatsActivity is launched)
-     *
-     */
-
     /**
      *
      */
@@ -39,8 +30,7 @@ public class MovementEntryChunk implements Serializable	{
         movementEntryList = list;
     }
 
-    // If we need the ArrayList itself, replace this with its getter
-    public MovementEntry getMovementEntry(int index)  {
-        return movementEntryList.get(index);
+    public ArrayList<MovementEntry> getMovementEntryList()  {
+        return movementEntryList;
     }
 }
