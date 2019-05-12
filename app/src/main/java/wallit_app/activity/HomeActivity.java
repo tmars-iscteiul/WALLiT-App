@@ -1,4 +1,4 @@
-package com.example.wallit_app.activity;
+package wallit_app.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import com.example.wallit_app.R;
+
+import wallit_app.activity.DepositActivity;
+import wallit_app.activity.FundInfoActivity;
 
 public class HomeActivity extends ToolBarActivity {
 

@@ -1,4 +1,4 @@
-package com.example.wallit_app.activity;
+package wallit_app.activity;
 
 import android.annotation.TargetApi;
 import android.content.Context;

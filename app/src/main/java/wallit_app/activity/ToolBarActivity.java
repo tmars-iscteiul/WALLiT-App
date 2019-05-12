@@ -1,4 +1,4 @@
-package com.example.wallit_app.activity;
+package wallit_app.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -7,8 +7,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+
 import com.example.wallit_app.R;
-import com.example.wallit_app.networking.ServiceMessages;
+import wallit_app.utilities.ServiceMessages;
 
 public class ToolBarActivity extends BindingActivity {
 
@@ -88,7 +89,7 @@ public class ToolBarActivity extends BindingActivity {
     }
 
     @Override
-    protected void handleDataAck(ServiceMessages ackCode, String data)  {
+    protected void handleDataAck(ServiceMessages ackCode, Object data)  {
         // Do something if needed (most likely not)
     }
 
@@ -97,6 +98,10 @@ public class ToolBarActivity extends BindingActivity {
         unbindToNetworkingService();
         progressDialog.hide();
         connectionTimeoutDialog.show();
+    }
+
+    @Override
+    protected void runAfterConnectedToService()    {
     }
 
     private void logoutUser(Intent intent)   {

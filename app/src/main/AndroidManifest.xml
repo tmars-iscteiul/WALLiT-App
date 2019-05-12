@@ -14,60 +14,60 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".activity.StatsActivity"
+            android:name="wallit_app.activity.StatsActivity"
             android:label="@string/title_activity_stats"
-            android:parentActivityName=".activity.HomeActivity"
+            android:parentActivityName="wallit_app.activity.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.wallit_app.activity.HomeActivity" />
+                android:value="wallit_app.activity.HomeActivity" />
         </activity>
         <activity
-            android:name=".activity.FundInfoActivity"
+            android:name="wallit_app.activity.FundInfoActivity"
             android:label="@string/title_activity_fund_info"
-            android:parentActivityName=".activity.HomeActivity"
+            android:parentActivityName="wallit_app.activity.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.wallit_app.activity.HomeActivity" />
+                android:value="wallit_app.activity.HomeActivity" />
         </activity>
         <activity
-            android:name=".activity.WithdrawActivity"
+            android:name="wallit_app.activity.WithdrawActivity"
             android:label="@string/title_activity_withdraw"
-            android:parentActivityName=".activity.HomeActivity"
+            android:parentActivityName="wallit_app.activity.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.wallit_app.activity.HomeActivity" />
+                android:value="wallit_app.activity.HomeActivity" />
         </activity>
         <activity
-            android:name=".activity.DepositActivity"
+            android:name="wallit_app.activity.DepositActivity"
             android:label="@string/title_activity_deposit"
-            android:parentActivityName=".activity.HomeActivity"
+            android:parentActivityName="wallit_app.activity.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value="com.example.wallit_app.activity.HomeActivity" />
+            android:value="wallit_app.activity.HomeActivity" />
 
         <activity
-            android:name=".activity.HomeActivity"
+            android:name="wallit_app.activity.HomeActivity"
             android:label="@string/title_activity_home"
-            android:parentActivityName=".activity.LoginActivity"
+            android:parentActivityName="wallit_app.activity.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.LoginActivity" />
+                android:value="wallit_app.activity.LoginActivity" />
         </activity>
         <activity
-            android:name=".activity.SettingsActivity"
+            android:name="wallit_app.activity.SettingsActivity"
             android:label="@string/title_activity_settings" />
         <activity
-            android:name=".activity.LoginActivity"
+            android:name="wallit_app.activity.LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".activity.SplashActivity"
+            android:name="wallit_app.activity.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -77,7 +77,7 @@
         </activity>
 
         <service
-            android:name=".networking.NetworkingService"
+            android:name="wallit_app.networking.NetworkingService"
             android:exported="false" />
     </application>
 

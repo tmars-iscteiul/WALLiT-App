@@ -1,4 +1,4 @@
-package com.example.wallit_app.networking;
+package wallit_app.networking;
 
 import android.app.Service;
 import android.content.Intent;
@@ -9,7 +9,9 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.widget.Toast;
 
-import com.example.wallit_app.activity.BindingActivity;
+import wallit_app.activity.BindingActivity;
+import wallit_app.data.AckMessage;
+import wallit_app.utilities.ServiceMessages;
 
 import java.util.ArrayList;
 
@@ -17,7 +19,6 @@ public class NetworkingService extends Service {
 
 
     private ArrayList<Messenger> mClients = new ArrayList<>();
-    private int mValue = 0;
 
     private boolean offlineMode = false;
     private ServerConnectionHandler connectionHandler;
@@ -31,10 +32,10 @@ public class NetworkingService extends Service {
                 case MSG_LOGIN:
                     mClients.add(msg.replyTo);
                     if(!offlineMode) {
-                        connectionHandler.sendDataToServer("login,"+msg.obj);
+                        connectionHandler.sendDataToServer("REQUEST_LOGIN,"+msg.obj);
                         connectionHandler.start();
                     }   else    {
-                        returnAckToActivity("MSG_OFFLINE_ACK");
+                        returnAckToActivity(new AckMessage("MSG_OFFLINE_ACK", null));
                     }
                     break;
                 case MSG_BIND:
@@ -43,12 +44,14 @@ public class NetworkingService extends Service {
                 case MSG_UNBIND:
                     mClients.remove(msg.replyTo);
                     break;
+                case REQUEST_MOVEMENT_HISTORY:
+
+                    break;
                 case MSG_SEND_DATA:
-                    mValue = msg.arg1;
                     if(!offlineMode) {
                         connectionHandler.sendDataToServer((String)msg.obj);
                     }   else    {
-                        returnAckToActivity("MSG_OFFLINE_ACK");
+                        returnAckToActivity(new AckMessage("MSG_OFFLINE_ACK", null));
                     }
                     break;
                 case MSG_TERMINATE_SERVICE:
@@ -81,23 +84,31 @@ public class NetworkingService extends Service {
     }
 
     // Handles ack sent from the server, redirecting it to any bound activities (only one SHOULD BE bound at a time)
-    public void returnAckToActivity(String rawAck)    {
-        Message msg = getMessageFromAck(rawAck);
+    public void returnAckToActivity(AckMessage ackMessage)    {
+        Message msg = getMessageFromAck(ackMessage);
         for (int i = mClients.size()-1; i>=0; i--) {
             try {
-                mClients.get(i).send(msg);
+                /* Sometimes it sends two messages (right after an activity has bound, without the previous one to unbind)
+                 * TODO Try to unbind previous one right after next activity tries to bind
+                 */
+                mClients.get(i).send(Message.obtain(msg));
             } catch (RemoteException e) {
                 mClients.remove(i);
             }
         }
     }
 
-    // Consults the ServiceMessages enum to convert a rawAck string into a coherent ServiceMessage value type.
-    private Message getMessageFromAck(String rawAck)    {
-        int ackCode = ServiceMessages.getMessageByString(rawAck).getMessageID();
-        // Add obj to message if ever applicable (Will be once we implement the fund information return)
-        // Perhaps add an if(ackCode == MSG_SEND_DATA) and do work there
-        return Message.obtain(null, ackCode, this.hashCode());
+    // Consults the ServiceMessages enum to convert a ackMessage's ackCode string into a Message object, to be sent to the activity, annexing objects to it if necessary.
+    private Message getMessageFromAck(AckMessage ackMessage)    {
+        int ackCode = ServiceMessages.getMessageByString(ackMessage.getAckMessageType()).getMessageID();
+        Message msg = Message.obtain();
+        msg.what = ackCode;
+        // TODO Add distinction between receiving FundInfo and UserStats by replacing MSG_SEND_DATA's message to two different ones
+        // TODO Same message being used? What
+        if(ackCode == ServiceMessages.MSG_SEND_DATA.getMessageID())   {
+            msg.obj = ackMessage.getMovementEntryList();
+        }
+        return msg;
     }
 
     public ServerConnectionHandler getConnectionHandler()   {

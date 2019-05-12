@@ -1,4 +1,6 @@
-package com.example.wallit_app.networking;
+package wallit_app.networking;
+
+import wallit_app.data.AckMessage;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -34,7 +36,7 @@ public class ServerConnectionHandler extends Thread {
      */
     public synchronized void run()   {
         try {
-            serverSocket.connect(new InetSocketAddress(host, 8080), 5000);  // Works only for this static port, while the host is provided by an input field from the user
+            serverSocket.connect(new InetSocketAddress(host, 4201), 5000);  // Works only for this static port, while the host is provided by an input field from the user
             objectOut = new ObjectOutputStream(serverSocket.getOutputStream());
             objectIn  = new ObjectInputStream(serverSocket.getInputStream());
         }   catch (IOException e)   {
@@ -52,8 +54,8 @@ public class ServerConnectionHandler extends Thread {
                     System.out.println("Sent to server: \"" + query + "\".");
                     // TODO: Waiting forever on an ack. Set a timeout
                     try {
-                        String ack = (String)objectIn.readObject();
-                        System.out.println("Received from server: \"" + ack + "\".");
+                        AckMessage ack = (AckMessage)objectIn.readObject();
+                        System.out.println("Received from server: \"" + ack.getAckMessageType() + "\".");
                         nService.returnAckToActivity(ack);
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
@@ -76,9 +78,15 @@ public class ServerConnectionHandler extends Thread {
 
     private void connectionTimeout()    {
         System.out.println("Connection timed out.");
-        nService.returnAckToActivity("MSG_CONNECTION_TIMEOUT");
+        nService.returnAckToActivity(new AckMessage("MSG_CONNECTION_TIMEOUT", null));
     }
 
+    /*
+     * Message standard sent by android client
+     * Arg1: COMMAND
+     * Arg2: USERNAME
+     * Arg3: EXTRA DATA
+     */
     // Called by the service, when an activity prompted it to send data to the server
     public synchronized void sendDataToServer(String data)   {
         dataToSend.add(data);

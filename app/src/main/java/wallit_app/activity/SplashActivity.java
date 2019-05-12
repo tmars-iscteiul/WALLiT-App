@@ -1,4 +1,4 @@
-package com.example.wallit_app.activity;
+package wallit_app.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;

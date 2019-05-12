@@ -1,4 +1,4 @@
-package com.example.wallit_app.activity;
+package wallit_app.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.app.AlertDialog;
 
 import com.example.wallit_app.R;
-import com.example.wallit_app.networking.ServiceMessages;
+import wallit_app.utilities.ServiceMessages;
 
 public class LoginActivity extends BindingActivity {
 
@@ -110,7 +110,7 @@ public class LoginActivity extends BindingActivity {
     }
 
     @Override
-    protected void handleDataAck(ServiceMessages ackCode, String data)  {
+    protected void handleDataAck(ServiceMessages ackCode, Object data)  {
         // Do something if needed (most likely not)
     }
 
@@ -136,6 +136,10 @@ public class LoginActivity extends BindingActivity {
         unbindToNetworkingService();
         progressDialog.hide();
         showMessageDialog("Couldn't connect to the server. Try again later.");
+    }
+
+    @Override
+    protected void runAfterConnectedToService()    {
     }
 
     // Overrides the back button's function, to make it ask to exit the app

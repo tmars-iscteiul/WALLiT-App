@@ -1,8 +1,7 @@
-package com.example.wallit_app.activity;
+package wallit_app.activity;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,8 +15,10 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 
-import com.example.wallit_app.networking.NetworkingService;
-import com.example.wallit_app.networking.ServiceMessages;
+import java.lang.reflect.Field;
+
+import wallit_app.networking.NetworkingService;
+import wallit_app.utilities.ServiceMessages;
 
 
 public abstract class BindingActivity extends AppCompatActivity {
@@ -44,7 +45,8 @@ public abstract class BindingActivity extends AppCompatActivity {
             ServiceMessages sm = ServiceMessages.getMessageByID(msg.what);
             switch (sm) {
                 case MSG_SEND_DATA:
-                    handleDataAck(sm, (String)msg.obj);
+                    System.out.println("Received data from service: " + msg.obj);
+                    handleDataAck(sm, msg.obj);
                     break;
                 default:
                     handleAck(sm);
@@ -56,7 +58,7 @@ public abstract class BindingActivity extends AppCompatActivity {
 
     protected ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
-            // This is called when the connection with the service has been established.
+            // This is called when the connection with the service has been established (after binding request).
             mService = new Messenger(service);
             Message msg;
             if(loginOnBind) {
@@ -71,11 +73,11 @@ public abstract class BindingActivity extends AppCompatActivity {
             } catch (RemoteException e) {
             }
             System.out.println(this.toString() + " activity's messaging system connected to the networking service.");
+            runAfterConnectedToService();
         }
 
         public void onServiceDisconnected(ComponentName className) {
-            // This is called when the connection with the service has been
-            // unexpectedly disconnected -- that is, its process crashed.
+            // This is called when the connection with the service has been unexpectedly disconnected -- that is, its process crashed.
             mService = null;
             System.out.println(this.toString() + " activity's messaging system disconnected to the networking service.");
         }
@@ -95,11 +97,14 @@ public abstract class BindingActivity extends AppCompatActivity {
         unbindToNetworkingService();
     }
 
+    //Called by ServiceConnection after the connection to the service has been established
+    protected abstract void runAfterConnectedToService();
+
     // Called by incomingHandler after receiving an ack from the service/server
     protected abstract void handleAck(ServiceMessages ackCode);
 
     // Called by incomingHandler after receiving an ack with data from the service/server
-    protected abstract void handleDataAck(ServiceMessages ackCode, String data);
+    protected abstract void handleDataAck(ServiceMessages ackCode, Object rawData);
 
     // Called by incomingHandler after receiving an offline ack, forbidding any server communication
     protected void handleOfflineAck()   {
@@ -110,14 +115,13 @@ public abstract class BindingActivity extends AppCompatActivity {
     // Send a message to the service, with the intent of sending data: a constructed string for now.
     protected void redirectDataToServer(String data)   {
         try {
-            Message msg = Message.obtain(null, ServiceMessages.MSG_SEND_DATA.getMessageID(), this.hashCode());
+            Message msg = Message.obtain(null, ServiceMessages.MSG_SEND_DATA.getMessageID());
             msg.obj = data;
             mService.send(msg);
         } catch (RemoteException e) {
             e.getStackTrace();
         }
     }
-
 
     protected void bindToNetworkingService()    {
         Intent intent = new Intent(this, NetworkingService.class);
@@ -153,5 +157,16 @@ public abstract class BindingActivity extends AppCompatActivity {
                 });
         alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+    public static int getResId(String resName, Class<?> c) {
+
+        try {
+            Field idField = c.getDeclaredField(resName);
+            return idField.getInt(idField);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
     }
 }
