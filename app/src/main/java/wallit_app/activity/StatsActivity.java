@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.example.wallit_app.R;
 
-import wallit_app.data.MovementEntry;
 import wallit_app.data.MovementEntryChunk;
 import wallit_app.utilities.ServiceMessages;
 
@@ -39,23 +38,29 @@ public class StatsActivity extends ToolBarActivity {
 
     @Override
     protected void handleDataAck(ServiceMessages ackCode, Object rawData) {
-        ArrayList<MovementEntryChunk> movementEntryChunkList = new ArrayList<>((ArrayList<MovementEntryChunk>)rawData);
-        // TODO Add a loop to fill in the table with all the received information
-        TextView tv = (TextView)findViewById(res.getIdentifier("date1", "id", getApplicationContext().getPackageName()));
-        tv.setText(movementEntryChunkList.get(0).getMovementEntry(0).getDate());
+        insertDataOnTable((ArrayList<MovementEntryChunk>)rawData);
+        progressDialog.hide();
     }
 
-    // TODO Add an ACK with data received so it can place it in the table
-    // This is gonna take long
+    private void insertDataOnTable(ArrayList<MovementEntryChunk> movementEntryChunkList)  {
+        for(int i = 0; i<movementEntryChunkList.size(); i++)    {
+            boolean isDeposit = movementEntryChunkList.get(0).getMovementEntry(i).getAmount() > 0;
+            insertDataOnCell("date" + (i+1), movementEntryChunkList.get(0).getMovementEntry(i).getDate(), isDeposit);
+            insertDataOnCell("amount" + (i+1), movementEntryChunkList.get(0).getMovementEntry(i).getAmount() + " €", isDeposit);
+            insertDataOnCell("balance" + (i+1), movementEntryChunkList.get(0).getMovementEntry(i).getBalance() + " € ", isDeposit);
+        }
+        System.out.println("Inserted movement history data to table");
+        // TODO Add page system, so user can see entire history of movements. (9 entries per page) (RIGHT NOW, IT CRASHED THE APP IF 10 LINES ARE TRANSMITTED)
+        // TODO Add data to cache, memory or keep activity alive, so we don't request it to the server every time.
+    }
 
-    /*
-    If deposit row: change font color to #6699CC
-    If withdraw row: change font color to #676767
-    Date, Amount, Balance.
-
-    int id = res.getIdentifier("titleText", "id", getContext().getPackageName());
-
-    TODO: Add page system, so user can see entire history of movements. (9 entries per page)
-     */
+    private void insertDataOnCell(String cellName, String data, boolean isDeposit) {
+        TextView tv = findViewById(res.getIdentifier(cellName, "id", getApplicationContext().getPackageName()));
+        tv.setText(data);
+        if(isDeposit)
+            tv.setTextColor(getResources().getColor(R.color.colorPrimary));
+        else
+            tv.setTextColor(getResources().getColor(R.color.colorAccent));
+    }
 
 }

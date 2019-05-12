@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activity.StatsActivity"
+    tools:context="wallit_app.activity.StatsActivity"
     tools:showIn="@layout/stats_main">
 
     <TextView
@@ -25,7 +25,7 @@
     <TableLayout
         android:id="@+id/movementHistoryTable"
         android:layout_width="344dp"
-        android:layout_height="207dp"
+        android:layout_height="228dp"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="8dp"
@@ -60,7 +60,7 @@
                 android:id="@+id/header_amount"
                 android:layout_width="111dp"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="end"
                 android:padding="5dp"
                 android:text="Amount"
                 android:textColor="@color/colorBackground"
@@ -72,7 +72,7 @@
                 android:id="@+id/header_balance"
                 android:layout_width="111dp"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="end"
                 android:padding="5dp"
                 android:text="Balance"
                 android:textColor="@color/colorBackground"
@@ -94,7 +94,7 @@
                 android:layout_width="122dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorAccent"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 tools:text=" 2019-02-21" />
 
             <TextView
@@ -103,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:textColor="@color/colorAccent"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 tools:text="150,00 € " />
 
@@ -113,7 +113,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:textColor="@color/colorAccent"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 tools:text="5.672,17 € " />
 
@@ -135,7 +135,7 @@
                 android:layout_width="122dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 tools:text=" 2019-01-14" />
 
             <TextView
@@ -144,7 +144,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 tools:text="80,00 € " />
 
@@ -154,7 +154,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 tools:text="5.492,56 € " />
 
@@ -178,7 +178,7 @@
                 android:layout_width="122dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorAccent"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 tools:text=" 2018-12-02" />
 
             <TextView
@@ -187,7 +187,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:textColor="@color/colorAccent"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 tools:text="100,00 € " />
 
@@ -197,7 +197,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:textColor="@color/colorAccent"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 tools:text="5.558,16 € " />
 
@@ -221,7 +221,7 @@
                 android:layout_width="122dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorAccent"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 tools:text=" 2018-10-12" />
 
             <TextView
@@ -230,7 +230,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:textColor="@color/colorAccent"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 tools:text="120,00 € " />
 
@@ -240,7 +240,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:textColor="@color/colorAccent"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 tools:text="5.426,36 € " />
 
@@ -262,7 +262,7 @@
                 android:layout_width="122dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 tools:text=" 2018-08-21	" />
 
             <TextView
@@ -271,7 +271,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 tools:text="50,00 € " />
 
@@ -281,7 +281,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 tools:text="5.398,27 € " />
 
@@ -303,7 +303,7 @@
                 android:layout_width="122dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 tools:text=" 2018-08-21	" />
 
             <TextView
@@ -312,7 +312,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 tools:text="50,00 € " />
 
@@ -322,7 +322,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 tools:text="5.398,27 € " />
 
@@ -344,7 +344,7 @@
                 android:layout_width="122dp"
                 android:layout_height="match_parent"
                 android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 tools:text=" 2018-08-21	" />
 
             <TextView
@@ -353,7 +353,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 tools:text="50,00 € " />
 
@@ -363,7 +363,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 tools:text="5.398,27 € " />
 
@@ -385,7 +385,7 @@
                 android:layout_width="122dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 tools:text=" 2018-08-21	" />
 
             <TextView
@@ -394,7 +394,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 tools:text="50,00 € " />
 
@@ -404,7 +404,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 tools:text="5.398,27 € " />
 
@@ -426,7 +426,7 @@
                 android:layout_width="122dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 tools:text=" 2018-08-21	" />
 
             <TextView
@@ -435,7 +435,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 tools:text="50,00 € " />
 
@@ -445,7 +445,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 tools:text="5.398,27 € " />
 
@@ -521,6 +521,7 @@
         android:layout_marginEnd="34dp"
         android:layout_marginRight="34dp"
         android:gravity="right"
+        android:text="-0,14€"
         android:textColor="@android:color/holo_red_dark"
         android:textSize="18sp"
         android:textStyle="bold"
