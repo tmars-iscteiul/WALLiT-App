@@ -81,12 +81,6 @@ public class ServerConnectionHandler extends Thread {
         nService.returnAckToActivity(new AckMessage("MSG_CONNECTION_TIMEOUT", null));
     }
 
-    /*
-     * Message standard sent by android client
-     * Arg1: COMMAND
-     * Arg2: USERNAME
-     * Arg3: EXTRA DATA
-     */
     // Called by the service, when an activity prompted it to send data to the server
     public synchronized void sendDataToServer(String data)   {
         dataToSend.add(data);

@@ -14,6 +14,8 @@ public enum ServiceMessages {
     MSG_OFFLINE_ACK(8),
     REQUEST_LOGIN(9),
     REQUEST_MOVEMENT_HISTORY(10),
+    REQUEST_DEPOSIT(11),
+    REQUEST_WITHDRAW(12),
     ;
 
     private final int messageID;

@@ -29,30 +29,26 @@ public class NetworkingService extends Service {
         @Override
         public void handleMessage(Message msg) {
             switch (ServiceMessages.getMessageByID(msg.what)) {
-                case MSG_LOGIN:
-                    mClients.add(msg.replyTo);
-                    if(!offlineMode) {
-                        connectionHandler.sendDataToServer("REQUEST_LOGIN,"+msg.obj);
-                        connectionHandler.start();
-                    }   else    {
-                        returnAckToActivity(new AckMessage("MSG_OFFLINE_ACK", null));
-                    }
-                    break;
                 case MSG_BIND:
                     mClients.add(msg.replyTo);
                     break;
                 case MSG_UNBIND:
                     mClients.remove(msg.replyTo);
                     break;
-                case REQUEST_MOVEMENT_HISTORY:
-
-                    break;
-                case MSG_SEND_DATA:
+                case MSG_LOGIN:
+                    mClients.add(msg.replyTo);
                     if(!offlineMode) {
                         connectionHandler.sendDataToServer((String)msg.obj);
+                        connectionHandler.start();
                     }   else    {
                         returnAckToActivity(new AckMessage("MSG_OFFLINE_ACK", null));
                     }
+                    break;
+                case REQUEST_MOVEMENT_HISTORY:
+                case REQUEST_WITHDRAW:
+                case REQUEST_DEPOSIT:
+                case MSG_SEND_DATA:
+                    handleMessageFromActivity((String)msg.obj);
                     break;
                 case MSG_TERMINATE_SERVICE:
                     terminateConnection();
@@ -95,6 +91,14 @@ public class NetworkingService extends Service {
             } catch (RemoteException e) {
                 mClients.remove(i);
             }
+        }
+    }
+
+    private void handleMessageFromActivity(String data) {
+        if(!offlineMode) {
+            connectionHandler.sendDataToServer(data);
+        }   else    {
+            returnAckToActivity(new AckMessage("MSG_OFFLINE_ACK", null));
         }
     }
 

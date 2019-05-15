@@ -36,7 +36,7 @@ public class StatsActivity extends ToolBarActivity {
     @Override
     protected void runAfterConnectedToService()    {
         // TODO username isn't set here, transfer from previous intent (just like the host)
-        redirectDataToServer("REQUEST_MOVEMENT_HISTORY," + username);
+        redirectDataToServer("REQUEST_MOVEMENT_HISTORY", ServiceMessages.REQUEST_MOVEMENT_HISTORY);
         progressDialog.setMessage("Downloading movement history...");
         progressDialog.show();
     }
@@ -71,6 +71,7 @@ public class StatsActivity extends ToolBarActivity {
 
     private void insertDataOnTableFromPage(int pageNumber)  {
         int i = 8;
+        // If there's rows left, clear them from previous inserted entries
         for(; i > dataChunkPages.get(pageNumber).getMovementEntryList().size() - 1; i--)    {
             clearTableRow(i);
         }
@@ -82,10 +83,7 @@ public class StatsActivity extends ToolBarActivity {
             insertDataOnCell("amount" + (i+1), dataChunkPages.get(pageNumber).getMovementEntryList().get(i).getAmount() + " €", isDeposit);
             insertDataOnCell("balance" + (i+1), dataChunkPages.get(pageNumber).getMovementEntryList().get(i).getBalance() + " € ", isDeposit);
         }
-        // If there's rows left, clear them from previous inserted entries
-
         currentPageDisplayTextView.setText("Page " + (pageNumber+1) + " / " + dataChunkPages.size());
-        // TODO Add data to cache, memory or keep activity alive, so we don't request it to the server every time.
     }
 
     private void insertDataOnCell(String cellName, String data, boolean isDeposit) {

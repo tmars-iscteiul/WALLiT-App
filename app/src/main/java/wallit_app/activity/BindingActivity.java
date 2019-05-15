@@ -63,7 +63,7 @@ public abstract class BindingActivity extends AppCompatActivity {
             Message msg;
             if(loginOnBind) {
                 msg = Message.obtain(null, ServiceMessages.MSG_LOGIN.getMessageID());
-                msg.obj = username;
+                msg.obj = "REQUEST_LOGIN," + username;
             }   else    {
                 msg = Message.obtain(null, ServiceMessages.MSG_BIND.getMessageID());
             }
@@ -113,9 +113,9 @@ public abstract class BindingActivity extends AppCompatActivity {
     }
 
     // Send a message to the service, with the intent of sending data: a constructed string for now.
-    protected void redirectDataToServer(String data)   {
+    protected void redirectDataToServer(String data, ServiceMessages serviceMessages)   {
         try {
-            Message msg = Message.obtain(null, ServiceMessages.MSG_SEND_DATA.getMessageID());
+            Message msg = Message.obtain(null, serviceMessages.getMessageID());
             msg.obj = data;
             mService.send(msg);
         } catch (RemoteException e) {

@@ -29,11 +29,11 @@ public class DepositActivity extends ToolBarActivity {
 
     // Called when the user presses the deposit button
     public void buttonSendDepositData(View view)  {
-        String value = et.getText().toString();
-        SimpleDateFormat ft = new SimpleDateFormat ("hh:mm:ss");
-        Date date = new Date();
-        String finalData = "[" + ft.format(date) + "] Client wants to deposit: " + value + "€.";
-        redirectDataToServer(finalData);
+        if(et.getText().toString().isEmpty())   {
+            showMessageDialog("Deposit value cannot be empty.");
+            return;
+        }
+        redirectDataToServer("REQUEST_DEPOSIT," + et.getText().toString(), ServiceMessages.REQUEST_DEPOSIT);
         progressDialog.setMessage("Depositing...");
         progressDialog.show();
         // TODO: Add a timeout to the progress dialog.

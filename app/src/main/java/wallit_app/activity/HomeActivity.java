@@ -10,8 +10,6 @@ import android.widget.Toast;
 
 import com.example.wallit_app.R;
 
-import wallit_app.activity.DepositActivity;
-import wallit_app.activity.FundInfoActivity;
 
 public class HomeActivity extends ToolBarActivity {
 

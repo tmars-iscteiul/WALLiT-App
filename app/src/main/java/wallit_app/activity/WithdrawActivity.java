@@ -29,11 +29,11 @@ public class WithdrawActivity extends ToolBarActivity {
 
     // Called when the user presses the withdraw button
     public void buttonSendWithdrawData(View view)  {
-        String value = et.getText().toString();
-        SimpleDateFormat ft = new SimpleDateFormat ("hh:mm:ss");
-        Date date = new Date();
-        String finalData = "[" + ft.format(date) + "] Client wants to withdraw: " + value + "€.";
-        redirectDataToServer(finalData);
+        if(et.getText().toString().isEmpty())   {
+            showMessageDialog("Withdraw value cannot be empty.");
+            return;
+        }
+        redirectDataToServer("REQUEST_WITHDRAW," + et.getText().toString(), ServiceMessages.REQUEST_WITHDRAW);
         progressDialog.setMessage("Withdrawing...");
         progressDialog.show();
         // TODO: Add a timeout to the progress dialog.
