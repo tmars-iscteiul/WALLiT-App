@@ -79,25 +79,12 @@ public class ToolBarActivity extends BindingActivity {
 
     @Override
     protected void handleAck(ServiceMessages ackCode)   {
-        switch(ackCode) {
-            case MSG_CONNECTION_TIMEOUT:
-                handleTimeoutAck();
-                break;
-            default:
-                break;
-        }
+        super.handleAck(ackCode);
     }
 
     @Override
     protected void handleDataAck(ServiceMessages ackCode, Object data)  {
         // Do something if needed (most likely not)
-    }
-
-    private void handleTimeoutAck()    {
-        // Timeout login confirmation
-        unbindToNetworkingService();
-        progressDialog.hide();
-        connectionTimeoutDialog.show();
     }
 
     @Override

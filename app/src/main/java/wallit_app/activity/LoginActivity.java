@@ -98,15 +98,14 @@ public class LoginActivity extends BindingActivity {
             case MSG_ACK_NEGATIVE:
                 handleNegativeAck();
                 break;
-            case MSG_CONNECTION_TIMEOUT:
-                handleTimeoutAck();
-                break;
             case MSG_OFFLINE_ACK:
                 handlePositiveAck();
                 break;
             default:
+                super.handleAck(ackCode);
                 break;
         }
+
     }
 
     @Override
@@ -131,12 +130,6 @@ public class LoginActivity extends BindingActivity {
         showMessageDialog("Login failed. Please, try again.");
     }
 
-    private void handleTimeoutAck()    {
-        // Timeout login confirmation
-        unbindToNetworkingService();
-        progressDialog.hide();
-        showMessageDialog("Couldn't connect to the server. Try again later.");
-    }
 
     @Override
     protected void runAfterConnectedToService()    {

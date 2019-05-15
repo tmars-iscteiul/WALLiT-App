@@ -42,6 +42,15 @@ public class StatsActivity extends ToolBarActivity {
     }
 
     @Override
+    protected void handleAck(ServiceMessages ackCode)   {
+        switch(ackCode) {
+            default:
+                super.handleAck(ackCode);
+                break;
+        }
+    }
+
+    @Override
     protected void handleDataAck(ServiceMessages ackCode, Object rawData) {
         dataChunkPages = (ArrayList<MovementEntryChunk>)rawData;
         currentPageDisplay = 0;

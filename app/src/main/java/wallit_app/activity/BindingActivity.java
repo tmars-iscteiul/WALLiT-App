@@ -100,16 +100,35 @@ public abstract class BindingActivity extends AppCompatActivity {
     //Called by ServiceConnection after the connection to the service has been established
     protected abstract void runAfterConnectedToService();
 
-    // Called by incomingHandler after receiving an ack from the service/server
-    protected abstract void handleAck(ServiceMessages ackCode);
-
     // Called by incomingHandler after receiving an ack with data from the service/server
     protected abstract void handleDataAck(ServiceMessages ackCode, Object rawData);
+
+    // Called by incomingHandler after receiving an ack from the service/server
+    protected void handleAck(ServiceMessages ackCode)  {
+        switch(ackCode) {
+            case MSG_CONNECTION_TIMEOUT:
+                handleTimeoutAck();
+                break;
+            case MSG_OFFLINE_ACK:
+                handleOfflineAck();
+                break;
+            default:
+                break;
+        }
+    }
 
     // Called by incomingHandler after receiving an offline ack, forbidding any server communication
     protected void handleOfflineAck()   {
         progressDialog.hide();
         showMessageDialog("Can't execute operation in OFFLINE mode.");
+    }
+
+    // Called by incomingHandler after receiving a timeout ack, terminating the connection
+    protected void handleTimeoutAck()    {
+        // Timeout login confirmation
+        unbindToNetworkingService();
+        progressDialog.hide();
+        showMessageDialog("Couldn't connect to the server. Try again later.");
     }
 
     // Send a message to the service, with the intent of sending data: a constructed string for now.

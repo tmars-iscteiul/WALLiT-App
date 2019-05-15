@@ -7,6 +7,8 @@ import com.example.wallit_app.R;
 
 public class FundInfoActivity extends ToolBarActivity {
 
+    // Using this library for the graph view: https://github.com/jjoe64/GraphView
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

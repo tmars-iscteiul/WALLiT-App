@@ -14,25 +14,17 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Fund Information"
-        android:textSize="36sp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="155dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/graph"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="4dp"
-        android:src="@drawable/graph_placeholder"
-        app:layout_constraintBottom_toTopOf="@+id/currentStatus"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/valueText6" />
 
@@ -40,12 +32,12 @@
         android:id="@+id/currentStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:text="Current Status"
-        android:textSize="36sp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/graph" />
 
     <TextView
         android:id="@+id/valueText"
@@ -55,7 +47,7 @@
         android:layout_marginLeft="48dp"
         android:layout_marginTop="16dp"
         android:text="Value:"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/currentStatus" />
 
@@ -67,7 +59,7 @@
         android:layout_marginEnd="48dp"
         android:layout_marginRight="48dp"
         android:text="107,56"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/currentStatus" />
 
@@ -78,7 +70,7 @@
         android:layout_marginStart="48dp"
         android:layout_marginLeft="48dp"
         android:text="α-level:"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/valueText" />
 
@@ -90,7 +82,7 @@
         android:layout_marginRight="48dp"
         android:text="+7,24%"
         android:textColor="@android:color/holo_green_dark"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/valueValue" />
 
@@ -102,7 +94,7 @@
         android:layout_marginLeft="48dp"
         android:layout_marginTop="32dp"
         android:text="WALLiT:"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/valueText3" />
 
@@ -115,7 +107,7 @@
         android:layout_marginRight="48dp"
         android:text="1203,64€"
         android:textColor="@android:color/holo_red_light"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/valueValue2" />
 
@@ -126,7 +118,7 @@
         android:layout_marginStart="48dp"
         android:layout_marginLeft="48dp"
         android:text="α-WALLiT:"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/valueText4" />
 
@@ -138,7 +130,7 @@
         android:layout_marginRight="48dp"
         android:text="-1.54%"
         android:textColor="@android:color/holo_red_light"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/valueValue3" />
 
