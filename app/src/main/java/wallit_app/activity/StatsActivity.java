@@ -1,6 +1,5 @@
 package wallit_app.activity;
 
-import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -51,7 +50,6 @@ public class StatsActivity extends ToolBarActivity {
     }
 
     public void showNextPage(View view)    {
-        // TODO If there's a next page, display data on table. Change page text on the bottom
         // If there's a next page
         if((currentPageDisplay + 1) < dataChunkPages.size())    {
             currentPageDisplay++;
@@ -62,7 +60,6 @@ public class StatsActivity extends ToolBarActivity {
     }
 
     public void showPreviousPage(View view)    {
-        // TODO If there's a previous page, display data on table. Change page text on the bottom
         // If there's a previous page
         if((currentPageDisplay - 1) >= 0)    {
             currentPageDisplay--;
@@ -73,23 +70,26 @@ public class StatsActivity extends ToolBarActivity {
     }
 
     private void insertDataOnTableFromPage(int pageNumber)  {
-        int i;
-        for(i = 0; i<dataChunkPages.get(pageNumber).getMovementEntryList().size(); i++)    {
+        int i = 8;
+        for(; i > dataChunkPages.get(pageNumber).getMovementEntryList().size() - 1; i--)    {
+            clearTableRow(i);
+        }
+        for(; i >= 0; i--)    {
+            System.out.println("Started: " + i + ", out of " + dataChunkPages.get(pageNumber).getMovementEntryList().size());
+            System.out.println("Object: " + dataChunkPages.get(pageNumber).getMovementEntryList().get(i));
             boolean isDeposit = dataChunkPages.get(pageNumber).getMovementEntryList().get(i).getAmount() > 0;
             insertDataOnCell("date" + (i+1), dataChunkPages.get(pageNumber).getMovementEntryList().get(i).getDate(), isDeposit);
             insertDataOnCell("amount" + (i+1), dataChunkPages.get(pageNumber).getMovementEntryList().get(i).getAmount() + " €", isDeposit);
             insertDataOnCell("balance" + (i+1), dataChunkPages.get(pageNumber).getMovementEntryList().get(i).getBalance() + " € ", isDeposit);
         }
         // If there's rows left, clear them from previous inserted entries
-        for(; i<9; i++)    {
-            clearTableRow(i);
-        }
+
         currentPageDisplayTextView.setText("Page " + (pageNumber+1) + " / " + dataChunkPages.size());
-        // TODO Add page system, so users can see entire history of movements. (9 entries per page) (RIGHT NOW, IT IGNORES AFTER THE 9TH ENTRY)
         // TODO Add data to cache, memory or keep activity alive, so we don't request it to the server every time.
     }
 
     private void insertDataOnCell(String cellName, String data, boolean isDeposit) {
+        System.out.println("Setting: " + cellName + " to " + data);
         TextView tv = findViewById(res.getIdentifier(cellName, "id", getApplicationContext().getPackageName()));
         tv.setText(data);
         if(isDeposit)
