@@ -85,7 +85,6 @@ public class LoginActivity extends BindingActivity {
                 dialog.cancel();
             }
         });
-
         builder.show();
     }
 
@@ -99,13 +98,12 @@ public class LoginActivity extends BindingActivity {
                 handleNegativeAck();
                 break;
             case MSG_OFFLINE_ACK:
+                // Simulates a positive ack, so the user can login, but the application knows it's in offline mode, so it won't allow the user to contact the server
                 handlePositiveAck();
                 break;
             default:
-                super.handleAck(ackCode);
                 break;
         }
-
     }
 
     @Override

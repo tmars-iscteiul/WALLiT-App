@@ -27,15 +27,13 @@ public class ToolBarActivity extends BindingActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final Intent intent = new Intent(this, LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         logoutDialog = new AlertDialog.Builder(this);
         logoutDialog.setTitle("Logout Confirmation");
         logoutDialog.setMessage("Are you sure you want to logout from your account?");
         logoutDialog.setPositiveButton("YES",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        logoutUser(intent);
+                        logoutUser();
                     }
                 });
         logoutDialog.setNegativeButton("NO",
@@ -49,7 +47,7 @@ public class ToolBarActivity extends BindingActivity {
                 .setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        logoutUser(null);
+                        logoutUser();
                     }
                 });
         connectionTimeoutDialog = connectionTimeoutDialogBuilder.create();
@@ -79,7 +77,16 @@ public class ToolBarActivity extends BindingActivity {
 
     @Override
     protected void handleAck(ServiceMessages ackCode)   {
-        super.handleAck(ackCode);
+        switch(ackCode) {
+            case MSG_CONNECTION_TIMEOUT:
+                connectionTimeoutDialog.show();
+                break;
+            case MSG_OFFLINE_ACK:
+                handleOfflineAck();
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -91,11 +98,9 @@ public class ToolBarActivity extends BindingActivity {
     protected void runAfterConnectedToService()    {
     }
 
-    private void logoutUser(Intent intent)   {
-        if(intent == null)  {
-            intent = new Intent(this, LoginActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        }
+    private void logoutUser()   {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         userLoggedIn = false;
         startActivity(intent);
     }

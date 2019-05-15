@@ -104,18 +104,7 @@ public abstract class BindingActivity extends AppCompatActivity {
     protected abstract void handleDataAck(ServiceMessages ackCode, Object rawData);
 
     // Called by incomingHandler after receiving an ack from the service/server
-    protected void handleAck(ServiceMessages ackCode)  {
-        switch(ackCode) {
-            case MSG_CONNECTION_TIMEOUT:
-                handleTimeoutAck();
-                break;
-            case MSG_OFFLINE_ACK:
-                handleOfflineAck();
-                break;
-            default:
-                break;
-        }
-    }
+    protected abstract void handleAck(ServiceMessages ackCode);
 
     // Called by incomingHandler after receiving an offline ack, forbidding any server communication
     protected void handleOfflineAck()   {
@@ -178,14 +167,4 @@ public abstract class BindingActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    public static int getResId(String resName, Class<?> c) {
-
-        try {
-            Field idField = c.getDeclaredField(resName);
-            return idField.getInt(idField);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return -1;
-        }
-    }
 }

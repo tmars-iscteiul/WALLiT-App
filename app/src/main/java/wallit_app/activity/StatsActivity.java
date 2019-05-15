@@ -22,6 +22,7 @@ public class StatsActivity extends ToolBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // TODO There's a bug in offline mode, when the user exits from stats activity to the home activity, it shows the offline dialog for some reason. Find out why, how and fix it
         super.onCreate(savedInstanceState);
         setContentView(R.layout.stats_main);
 
@@ -43,11 +44,7 @@ public class StatsActivity extends ToolBarActivity {
 
     @Override
     protected void handleAck(ServiceMessages ackCode)   {
-        switch(ackCode) {
-            default:
-                super.handleAck(ackCode);
-                break;
-        }
+        super.handleAck(ackCode);
     }
 
     @Override
