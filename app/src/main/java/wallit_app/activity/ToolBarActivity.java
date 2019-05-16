@@ -63,14 +63,8 @@ public class ToolBarActivity extends BindingActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        // TODO: Opening settings activity unbinds every activity to the service, shutting it down. Fix this, for now we can't access the settings activity (nothing works there anyways)
-        //if (id == R.id.action_settings) {
-        //    startActivity(new Intent(this, SettingsActivity.class));
-        //}
-        if (id == R.id.action_logout)   {
+        if (item.getItemId() == R.id.action_logout)
             logoutDialog.show();
-        }
         return super.onOptionsItemSelected(item);
     }
 
