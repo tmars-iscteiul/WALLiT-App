@@ -30,7 +30,7 @@ public enum ServiceMessages {
     }
 
     public String getMessageString() {
-        return String.valueOf(messageID);
+        return toString();
     }
 
     static public ServiceMessages getMessageByID(int id)   {
