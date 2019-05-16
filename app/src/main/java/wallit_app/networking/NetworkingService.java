@@ -41,7 +41,7 @@ public class NetworkingService extends Service {
                         connectionHandler.sendDataToServer((String)msg.obj);
                         connectionHandler.start();
                     }   else    {
-                        returnAckToActivity(new AckMessage("MSG_OFFLINE_ACK", null));
+                        returnAckToActivity(new AckMessage(ServiceMessages.MSG_OFFLINE_ACK.getMessageString(), null));
                     }
                     break;
                 case REQUEST_MOVEMENT_HISTORY:
@@ -99,7 +99,7 @@ public class NetworkingService extends Service {
         if(!offlineMode) {
             connectionHandler.sendDataToServer(data);
         }   else    {
-            returnAckToActivity(new AckMessage("MSG_OFFLINE_ACK", null));
+            returnAckToActivity(new AckMessage(ServiceMessages.MSG_OFFLINE_ACK.getMessageString(), null));
         }
     }
 

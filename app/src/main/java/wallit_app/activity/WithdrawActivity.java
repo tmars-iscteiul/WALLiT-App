@@ -33,7 +33,7 @@ public class WithdrawActivity extends ToolBarActivity {
             showMessageDialog("Withdraw value cannot be empty.");
             return;
         }
-        redirectDataToServer("REQUEST_WITHDRAW," + et.getText().toString(), ServiceMessages.REQUEST_WITHDRAW);
+        redirectDataToServer(ServiceMessages.REQUEST_WITHDRAW.getMessageString() + "," + et.getText().toString(), ServiceMessages.REQUEST_WITHDRAW);
         progressDialog.setMessage("Withdrawing...");
         progressDialog.show();
         // TODO: Add a timeout to the progress dialog.
