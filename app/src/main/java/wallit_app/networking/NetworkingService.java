@@ -45,6 +45,7 @@ public class NetworkingService extends Service {
                     }
                     break;
                 case REQUEST_MOVEMENT_HISTORY:
+                case REQUEST_FUND_INFO:
                 case REQUEST_WITHDRAW:
                 case REQUEST_DEPOSIT:
                 case MSG_SEND_DATA:

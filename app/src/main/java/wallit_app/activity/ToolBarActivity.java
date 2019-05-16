@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-
 import com.example.wallit_app.R;
 import wallit_app.utilities.ServiceMessages;
 

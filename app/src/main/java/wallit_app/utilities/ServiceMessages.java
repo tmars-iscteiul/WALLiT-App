@@ -16,6 +16,7 @@ public enum ServiceMessages {
     REQUEST_MOVEMENT_HISTORY(10),
     REQUEST_DEPOSIT(11),
     REQUEST_WITHDRAW(12),
+    REQUEST_FUND_INFO(13),
     ;
 
     private final int messageID;
