@@ -13,72 +13,90 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
         <activity
             android:name="wallit_app.activity.StatsActivity"
             android:label="@string/title_activity_stats"
             android:parentActivityName="wallit_app.activity.HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="wallit_app.activity.HomeActivity" />
         </activity>
+
         <activity
             android:name="wallit_app.activity.FundInfoActivity"
             android:label="@string/title_activity_fund_info"
             android:parentActivityName="wallit_app.activity.HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="wallit_app.activity.HomeActivity" />
         </activity>
+
         <activity
             android:name="wallit_app.activity.WithdrawActivity"
             android:label="@string/title_activity_withdraw"
             android:parentActivityName="wallit_app.activity.HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="wallit_app.activity.HomeActivity" />
         </activity>
+
         <activity
             android:name="wallit_app.activity.DepositActivity"
             android:label="@string/title_activity_deposit"
             android:parentActivityName="wallit_app.activity.HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
 
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
             android:value="wallit_app.activity.HomeActivity" />
+        </activity>
 
         <activity
             android:name="wallit_app.activity.HomeActivity"
             android:label="@string/title_activity_home"
             android:parentActivityName="wallit_app.activity.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="wallit_app.activity.LoginActivity" />
         </activity>
+
         <activity
             android:name="wallit_app.activity.SettingsActivity"
-            android:label="@string/title_activity_settings" />
+            android:label="@string/title_activity_settings"
+            android:screenOrientation="portrait">
+        </activity>
+
         <activity
             android:name="wallit_app.activity.LoginActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
+        </activity>
+
         <activity
             android:name="wallit_app.activity.SplashActivity"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <service
             android:name="wallit_app.networking.NetworkingService"
-            android:exported="false" />
+            android:exported="false"/>
+
     </application>
 
 </manifest>
