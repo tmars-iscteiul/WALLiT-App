@@ -33,7 +33,7 @@ public class DepositActivity extends ToolBarActivity {
             showMessageDialog("Deposit value cannot be empty.");
             return;
         }
-        redirectDataToServer("REQUEST_DEPOSIT," + et.getText().toString(), ServiceMessages.REQUEST_DEPOSIT);
+        redirectDataToServer(ServiceMessages.REQUEST_DEPOSIT.getMessageString() + "," + et.getText().toString(), ServiceMessages.REQUEST_DEPOSIT);
         progressDialog.setMessage("Depositing...");
         progressDialog.show();
         // TODO: Add a timeout to the progress dialog.
@@ -56,12 +56,6 @@ public class DepositActivity extends ToolBarActivity {
                 super.handleAck(ackCode);
                 break;
         }
-    }
-
-    @Override
-    protected void handleDataAck(ServiceMessages ackCode, Object data)  {
-        // Do something if needed (most likely not)
-
     }
 
     private void handlePositiveAck()    {

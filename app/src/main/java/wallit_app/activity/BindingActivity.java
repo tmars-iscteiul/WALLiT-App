@@ -63,7 +63,7 @@ public abstract class BindingActivity extends AppCompatActivity {
             Message msg;
             if(loginOnBind) {
                 msg = Message.obtain(null, ServiceMessages.MSG_LOGIN.getMessageID());
-                msg.obj = "REQUEST_LOGIN," + username;
+                msg.obj = ServiceMessages.REQUEST_LOGIN.getMessageString() + "," + username;
             }   else    {
                 msg = Message.obtain(null, ServiceMessages.MSG_BIND.getMessageID());
             }

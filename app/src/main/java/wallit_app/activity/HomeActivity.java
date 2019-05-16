@@ -37,9 +37,7 @@ public class HomeActivity extends ToolBarActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event){
         //Changes 'back' button action
         if(keyCode==KeyEvent.KEYCODE_BACK)
-        {
             logoutDialog.show();
-        }
         return true;
     }
 

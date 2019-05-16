@@ -37,7 +37,7 @@ public class StatsActivity extends ToolBarActivity {
     @Override
     protected void runAfterConnectedToService()    {
         // TODO username isn't set here, transfer from previous intent (just like the host)
-        redirectDataToServer("REQUEST_MOVEMENT_HISTORY", ServiceMessages.REQUEST_MOVEMENT_HISTORY);
+        redirectDataToServer(ServiceMessages.REQUEST_MOVEMENT_HISTORY.getMessageString(), ServiceMessages.REQUEST_MOVEMENT_HISTORY);
         progressDialog.setMessage("Downloading movement history...");
         progressDialog.show();
     }
