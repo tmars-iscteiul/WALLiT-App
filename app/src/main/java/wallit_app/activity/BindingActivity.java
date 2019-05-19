@@ -44,7 +44,8 @@ public abstract class BindingActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             ServiceMessages sm = ServiceMessages.getMessageByID(msg.what);
             switch (sm) {
-                case MSG_SEND_DATA:
+                case MSG_ACK_FUND_DATA:
+                case MSG_ACK_USER_DATA:
                     System.out.println("Received data from service: " + msg.obj);
                     handleDataAck(sm, msg.obj);
                     break;

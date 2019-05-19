@@ -49,7 +49,8 @@ public class NetworkingService extends Service {
                 case REQUEST_FUND_INFO:
                 case REQUEST_WITHDRAW:
                 case REQUEST_DEPOSIT:
-                case MSG_SEND_DATA:
+                case MSG_ACK_FUND_DATA:
+                case MSG_ACK_USER_DATA:
                     handleMessageFromActivity((String)msg.obj);
                     break;
                 case MSG_TERMINATE_SERVICE:
@@ -86,9 +87,6 @@ public class NetworkingService extends Service {
         Message msg = getMessageFromAck(ackMessage);
         for (int i = mClients.size()-1; i>=0; i--) {
             try {
-                /* Sometimes it sends two messages (right after an activity has bound, without the previous one to unbind)
-                 * TODO Try to unbind previous one right after next activity tries to bind
-                 */
                 mClients.get(i).send(Message.obtain(msg));
             } catch (RemoteException e) {
                 mClients.remove(i);
@@ -109,11 +107,10 @@ public class NetworkingService extends Service {
         int ackCode = ServiceMessages.getMessageByString(ackMessage.getAckMessageType()).getMessageID();
         Message msg = Message.obtain();
         msg.what = ackCode;
-        // TODO Add distinction between receiving FundInfo and UserStats by replacing MSG_SEND_DATA's message to two different ones
-        // TODO Same message being used? What
-        if(ackCode == ServiceMessages.MSG_SEND_DATA.getMessageID())   {
+        if(ackCode == ServiceMessages.MSG_ACK_USER_DATA.getMessageID())
             msg.obj = ackMessage.getMovementEntryChunkList();
-        }
+        if(ackCode == ServiceMessages.MSG_ACK_FUND_DATA.getMessageID())
+            msg.obj = ackMessage.getFundInfoList();
         return msg;
     }
 

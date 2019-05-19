@@ -7,7 +7,7 @@ public enum ServiceMessages {
     MSG_BIND(1),
     MSG_ACK_POSITIVE(2),
     MSG_ACK_NEGATIVE(3),
-    MSG_SEND_DATA(4),
+    //MSG_SEND_DATA(4),
     MSG_LOGIN(5),
     MSG_TERMINATE_SERVICE(6),
     MSG_CONNECTION_TIMEOUT(7),
@@ -17,6 +17,8 @@ public enum ServiceMessages {
     REQUEST_DEPOSIT(11),
     REQUEST_WITHDRAW(12),
     REQUEST_FUND_INFO(13),
+    MSG_ACK_FUND_DATA(14),
+    MSG_ACK_USER_DATA(15),
     ;
 
     private final int messageID;
