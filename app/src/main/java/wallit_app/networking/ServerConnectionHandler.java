@@ -49,7 +49,7 @@ public class ServerConnectionHandler extends Thread {
             if(!dataToSend.isEmpty() && connected)   {
                 try {
                     String query = dataToSend.poll();
-                    objectOut.writeObject(query);   // Crashes the app if the server is offline (nullpointerexception)
+                    objectOut.writeObject(query);   // TODO Crashes the app if the server is offline (nullpointerexception). Fix this by creating a catch
                     objectOut.reset();
                     System.out.println("Sent to server: \"" + query + "\".");
                     // TODO: Waiting forever on an ack. Set a timeout

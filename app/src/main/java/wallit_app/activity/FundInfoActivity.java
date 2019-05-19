@@ -26,7 +26,7 @@ public class FundInfoActivity extends ToolBarActivity {
     @Override
     protected void runAfterConnectedToService()    {
         // TODO username isn't set here, transfer from previous intent (just like the host)
-        redirectDataToServer(ServiceMessages.REQUEST_MOVEMENT_HISTORY.getMessageString(), ServiceMessages.REQUEST_MOVEMENT_HISTORY);
+        redirectDataToServer(ServiceMessages.REQUEST_FUND_INFO.getMessageString(), ServiceMessages.REQUEST_MOVEMENT_HISTORY);
         progressDialog.setMessage("Downloading fund information...");
         progressDialog.show();
     }

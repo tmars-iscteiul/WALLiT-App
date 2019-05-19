@@ -7,6 +7,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
+import android.support.design.widget.Snackbar;
 import android.widget.Toast;
 
 import wallit_app.activity.BindingActivity;
@@ -111,7 +112,7 @@ public class NetworkingService extends Service {
         // TODO Add distinction between receiving FundInfo and UserStats by replacing MSG_SEND_DATA's message to two different ones
         // TODO Same message being used? What
         if(ackCode == ServiceMessages.MSG_SEND_DATA.getMessageID())   {
-            msg.obj = ackMessage.getMovementEntryList();
+            msg.obj = ackMessage.getMovementEntryChunkList();
         }
         return msg;
     }

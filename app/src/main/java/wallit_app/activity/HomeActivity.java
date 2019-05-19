@@ -2,6 +2,7 @@ package wallit_app.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.view.KeyEvent;
 import android.widget.TextView;
 import android.view.View;
