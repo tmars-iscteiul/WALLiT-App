@@ -20,8 +20,8 @@ public class DepositActivity extends ToolBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.deposit_main);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        toolbar = findViewById(R.id.toolbar);
+        setupToolbar();
 
         et = findViewById(R.id.depositValue);
         et.setText("0");

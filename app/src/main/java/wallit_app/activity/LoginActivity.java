@@ -119,6 +119,7 @@ public class LoginActivity extends BindingActivity {
         intent.putExtra(CONNECTION_HOST, host);
         progressDialog.hide();
         startActivity(intent);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     private void handleNegativeAck()    {

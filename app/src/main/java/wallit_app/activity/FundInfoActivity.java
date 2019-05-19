@@ -27,8 +27,8 @@ public class FundInfoActivity extends ToolBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fundinfo_main);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        toolbar = findViewById(R.id.toolbar);
+        setupToolbar();
 
         graph = findViewById(R.id.graph);
         setupGraph();
@@ -38,23 +38,9 @@ public class FundInfoActivity extends ToolBarActivity {
     @Override
     protected void runAfterConnectedToService()    {
         // TODO username isn't set here, transfer from previous intent (just like the host)
-        redirectDataToServer(ServiceMessages.REQUEST_FUND_INFO.getMessageString(), ServiceMessages.REQUEST_MOVEMENT_HISTORY);
+        redirectDataToServer(ServiceMessages.REQUEST_FUND_INFO.getMessageString(), ServiceMessages.REQUEST_FUND_INFO);
         progressDialog.setMessage("Downloading fund information...");
         progressDialog.show();
-    }
-
-    @Override
-    protected void handleAck(ServiceMessages ackCode)   {
-        switch(ackCode) {
-            // This is here because the server isn't prepared to handle fund info requests. Simply sends a negative ACK.
-            // Once the data struct class is implemented, replace this with proper server communication
-            case MSG_ACK_NEGATIVE:
-                progressDialog.hide();
-                showMessageDialog("Getting fund information from server not yet implemented.");
-                break;
-            default:
-                break;
-        }
     }
 
     @Override

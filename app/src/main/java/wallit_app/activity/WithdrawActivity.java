@@ -20,8 +20,8 @@ public class WithdrawActivity extends ToolBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.withdraw_main);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        toolbar = findViewById(R.id.toolbar);
+        setupToolbar();
 
         et = findViewById(R.id.withdrawValue);
         et.setText("0");

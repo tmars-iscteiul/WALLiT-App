@@ -26,8 +26,8 @@ public class StatsActivity extends ToolBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.stats_main);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        toolbar = findViewById(R.id.toolbar);
+        setupToolbar();
 
         currentPageDisplayTextView = findViewById(R.id.pageText);
 
@@ -40,11 +40,6 @@ public class StatsActivity extends ToolBarActivity {
         redirectDataToServer(ServiceMessages.REQUEST_MOVEMENT_HISTORY.getMessageString(), ServiceMessages.REQUEST_MOVEMENT_HISTORY);
         progressDialog.setMessage("Downloading movement history...");
         progressDialog.show();
-    }
-
-    @Override
-    protected void handleAck(ServiceMessages ackCode)   {
-        super.handleAck(ackCode);
     }
 
     @Override

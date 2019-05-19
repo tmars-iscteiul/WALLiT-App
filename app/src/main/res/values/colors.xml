@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorFullWhite">#FFFFFF</color>
+
     <color name="colorPrimary">#6699CC</color>
     <color name="colorPrimaryDark">#003B6D</color>
     <color name="colorAccent">#676767</color>
@@ -9,4 +11,5 @@
     <color name="colorDepositText">#6699CC</color>
     <color name="colorWithdrawText">#676767</color>
     <color name="colorGraphBackground">#EBEDF3</color>
+    <color name="colorToolbar">#EBEDF3</color>
 </resources>

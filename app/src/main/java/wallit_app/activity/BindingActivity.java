@@ -14,6 +14,7 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 
 import java.lang.reflect.Field;
 
@@ -87,6 +88,8 @@ public abstract class BindingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState)   {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
         alertDialogBuilder = new AlertDialog.Builder(this);
         progressDialog = new ProgressDialog(this, ProgressDialog.STYLE_SPINNER);
         progressDialog.setIndeterminate(true);
@@ -167,5 +170,6 @@ public abstract class BindingActivity extends AppCompatActivity {
         alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
+
 
 }

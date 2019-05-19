@@ -19,14 +19,14 @@ public class HomeActivity extends ToolBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_main);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        toolbar = findViewById(R.id.toolbar);
+        setupToolbar();
+
 
         Intent intent = getIntent();
         host = intent.getStringExtra(CONNECTION_HOST);
         this.username = intent.getStringExtra(LoginActivity.LOGIN_USER);
-        TextView textView = findViewById(R.id.welcome_text);
-        textView.setText("Welcome " + username + "!");
+        getSupportActionBar().setTitle("Welcome " + username);
 
         if(!host.equals("offline"))
             Toast.makeText(this, "Connected to server.", Toast.LENGTH_SHORT).show();

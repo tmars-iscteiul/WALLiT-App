@@ -4,14 +4,19 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.example.wallit_app.R;
 import wallit_app.utilities.ServiceMessages;
 
 public class ToolBarActivity extends BindingActivity {
 
+    protected Toolbar toolbar;
     protected AlertDialog.Builder logoutDialog;
     private AlertDialog.Builder connectionTimeoutDialogBuilder;
     private AlertDialog connectionTimeoutDialog;
@@ -54,11 +59,8 @@ public class ToolBarActivity extends BindingActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //Back button on top left (Do we want it or no?)
-        //ActionBar actionBar = getSupportActionBar();
-        //actionBar.setDisplayHomeAsUpEnabled(true);
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -91,10 +93,21 @@ public class ToolBarActivity extends BindingActivity {
     protected void runAfterConnectedToService()    {
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
+
     private void logoutUser()   {
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         userLoggedIn = false;
         startActivity(intent);
+    }
+
+    protected void setupToolbar()   {
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorAccent));
+        setSupportActionBar(toolbar);
     }
 }
