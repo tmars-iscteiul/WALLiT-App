@@ -97,9 +97,9 @@ public class StatsActivity extends ToolBarActivity {
         TextView tv = findViewById(res.getIdentifier(cellName, "id", getApplicationContext().getPackageName()));
         tv.setText(data);
         if(isDeposit)
-            tv.setTextColor(getResources().getColor(R.color.colorPrimary));
+            tv.setTextColor(getResources().getColor(R.color.colorDepositText));
         else
-            tv.setTextColor(getResources().getColor(R.color.colorAccent));
+            tv.setTextColor(getResources().getColor(R.color.colorWithdrawText));
     }
 
     private void clearTableRow(int rowNumber)   {

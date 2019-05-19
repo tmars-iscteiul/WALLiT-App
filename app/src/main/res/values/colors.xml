@@ -5,4 +5,8 @@
     <color name="colorAccent">#676767</color>
     <color name="colorBackground">#EBEDF3</color>
     <color name="colorBackgroundDark">#BDBDBD</color>
+
+    <color name="colorDepositText">#6699CC</color>
+    <color name="colorWithdrawText">#676767</color>
+    <color name="colorGraphBackground">#EBEDF3</color>
 </resources>
