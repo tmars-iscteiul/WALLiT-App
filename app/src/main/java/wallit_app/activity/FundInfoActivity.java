@@ -86,7 +86,7 @@ public class FundInfoActivity extends ToolBarActivity {
 
     private void setupGraph()   {
         // Locks the viewport to manual bounds
-        // TODO Change later to match the imported data series
+        // TODO Find out how to see dates instead of numbers on the X axis
         graph.getViewport().setXAxisBoundsManual(true);
         graph.getViewport().setMinX(0);
         graph.getViewport().setMaxX(20);
@@ -96,6 +96,5 @@ public class FundInfoActivity extends ToolBarActivity {
 
         // Removes grid lines
         graph.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.NONE);
-
     }
 }
