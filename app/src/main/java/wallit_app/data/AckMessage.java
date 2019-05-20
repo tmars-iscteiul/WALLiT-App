@@ -8,17 +8,18 @@ public class AckMessage implements Serializable {
 
     private String ackMessageType;
     private ArrayList<MovementEntryChunk> movementEntryChunkList;
-    private ArrayList<FundInfoEntry> fundInfoList;
+    private ArrayList<FundInfoEntryChunk> fundInfoChunkList;
 
+    @SuppressWarnings("unchecked")
     public AckMessage(String ackMessageType, Object objectList) {
         this.ackMessageType = ackMessageType;
         if(ackMessageType == "MSG_ACK_FUND_DATA")	{
             this.movementEntryChunkList = null;
-            this.fundInfoList = (ArrayList<FundInfoEntry>)objectList;
+            this.fundInfoChunkList = (ArrayList<FundInfoEntryChunk>)objectList;
         }
         if(ackMessageType == "MSG_ACK_USER_DATA") {
             this.movementEntryChunkList = (ArrayList<MovementEntryChunk>)objectList;
-            this.fundInfoList = null;
+            this.fundInfoChunkList = null;
         }
     }
 
@@ -30,8 +31,8 @@ public class AckMessage implements Serializable {
         return movementEntryChunkList;
     }
 
-    public ArrayList<FundInfoEntry> getFundInfoList() {
-        return fundInfoList;
+    public ArrayList<FundInfoEntryChunk> getFundInfoList() {
+        return fundInfoChunkList;
     }
 }
 

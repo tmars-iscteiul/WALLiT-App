@@ -14,12 +14,13 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import java.util.ArrayList;
 
 import wallit_app.data.FundInfoEntry;
+import wallit_app.data.FundInfoEntryChunk;
 import wallit_app.utilities.ServiceMessages;
 
 // Using this library for the graph view: https://github.com/jjoe64/GraphView
 public class FundInfoActivity extends ToolBarActivity {
 
-    private ArrayList<FundInfoEntry> fundInfoEntries;
+    private ArrayList<FundInfoEntryChunk> fundInfoEntries;
     private GraphView graph;
 
     @Override
@@ -46,16 +47,19 @@ public class FundInfoActivity extends ToolBarActivity {
     @Override
     protected void handleDataAck(ServiceMessages ackCode, Object rawData) {
         // TODO Add local object variable to store fund information received from the server. TBD what class it is and how it's constructed
-        fundInfoEntries = new ArrayList<>((ArrayList<FundInfoEntry>)rawData);
+        // TODO Add time scales chunks data class and change this to handle it instead of just one graph
+        // TODO Implement time scales changing display on graph
+        fundInfoEntries = new ArrayList<>((ArrayList<FundInfoEntryChunk>)rawData);
         updateGraphData();
         progressDialog.hide();
     }
 
     private void updateGraphData()   {
-        DataPoint[] dp = new DataPoint[fundInfoEntries.size()];
+        DataPoint[] dp = new DataPoint[fundInfoEntries.get(0).getFundInfoEntryList().size()];
         for(int i = 0; i < dp.length; i++)  {
             // TODO Date isn't set here properly. Find out how and replace it once the fundinfo data is being delivered from the files
-            dp[i] = new DataPoint(i, fundInfoEntries.get(i).getValue());
+            // TODO Add page-like system to change time scales
+            dp[i] = new DataPoint(i, fundInfoEntries.get(0).getFundInfoEntryList().get(i).getValue());
         }
         setupSeries(dp);
     }
@@ -76,6 +80,8 @@ public class FundInfoActivity extends ToolBarActivity {
         series.setDrawBackground(false);
         graph.addSeries(series);
 
+        // Adjusts viewport to include all data
+        graph.getViewport().setMaxX(fundInfoEntries.get(0).getFundInfoEntryList().size());
     }
 
     private void setupGraph()   {
