@@ -24,24 +24,12 @@
         app:srcCompat="@drawable/logo_original" />
 
     <TextView
-        android:id="@+id/welcome_text"
-        android:layout_width="0dp"
-        android:layout_height="35dp"
-        android:gravity="center|top"
-        android:text="Welcome, %username%!"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wallit_logo" />
-
-    <TextView
         android:id="@+id/current_value_text"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="48dp"
         android:layout_marginLeft="48dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="48dp"
         android:layout_marginRight="48dp"
         android:gravity="center|top"
@@ -50,7 +38,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcome_text" />
+        app:layout_constraintTop_toBottomOf="@+id/wallit_logo" />
 
     <Button
         android:id="@+id/deposit_button"
