@@ -76,6 +76,7 @@ public class NetworkingService extends Service {
     @Override
     public void onDestroy() {
         if(connectionHandler != null) {
+            // TODO Remove this for final release
             if(connectionHandler.isConnected())
                 Toast.makeText(this, "Disconnected from server.", Toast.LENGTH_SHORT).show();
             connectionHandler.terminateConnection();
@@ -84,6 +85,7 @@ public class NetworkingService extends Service {
 
     // Handles ack sent from the server, redirecting it to any bound activities (only one SHOULD BE bound at a time)
     public void returnAckToActivity(AckMessage ackMessage)    {
+
         Message msg = getMessageFromAck(ackMessage);
         for (int i = mClients.size()-1; i>=0; i--) {
             try {

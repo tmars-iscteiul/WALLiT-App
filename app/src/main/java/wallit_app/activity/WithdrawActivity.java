@@ -49,9 +49,6 @@ public class WithdrawActivity extends ToolBarActivity {
             case MSG_ACK_NEGATIVE:
                 handleNegativeAck();
                 break;
-            case MSG_OFFLINE_ACK:
-                handleOfflineAck();
-                break;
             default:
                 super.handleAck(ackCode);
                 break;
@@ -63,12 +60,14 @@ public class WithdrawActivity extends ToolBarActivity {
         // Do something if needed (most likely not)
     }
 
-    private void handlePositiveAck()    {
+    @Override
+    protected void handlePositiveAck()    {
         progressDialog.hide();
         showMessageDialog("Deposit operation successful.");
     }
 
-    private void handleNegativeAck()    {
+    @Override
+    protected void handleNegativeAck()    {
         progressDialog.hide();
         showMessageDialog("Couldn't withdraw.");
     }

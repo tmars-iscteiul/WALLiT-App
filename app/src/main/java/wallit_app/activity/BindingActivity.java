@@ -116,14 +116,6 @@ public abstract class BindingActivity extends AppCompatActivity {
         showMessageDialog("Can't execute operation in OFFLINE mode.");
     }
 
-    // Called by incomingHandler after receiving a timeout ack, terminating the connection
-    protected void handleTimeoutAck()    {
-        // Timeout login confirmation
-        unbindToNetworkingService();
-        progressDialog.hide();
-        showMessageDialog("Couldn't connect to the server. Try again later.");
-    }
-
     // Send a message to the service, with the intent of sending data: a constructed string for now.
     protected void redirectDataToServer(String data, ServiceMessages serviceMessages)   {
         try {

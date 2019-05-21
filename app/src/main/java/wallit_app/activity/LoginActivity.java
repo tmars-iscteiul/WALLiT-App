@@ -23,6 +23,7 @@ public class LoginActivity extends BindingActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_main);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
         usernameInputField = findViewById(R.id.username);
 
@@ -98,8 +99,13 @@ public class LoginActivity extends BindingActivity {
                 handleNegativeAck();
                 break;
             case MSG_OFFLINE_ACK:
-                // Simulates a positive ack, so the user can login, but the application knows it's in offline mode, so it won't allow the user to contact the server
+                // Simulates a positive ack, so the user can "login", but the application knows it's in offline mode, so it won't allow the user to contact the server
                 handlePositiveAck();
+                break;
+            case MSG_CONNECTION_TIMEOUT:
+                unbindToNetworkingService();
+                progressDialog.hide();
+                showMessageDialog("Connection to server couldn't be established.");
                 break;
             default:
                 break;
@@ -119,7 +125,6 @@ public class LoginActivity extends BindingActivity {
         intent.putExtra(CONNECTION_HOST, host);
         progressDialog.hide();
         startActivity(intent);
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     private void handleNegativeAck()    {

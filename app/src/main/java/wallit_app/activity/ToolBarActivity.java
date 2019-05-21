@@ -72,8 +72,16 @@ public class ToolBarActivity extends BindingActivity {
 
     @Override
     protected void handleAck(ServiceMessages ackCode)   {
+        System.out.println("Handling ack " + ackCode.getMessageString());
         switch(ackCode) {
+            case MSG_ACK_POSITIVE:
+                handlePositiveAck();
+                break;
+            case MSG_ACK_NEGATIVE:
+                handleNegativeAck();
+                break;
             case MSG_CONNECTION_TIMEOUT:
+                progressDialog.hide();
                 connectionTimeoutDialog.show();
                 break;
             case MSG_OFFLINE_ACK:
@@ -87,6 +95,12 @@ public class ToolBarActivity extends BindingActivity {
     @Override
     protected void handleDataAck(ServiceMessages ackCode, Object data)  {
         // Do something if needed (most likely not)
+    }
+
+    protected void handlePositiveAck()  {
+    }
+
+    protected void handleNegativeAck()  {
     }
 
     @Override

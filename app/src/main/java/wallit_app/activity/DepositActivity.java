@@ -43,27 +43,21 @@ public class DepositActivity extends ToolBarActivity {
     protected void handleAck(ServiceMessages ackCode)   {
         // Do something if needed (most likely not)
         switch(ackCode) {
-            case MSG_ACK_POSITIVE:
-                handlePositiveAck();
-                break;
-            case MSG_ACK_NEGATIVE:
-                handleNegativeAck();
-                break;
-            case MSG_OFFLINE_ACK:
-                handleOfflineAck();
-                break;
+
             default:
                 super.handleAck(ackCode);
                 break;
         }
     }
 
-    private void handlePositiveAck()    {
+    @Override
+    protected void handlePositiveAck()    {
         progressDialog.hide();
         showMessageDialog("Deposit operation successful.");
     }
 
-    private void handleNegativeAck()    {
+    @Override
+    protected void handleNegativeAck()    {
         progressDialog.hide();
         showMessageDialog("Couldn't deposit.");
     }

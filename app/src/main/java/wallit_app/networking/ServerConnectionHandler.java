@@ -1,6 +1,7 @@
 package wallit_app.networking;
 
 import wallit_app.data.AckMessage;
+import wallit_app.utilities.ServiceMessages;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -78,7 +79,7 @@ public class ServerConnectionHandler extends Thread {
 
     private void connectionTimeout()    {
         System.out.println("Connection timed out.");
-        nService.returnAckToActivity(new AckMessage("MSG_CONNECTION_TIMEOUT", null));
+        nService.returnAckToActivity(new AckMessage(ServiceMessages.MSG_CONNECTION_TIMEOUT.getMessageString(), null));
     }
 
     // Called by the service, when an activity prompted it to send data to the server
