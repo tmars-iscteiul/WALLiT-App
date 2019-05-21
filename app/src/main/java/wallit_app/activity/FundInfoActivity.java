@@ -91,7 +91,8 @@ public class FundInfoActivity extends ToolBarActivity {
         graph.addSeries(series);
 
         // Adjusts viewport to include all data
-        graph.getViewport().setMaxX(fundInfoEntries.get(0).getFundInfoEntryList().size());
+        // TODO Get the highest point and add a 5th more Y size on the viewport
+        graph.getViewport().setMaxX(dp.length);
     }
 
     private void setupGraph()   {
