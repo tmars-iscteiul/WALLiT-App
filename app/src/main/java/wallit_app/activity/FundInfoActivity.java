@@ -1,22 +1,25 @@
 package wallit_app.activity;
 
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.wallit_app.R;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.DataPointInterface;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.OnDataPointTapListener;
+import com.jjoe64.graphview.series.Series;
 
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
-import wallit_app.data.FundInfoEntry;
 import wallit_app.data.FundInfoEntryChunk;
 import wallit_app.utilities.ServiceMessages;
 
@@ -40,7 +43,7 @@ public class FundInfoActivity extends ToolBarActivity {
         timeScaleImage = findViewById(R.id.timeScaleImage);
         graph = findViewById(R.id.graph);
         currentTimeScale = 0;
-        setupGraph();
+        setupGraph(0, 20, 0, 1500);
         fundInfoEntries = new ArrayList<>();
     }
 
@@ -65,15 +68,19 @@ public class FundInfoActivity extends ToolBarActivity {
 
     private void updateGraphData()   {
         DataPoint[] dp = new DataPoint[fundInfoEntries.get(currentTimeScale).getFundInfoEntryList().size()];
+        double viewportLimit = 0;
         for(int i = 0; i < dp.length; i++)  {
             // TODO Date isn't set here properly. Find out how and replace it once the fundinfo data is being delivered from the files
             // TODO Add page-like system to change time scales
-            dp[i] = new DataPoint(i, fundInfoEntries.get(currentTimeScale).getFundInfoEntryList().get(i).getValue());
+            dp[i] = new DataPoint(fundInfoEntries.get(currentTimeScale).getFundInfoEntryList().get(i).getDate(), fundInfoEntries.get(currentTimeScale).getFundInfoEntryList().get(i).getValue());
+            if(dp[i].getY() > viewportLimit)
+                viewportLimit = dp[i].getY();
         }
-        setupSeries(dp);
+        setupSeries(dp, viewportLimit);
     }
 
-    private void setupSeries(DataPoint[] dp)    {
+    private void setupSeries(DataPoint[] dp, double viewportLimit)    {
+        // TODO Remove duplicated code
         // Adds the background first
         graph.removeAllSeries();
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dp);
@@ -88,22 +95,40 @@ public class FundInfoActivity extends ToolBarActivity {
         series.setDataPointsRadius(4);
         series.setThickness(2);
         series.setDrawBackground(false);
+        series.setOnDataPointTapListener(new OnDataPointTapListener() {
+            @Override
+            public void onTap(Series series, DataPointInterface dataPoint) {
+                displayDataPointToastMessage(dataPoint);
+            }
+        });
         graph.addSeries(series);
 
-        // Adjusts viewport to include all data
-        // TODO Get the highest point and add a 5th more Y size on the viewport
-        graph.getViewport().setMaxX(dp.length);
+        setupGraph(0, viewportLimit, dp[0].getX(), dp[dp.length-1].getX());
     }
 
-    private void setupGraph()   {
+    private void setupGraph(double minY, double maxY, double minX, double maxX)   {
+        // custom label formatter to show currency "EUR" and Date
+        graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(this) {
+            @Override
+            public String formatLabel(double value, boolean isValueX) {
+                if (isValueX) {
+                    // show normal x values
+                    return super.formatLabel(value, isValueX);
+                } else {
+                    // show currency for y values
+                    return super.formatLabel(value, isValueX) + " €";
+                }
+            }
+        });
+
         // Locks the viewport to manual bounds
-        // TODO Find out how to see dates instead of numbers on the X axis
-        graph.getViewport().setXAxisBoundsManual(true);
-        graph.getViewport().setMinX(0);
-        graph.getViewport().setMaxX(20);
         graph.getViewport().setYAxisBoundsManual(true);
-        graph.getViewport().setMinY(0);
-        graph.getViewport().setMaxY(1500);
+        graph.getViewport().setMinY(minY);
+        graph.getViewport().setMaxY(maxY);
+        graph.getViewport().setXAxisBoundsManual(true);
+        graph.getViewport().setMinX(minX);
+        graph.getViewport().setMaxX(maxX);
+        graph.getGridLabelRenderer().setNumHorizontalLabels(3);
 
         // Removes grid lines
         graph.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.NONE);
@@ -134,6 +159,13 @@ public class FundInfoActivity extends ToolBarActivity {
                 timeScaleImage.setImageDrawable(getResources().getDrawable(R.drawable.fund_timescale_selection5));
                 break;
         }
+    }
+
+    private void displayDataPointToastMessage(DataPointInterface dp)    {
+        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date((long)dp.getX()));
+        String value = new DecimalFormat("#.##").format(dp.getY());
+        String message = "Value at " + date + " is " + value + " €.";
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     public void selectScale5Button(View view)    {
