@@ -25,7 +25,7 @@
     <TableLayout
         android:id="@+id/movementHistoryTable"
         android:layout_width="344dp"
-        android:layout_height="228dp"
+        android:layout_height="0dp"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="8dp"
@@ -455,26 +455,39 @@
 
     <Button
         android:id="@+id/previousPageButton"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
-        android:layout_height="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:onClick="showPreviousPage"
-        android:text="Previous"
         android:textSize="8sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/movementHistoryTable" />
 
     <Button
         android:id="@+id/nextPageButton"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
-        android:layout_height="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:onClick="showNextPage"
-        android:text="Next"
         android:textSize="8sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/movementHistoryTable" />
+
+    <ImageView
+        android:id="@+id/pageSystemImage"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:src="@drawable/stats_page_off_off"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/movementHistoryTable" />
 
     <TextView
@@ -483,12 +496,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="112dp"
         android:layout_marginLeft="112dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="112dp"
         android:layout_marginRight="112dp"
         android:gravity="left"
         android:text="Page 1 / 1"
-        android:textSize="14sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/movementHistoryTable"
@@ -500,7 +513,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="112dp"
         android:layout_marginLeft="112dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="112dp"
         android:layout_marginRight="112dp"
         android:gravity="left"
@@ -509,7 +522,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pageText"
+        app:layout_constraintTop_toBottomOf="@+id/pageSystemImage"
         tools:text="General Statistics" />
 
     <TextView

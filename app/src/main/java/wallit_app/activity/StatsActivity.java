@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.wallit_app.R;
@@ -19,6 +20,10 @@ public class StatsActivity extends ToolBarActivity {
     private ArrayList<MovementEntryChunk> dataChunkPages;
     private int currentPageDisplay;
     private TextView currentPageDisplayTextView;
+    private ImageView pageImageDisplay;
+
+    private boolean hasPreviousPage;
+    private boolean hasNextPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +35,7 @@ public class StatsActivity extends ToolBarActivity {
         setupToolbar();
 
         currentPageDisplayTextView = findViewById(R.id.pageText);
+        pageImageDisplay = findViewById(R.id.pageSystemImage);
 
         res = getResources();
     }
@@ -52,21 +58,17 @@ public class StatsActivity extends ToolBarActivity {
 
     public void showNextPage(View view)    {
         // If there's a next page
-        if((currentPageDisplay + 1) < dataChunkPages.size())    {
+        if(hasNextPage)    {
             currentPageDisplay++;
             insertDataOnTableFromPage(currentPageDisplay);
-        }   else    {
-            System.out.println("There's no next page to display.");
         }
     }
 
     public void showPreviousPage(View view)    {
         // If there's a previous page
-        if((currentPageDisplay - 1) >= 0)    {
+        if(hasPreviousPage)    {
             currentPageDisplay--;
             insertDataOnTableFromPage(currentPageDisplay);
-        }   else    {
-            System.out.println("There's no previous page to display.");
         }
     }
 
@@ -84,7 +86,24 @@ public class StatsActivity extends ToolBarActivity {
             insertDataOnCell("amount" + (i+1), dataChunkPages.get(pageNumber).getMovementEntryList().get(i).getAmount() + " €", isDeposit);
             insertDataOnCell("balance" + (i+1), dataChunkPages.get(pageNumber).getMovementEntryList().get(i).getBalance() + " € ", isDeposit);
         }
-        currentPageDisplayTextView.setText("Page " + (pageNumber+1) + " / " + dataChunkPages.size());
+        updatePageSystemDisplay();
+    }
+
+    private void updatePageSystemDisplay()    {
+        hasPreviousPage = (currentPageDisplay - 1) >= 0;
+        hasNextPage = (currentPageDisplay + 1) < dataChunkPages.size();
+        currentPageDisplayTextView.setText("Page " + (currentPageDisplay+1) + " / " + dataChunkPages.size());
+        if(hasPreviousPage) {
+            if(hasNextPage)
+                pageImageDisplay.setImageDrawable(getResources().getDrawable(R.drawable.stats_page_on_on));
+            else
+                pageImageDisplay.setImageDrawable(getResources().getDrawable(R.drawable.stats_page_on_off));
+        }   else    {
+            if(hasNextPage)
+                pageImageDisplay.setImageDrawable(getResources().getDrawable(R.drawable.stats_page_off_on));
+            else
+                pageImageDisplay.setImageDrawable(getResources().getDrawable(R.drawable.stats_page_off_off));
+        }
     }
 
     private void insertDataOnCell(String cellName, String data, boolean isDeposit) {

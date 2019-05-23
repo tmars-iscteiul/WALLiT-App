@@ -40,7 +40,7 @@ public class FundInfoActivity extends ToolBarActivity {
         toolbar = findViewById(R.id.toolbar);
         setupToolbar();
 
-        timeScaleImage = findViewById(R.id.timeScaleImage);
+        timeScaleImage = findViewById(R.id.pageSystemImage);
         graph = findViewById(R.id.graph);
         currentTimeScale = 0;
         setupGraph(0, 20, 0, 1500);
