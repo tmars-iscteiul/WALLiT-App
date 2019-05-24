@@ -2,11 +2,8 @@ package wallit_app.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.view.KeyEvent;
-import android.widget.TextView;
 import android.view.View;
-import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import com.example.wallit_app.R;
@@ -21,7 +18,6 @@ public class HomeActivity extends ToolBarActivity {
 
         toolbar = findViewById(R.id.toolbar);
         setupToolbar();
-
 
         Intent intent = getIntent();
         host = intent.getStringExtra(CONNECTION_HOST);

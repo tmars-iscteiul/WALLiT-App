@@ -96,6 +96,7 @@ public class NetworkingService extends Service {
         }
     }
 
+    // Gateway to send information to the connection handler, or, if in offline-mode, generates an offline ack, letting the activity know it can't perform said operation
     private void handleMessageFromActivity(String data) {
         if(!offlineMode) {
             connectionHandler.sendDataToServer(data);

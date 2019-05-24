@@ -27,7 +27,7 @@ public class StatsActivity extends ToolBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO There's a bug in offline mode, when the user exits from stats activity to the home activity, it shows the offline dialog for some reason. Find out why, how and fix it
+        // TODO There's a bug in offline mode, when the user exits from stats activity to the home activity, it shows the offline dialog for some reason. Find out why and fix it
         super.onCreate(savedInstanceState);
         setContentView(R.layout.stats_main);
 
@@ -56,22 +56,23 @@ public class StatsActivity extends ToolBarActivity {
         progressDialog.hide();
     }
 
-    public void showNextPage(View view)    {
-        // If there's a next page
+    // Called when user clicks on the next page button
+    public void buttonShowNextPage(View view)    {
         if(hasNextPage)    {
             currentPageDisplay++;
             insertDataOnTableFromPage(currentPageDisplay);
         }
     }
 
-    public void showPreviousPage(View view)    {
-        // If there's a previous page
+    // Called when user clicks on the previous page button
+    public void buttonShowPreviousPage(View view)    {
         if(hasPreviousPage)    {
             currentPageDisplay--;
             insertDataOnTableFromPage(currentPageDisplay);
         }
     }
 
+    // Updates the table to display  data from a specific page in the dataChunkPages list
     private void insertDataOnTableFromPage(int pageNumber)  {
         int i = 8;
         // If there's rows left, clear them from previous inserted entries
@@ -79,8 +80,6 @@ public class StatsActivity extends ToolBarActivity {
             clearTableRow(i);
         }
         for(; i >= 0; i--)    {
-            System.out.println("Started: " + i + ", out of " + dataChunkPages.get(pageNumber).getMovementEntryList().size());
-            System.out.println("Object: " + dataChunkPages.get(pageNumber).getMovementEntryList().get(i));
             boolean isDeposit = dataChunkPages.get(pageNumber).getMovementEntryList().get(i).getAmount() > 0;
             insertDataOnCell("date" + (i+1), dataChunkPages.get(pageNumber).getMovementEntryList().get(i).getDate(), isDeposit);
             insertDataOnCell("amount" + (i+1), dataChunkPages.get(pageNumber).getMovementEntryList().get(i).getAmount() + " €", isDeposit);
@@ -89,6 +88,7 @@ public class StatsActivity extends ToolBarActivity {
         updatePageSystemDisplay();
     }
 
+    // Updates visual display of the paging system, including the display text (visual indication weather or not there's a next/previous page.
     private void updatePageSystemDisplay()    {
         hasPreviousPage = (currentPageDisplay - 1) >= 0;
         hasNextPage = (currentPageDisplay + 1) < dataChunkPages.size();
@@ -106,8 +106,8 @@ public class StatsActivity extends ToolBarActivity {
         }
     }
 
+    //Inserts data on a specific cell (by String)
     private void insertDataOnCell(String cellName, String data, boolean isDeposit) {
-        System.out.println("Setting: " + cellName + " to " + data);
         TextView tv = findViewById(res.getIdentifier(cellName, "id", getApplicationContext().getPackageName()));
         tv.setText(data);
         if(isDeposit)
@@ -116,6 +116,7 @@ public class StatsActivity extends ToolBarActivity {
             tv.setTextColor(getResources().getColor(R.color.colorWithdrawText));
     }
 
+    // Removes all text from a specific table row
     private void clearTableRow(int rowNumber)   {
         insertDataOnCell("date" + (rowNumber+1), "", false);
         insertDataOnCell("amount" + (rowNumber+1), "", false);

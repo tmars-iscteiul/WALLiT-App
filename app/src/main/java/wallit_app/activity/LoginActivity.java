@@ -114,9 +114,10 @@ public class LoginActivity extends BindingActivity {
 
     @Override
     protected void handleDataAck(ServiceMessages ackCode, Object data)  {
-        // Do something if needed (most likely not)
+        // Do something if needed (most likely to display the current value on the fund if needed)
     }
 
+    // Called when activity receives a positive ACK from the Networking Service
     private void handlePositiveAck()    {
         // Positive login confirmation
         userLoggedIn = true;
@@ -127,6 +128,7 @@ public class LoginActivity extends BindingActivity {
         startActivity(intent);
     }
 
+    // Called when activity receives a negative ACK from the Networking Service
     private void handleNegativeAck()    {
         // Negative login confirmation
         unbindToNetworkingService();

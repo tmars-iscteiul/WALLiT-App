@@ -5,11 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import com.example.wallit_app.R;
 import wallit_app.utilities.ServiceMessages;
@@ -97,9 +94,11 @@ public class ToolBarActivity extends BindingActivity {
         // Do something if needed (most likely not)
     }
 
+    // Called when activity receives a positive ACK from the Networking Service
     protected void handlePositiveAck()  {
     }
 
+    // Called when activity receives a positive ACK from the Networking Service
     protected void handleNegativeAck()  {
     }
 
@@ -107,12 +106,14 @@ public class ToolBarActivity extends BindingActivity {
     protected void runAfterConnectedToService()    {
     }
 
+    // Sets up a fade transition when the user clicks the back button to return to the previous activity
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
+    // Logs out user, by returning to the login activity, clearing all cache from the app
     private void logoutUser()   {
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -120,6 +121,7 @@ public class ToolBarActivity extends BindingActivity {
         startActivity(intent);
     }
 
+    // Update's toolbar's visuals and functionalities
     protected void setupToolbar()   {
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorAccent));
         setSupportActionBar(toolbar);

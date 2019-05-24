@@ -66,6 +66,7 @@ public class FundInfoActivity extends ToolBarActivity {
         progressDialog.hide();
     }
 
+    // Called to update the data to be displayed on the graph view, based on the current selected time scale
     private void updateGraphData()   {
         DataPoint[] dp = new DataPoint[fundInfoEntries.get(currentTimeScale).getFundInfoEntryList().size()];
         double viewportLimit = 0;
@@ -79,6 +80,8 @@ public class FundInfoActivity extends ToolBarActivity {
         setupSeries(dp, viewportLimit);
     }
 
+    // Adds the data (dp) to be displayed in the graph, draws the lines and data points, including the background visuals.
+    // viewportLimit is Y axis limit to the data, which is the highest value on the dp array (calculated previously on the updateGraphData() method)
     private void setupSeries(DataPoint[] dp, double viewportLimit)    {
         // TODO Remove duplicated code
         // Adds the background first
@@ -98,6 +101,7 @@ public class FundInfoActivity extends ToolBarActivity {
         series.setOnDataPointTapListener(new OnDataPointTapListener() {
             @Override
             public void onTap(Series series, DataPointInterface dataPoint) {
+                // TODO Add a way to highlight the selected datapoint on the graph view
                 displayDataPointToastMessage(dataPoint);
             }
         });
@@ -106,8 +110,9 @@ public class FundInfoActivity extends ToolBarActivity {
         setupGraph(0, viewportLimit, dp[0].getX(), dp[dp.length-1].getX());
     }
 
+    // Configures the viewport, visuals and labels of the graph, taking as inputs the viewport bounds
     private void setupGraph(double minY, double maxY, double minX, double maxX)   {
-        // custom label formatter to show currency "EUR" and Date
+        // Custom label formatter to show currency "EUR" and Date
         graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(this) {
             @Override
             public String formatLabel(double value, boolean isValueX) {
@@ -134,12 +139,14 @@ public class FundInfoActivity extends ToolBarActivity {
         graph.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.NONE);
     }
 
+    // Called by the button click listeners, to change and update the graph to the selected time scale
     private void selectTimeScale(int scale) {
         currentTimeScale = scale;
         updateGraphData();
         updateScaleImage();
     }
 
+    // Updates the scale selection image under the graph view, based on the current selected time scale
     private void updateScaleImage() {
         // TODO Optimize this
         switch(currentTimeScale)    {
@@ -161,6 +168,7 @@ public class FundInfoActivity extends ToolBarActivity {
         }
     }
 
+    // Called to display the selected datapoint's information on the screen after the user selects it
     private void displayDataPointToastMessage(DataPointInterface dp)    {
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date((long)dp.getX()));
         String value = new DecimalFormat("#.##").format(dp.getY());
@@ -168,6 +176,7 @@ public class FundInfoActivity extends ToolBarActivity {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
+    // All the buttons to display each time scale on the graph view
     public void selectScale5Button(View view)    {
         selectTimeScale(4);
     }

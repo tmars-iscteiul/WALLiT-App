@@ -32,8 +32,6 @@ public class ServerConnectionHandler extends Thread {
 
     /* Current problems with the connection thread
      * TODO: App doesn't fully close after prompt to close.
-     * TODO: App doesn't fully terminate the connection with the server.
-     * TODO: Lots of problems if the server is offline or can't be reached.
      */
     public synchronized void run()   {
         try {
@@ -77,6 +75,7 @@ public class ServerConnectionHandler extends Thread {
         }
     }
 
+    // Called when an exception occurs, to timeout the connection, informing the bound activities to terminate client's connection
     private void connectionTimeout()    {
         System.out.println("Connection timed out.");
         nService.returnAckToActivity(new AckMessage(ServiceMessages.MSG_CONNECTION_TIMEOUT.getMessageString(), null));
