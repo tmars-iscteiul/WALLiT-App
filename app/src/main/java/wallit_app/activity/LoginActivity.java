@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.os.StrictMode;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.app.AlertDialog;
 
@@ -28,6 +31,15 @@ public class LoginActivity extends BindingActivity {
         usernameInputField = findViewById(R.id.username);
 
         loginOnBind = true;
+
+        Button loginButton = findViewById(R.id.login_button);
+        loginButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                launchConnectionOptionsDialog();
+                return true;
+            }
+        });
 
         exitingDialog = new AlertDialog.Builder(this);
         exitingDialog.setTitle("Exit Confirmation");
@@ -67,7 +79,7 @@ public class LoginActivity extends BindingActivity {
 
     // Launch the options dialog, updates the host variable with the defined text
     // TODO Add a host type check (to counter invalid hosts inserted by the user)
-    public void launchConnectionOptionsDialog(View view)    {
+    public void launchConnectionOptionsDialog()    {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Connection settings");
         final EditText input = new EditText(this);
