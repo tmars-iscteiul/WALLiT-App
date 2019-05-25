@@ -85,7 +85,6 @@ public class NetworkingService extends Service {
 
     // Handles ack sent from the server, redirecting it to any bound activities (only one SHOULD BE bound at a time)
     public void returnAckToActivity(AckMessage ackMessage)    {
-
         Message msg = getMessageFromAck(ackMessage);
         for (int i = mClients.size()-1; i>=0; i--) {
             try {
@@ -114,6 +113,8 @@ public class NetworkingService extends Service {
             msg.obj = ackMessage.getMovementEntryChunkList();
         if(ackCode == ServiceMessages.MSG_ACK_FUND_DATA.getMessageID())
             msg.obj = ackMessage.getFundInfoList();
+        if(ackMessage.getLastRecordedBalance() != -1)
+            msg.obj = ackMessage.getLastRecordedBalance();
         return msg;
     }
 

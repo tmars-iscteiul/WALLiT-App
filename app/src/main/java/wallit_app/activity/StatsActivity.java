@@ -49,11 +49,14 @@ public class StatsActivity extends ToolBarActivity {
     }
 
     @Override
-    protected void handleDataAck(ServiceMessages ackCode, Object rawData) {
-        dataChunkPages = (ArrayList<MovementEntryChunk>)rawData;
-        currentPageDisplay = 0;
-        insertDataOnTableFromPage(currentPageDisplay);
-        progressDialog.hide();
+    protected void handleAck(ServiceMessages ackCode, Object rawData) {
+        if(ackCode == ServiceMessages.MSG_ACK_USER_DATA)    {
+            dataChunkPages = (ArrayList<MovementEntryChunk>)rawData;
+            currentPageDisplay = 0;
+            insertDataOnTableFromPage(currentPageDisplay);
+            progressDialog.hide();
+        }   else
+            super.handleAck(ackCode, rawData);
     }
 
     // Called when user clicks on the next page button

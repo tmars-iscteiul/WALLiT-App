@@ -25,6 +25,8 @@ public class DepositActivity extends ToolBarActivity {
 
         et = findViewById(R.id.depositValue);
         et.setText("0");
+
+        currentBalance = getIntent().getDoubleExtra(BindingActivity.USER_BALANCE, -1.0);
     }
 
     // Called when the user presses the deposit button
@@ -33,21 +35,10 @@ public class DepositActivity extends ToolBarActivity {
             showMessageDialog("Deposit value cannot be empty.");
             return;
         }
-        redirectDataToServer(ServiceMessages.REQUEST_DEPOSIT.getMessageString() + "," + et.getText().toString(), ServiceMessages.REQUEST_DEPOSIT);
         progressDialog.setMessage("Depositing...");
         progressDialog.show();
+        redirectDataToServer(ServiceMessages.REQUEST_DEPOSIT.getMessageString() + "," + et.getText().toString(), ServiceMessages.REQUEST_DEPOSIT);
         // TODO: Add a timeout to the progress dialog.
-    }
-
-    @Override
-    protected void handleAck(ServiceMessages ackCode)   {
-        // Do something if needed (most likely not)
-        switch(ackCode) {
-
-            default:
-                super.handleAck(ackCode);
-                break;
-        }
     }
 
     @Override

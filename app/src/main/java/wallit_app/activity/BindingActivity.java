@@ -14,9 +14,6 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
-import android.view.KeyEvent;
-
-import java.lang.reflect.Field;
 
 import wallit_app.networking.NetworkingService;
 import wallit_app.utilities.ServiceMessages;
@@ -24,7 +21,9 @@ import wallit_app.utilities.ServiceMessages;
 
 public abstract class BindingActivity extends AppCompatActivity {
 
-    public static final String CONNECTION_HOST = "com.example.wallit_app.CONNECTIONHOST";
+    public static final String CONNECTION_HOST = "wallit_app.CONNECTIONHOST";
+    public static final String LOGIN_USER = "wallit_app.LOGINUSER";
+    public static final String USER_BALANCE = "wallit_app.USERBALANCE";
 
     protected Messenger mService = null;
     protected final Messenger mMessenger = new Messenger(new IncomingHandler());
@@ -34,6 +33,7 @@ public abstract class BindingActivity extends AppCompatActivity {
     protected boolean userLoggedIn = false;
     protected String username = "%NOT_SET%";
     protected String host = "192.168.1.8";
+    protected double currentBalance = -1.0;
 
     protected AlertDialog.Builder alertDialogBuilder;
     protected AlertDialog alertDialog;
@@ -43,18 +43,8 @@ public abstract class BindingActivity extends AppCompatActivity {
     class IncomingHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
-            ServiceMessages sm = ServiceMessages.getMessageByID(msg.what);
-            switch (sm) {
-                case MSG_ACK_FUND_DATA:
-                case MSG_ACK_USER_DATA:
-                    System.out.println("Received data from service: " + msg.obj);
-                    handleDataAck(sm, msg.obj);
-                    break;
-                default:
-                    handleAck(sm);
-                    super.handleMessage(msg);   // What does this do? Test with and without
-                    break;
-            }
+            System.out.println("Received data from server: " + msg.obj);
+            handleAck(ServiceMessages.getMessageByID(msg.what), msg.obj);
         }
     }
 
@@ -104,11 +94,8 @@ public abstract class BindingActivity extends AppCompatActivity {
     //Called by ServiceConnection after the connection to the service has been established
     protected abstract void runAfterConnectedToService();
 
-    // Called by incomingHandler after receiving an ack with data from the service/server
-    protected abstract void handleDataAck(ServiceMessages ackCode, Object rawData);
-
     // Called by incomingHandler after receiving an ack from the service/server
-    protected abstract void handleAck(ServiceMessages ackCode);
+    protected abstract void handleAck(ServiceMessages ackCode, Object rawData);
 
     // Called by incomingHandler after receiving an offline ack, forbidding any server communication
     protected void handleOfflineAck()   {

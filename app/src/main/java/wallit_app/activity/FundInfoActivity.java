@@ -56,14 +56,17 @@ public class FundInfoActivity extends ToolBarActivity {
     }
 
     @Override
-    protected void handleDataAck(ServiceMessages ackCode, Object rawData) {
+    protected void handleAck(ServiceMessages ackCode, Object rawData) {
         // TODO Add local object variable to store fund information received from the server. TBD what class it is and how it's constructed
         // TODO Add time scales chunks data class and change this to handle it instead of just one graph
         // TODO Implement time scales changing display on graph
-        fundInfoEntries = new ArrayList<>((ArrayList<FundInfoEntryChunk>)rawData);
-        updateGraphData();
-        updateScaleImage();
-        progressDialog.hide();
+        if(ackCode == ServiceMessages.MSG_ACK_FUND_DATA)    {
+            fundInfoEntries = new ArrayList<>((ArrayList<FundInfoEntryChunk>)rawData);
+            updateGraphData();
+            updateScaleImage();
+            progressDialog.hide();
+        }   else
+            super.handleAck(ackCode, rawData);
     }
 
     // Called to update the data to be displayed on the graph view, based on the current selected time scale

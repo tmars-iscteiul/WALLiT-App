@@ -18,7 +18,6 @@ import wallit_app.utilities.ServiceMessages;
 
 public class LoginActivity extends BindingActivity {
 
-    public static final String LOGIN_USER = "com.example.wallit_app.LOGINUSER";
     private AlertDialog.Builder exitingDialog;
     private EditText usernameInputField;
 
@@ -102,17 +101,17 @@ public class LoginActivity extends BindingActivity {
     }
 
     @Override
-    protected void handleAck(ServiceMessages ackCode)   {
+    protected void handleAck(ServiceMessages ackCode, Object rawData)   {
         switch(ackCode) {
             case MSG_ACK_POSITIVE:
-                handlePositiveAck();
+                handlePositiveAck((double)rawData);
                 break;
             case MSG_ACK_NEGATIVE:
                 handleNegativeAck();
                 break;
             case MSG_OFFLINE_ACK:
                 // Simulates a positive ack, so the user can "login", but the application knows it's in offline mode, so it won't allow the user to contact the server
-                handlePositiveAck();
+                handlePositiveAck(-1.0);
                 break;
             case MSG_CONNECTION_TIMEOUT:
                 unbindToNetworkingService();
@@ -124,18 +123,14 @@ public class LoginActivity extends BindingActivity {
         }
     }
 
-    @Override
-    protected void handleDataAck(ServiceMessages ackCode, Object data)  {
-        // Do something if needed (most likely to display the current value on the fund if needed)
-    }
-
     // Called when activity receives a positive ACK from the Networking Service
-    private void handlePositiveAck()    {
+    private void handlePositiveAck(double balance)    {
         // Positive login confirmation
         userLoggedIn = true;
         Intent intent = new Intent(this, HomeActivity.class);
-        intent.putExtra(LOGIN_USER, username);
-        intent.putExtra(CONNECTION_HOST, host);
+        intent.putExtra(BindingActivity.LOGIN_USER, username);
+        intent.putExtra(BindingActivity.CONNECTION_HOST, host);
+        intent.putExtra(BindingActivity.USER_BALANCE, balance);
         progressDialog.hide();
         startActivity(intent);
     }

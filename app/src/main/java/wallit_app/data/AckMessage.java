@@ -1,4 +1,5 @@
 package wallit_app.data;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -9,6 +10,7 @@ public class AckMessage implements Serializable {
     private String ackMessageType;
     private ArrayList<MovementEntryChunk> movementEntryChunkList;
     private ArrayList<FundInfoEntryChunk> fundInfoChunkList;
+    private double lastRecordedBalance;
 
     @SuppressWarnings("unchecked")
     public AckMessage(String ackMessageType, Object objectList) {
@@ -21,6 +23,14 @@ public class AckMessage implements Serializable {
             this.movementEntryChunkList = (ArrayList<MovementEntryChunk>)objectList;
             this.fundInfoChunkList = null;
         }
+        lastRecordedBalance = -1;
+    }
+
+    public AckMessage(String ackMessageType, double lastRecordedBalance)	{
+        this.ackMessageType = ackMessageType;
+        this.lastRecordedBalance = lastRecordedBalance;
+        this.movementEntryChunkList = null;
+        this.fundInfoChunkList = null;
     }
 
     public String getAckMessageType()   {
@@ -34,6 +44,8 @@ public class AckMessage implements Serializable {
     public ArrayList<FundInfoEntryChunk> getFundInfoList() {
         return fundInfoChunkList;
     }
+
+    public double getLastRecordedBalance()	{
+        return lastRecordedBalance;
+    }
 }
-
-

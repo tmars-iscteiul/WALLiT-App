@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wallit_app.R;
-
 
 public class HomeActivity extends ToolBarActivity {
 
@@ -20,9 +20,18 @@ public class HomeActivity extends ToolBarActivity {
         setupToolbar();
 
         Intent intent = getIntent();
-        host = intent.getStringExtra(CONNECTION_HOST);
-        this.username = intent.getStringExtra(LoginActivity.LOGIN_USER);
+        host = intent.getStringExtra(BindingActivity.CONNECTION_HOST);
+        this.username = intent.getStringExtra(BindingActivity.LOGIN_USER);
         getSupportActionBar().setTitle("Welcome " + username);
+        double currentBalanceAux = intent.getDoubleExtra(BindingActivity.USER_BALANCE, 0);
+        // TODO Add a way to change this every time user deposits a value.
+        TextView tv = findViewById(R.id.current_value_text);
+        if(currentBalanceAux == -1.0)
+            tv.setText("You currently have " + "null" + " in the WALLiT Fund.");
+        else    {
+            currentBalance = currentBalanceAux;
+            tv.setText("You currently have " + currentBalance + "€ in the WALLiT Fund.");
+        }
 
         if(!host.equals("offline"))
             Toast.makeText(this, "Connected to server.", Toast.LENGTH_SHORT).show();
@@ -38,12 +47,17 @@ public class HomeActivity extends ToolBarActivity {
         return true;
     }
 
+
     public void buttonGoToDepositActivity(View view)    {
-        startActivity(new Intent(this, DepositActivity.class));
+        Intent intent = new Intent(this, DepositActivity.class);
+        intent.putExtra(USER_BALANCE, currentBalance);
+        startActivity(intent);
     }
 
     public void buttonGoToWithdrawActivity(View view)   {
-        startActivity(new Intent(this, WithdrawActivity.class));
+        Intent intent = new Intent(this, DepositActivity.class);
+        intent.putExtra(USER_BALANCE, currentBalance);
+        startActivity(intent);
     }
 
     public void buttonGoToFundInfoActivity(View view)   {

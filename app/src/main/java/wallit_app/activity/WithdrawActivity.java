@@ -25,6 +25,8 @@ public class WithdrawActivity extends ToolBarActivity {
 
         et = findViewById(R.id.withdrawValue);
         et.setText("0");
+
+        currentBalance = getIntent().getDoubleExtra(BindingActivity.USER_BALANCE, -1.0);
     }
 
     // Called when the user presses the withdraw button
@@ -33,31 +35,10 @@ public class WithdrawActivity extends ToolBarActivity {
             showMessageDialog("Withdraw value cannot be empty.");
             return;
         }
-        redirectDataToServer(ServiceMessages.REQUEST_WITHDRAW.getMessageString() + "," + et.getText().toString(), ServiceMessages.REQUEST_WITHDRAW);
         progressDialog.setMessage("Withdrawing...");
         progressDialog.show();
+        redirectDataToServer(ServiceMessages.REQUEST_WITHDRAW.getMessageString() + "," + et.getText().toString(), ServiceMessages.REQUEST_WITHDRAW);
         // TODO: Add a timeout to the progress dialog.
-    }
-
-    @Override
-    protected void handleAck(ServiceMessages ackCode)   {
-        // Do something if needed (most likely not)
-        switch(ackCode) {
-            case MSG_ACK_POSITIVE:
-                handlePositiveAck();
-                break;
-            case MSG_ACK_NEGATIVE:
-                handleNegativeAck();
-                break;
-            default:
-                super.handleAck(ackCode);
-                break;
-        }
-    }
-
-    @Override
-    protected void handleDataAck(ServiceMessages ackCode, Object data)  {
-        // Do something if needed (most likely not)
     }
 
     @Override

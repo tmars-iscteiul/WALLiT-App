@@ -68,8 +68,7 @@ public class ToolBarActivity extends BindingActivity {
     }
 
     @Override
-    protected void handleAck(ServiceMessages ackCode)   {
-        System.out.println("Handling ack " + ackCode.getMessageString());
+    protected void handleAck(ServiceMessages ackCode, Object rawData)   {
         switch(ackCode) {
             case MSG_ACK_POSITIVE:
                 handlePositiveAck();
@@ -87,11 +86,6 @@ public class ToolBarActivity extends BindingActivity {
             default:
                 break;
         }
-    }
-
-    @Override
-    protected void handleDataAck(ServiceMessages ackCode, Object data)  {
-        // Do something if needed (most likely not)
     }
 
     // Called when activity receives a positive ACK from the Networking Service
