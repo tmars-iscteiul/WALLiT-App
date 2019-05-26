@@ -65,6 +65,11 @@ public class LoginActivity extends BindingActivity {
 
     // Called by pressing the LOGIN button in LoginActivity
     public void buttonLoginUser(View view) {
+        if(usernameInputField.getText().toString().isEmpty())   {
+            showMessageDialog("Username cannot be empty.");
+            return;
+        }
+        // TODO Make sure password can't be empty
         username = usernameInputField.getText().toString();
         progressDialog.setMessage("Logging in...");
         progressDialog.show();

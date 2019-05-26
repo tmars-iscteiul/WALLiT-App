@@ -55,7 +55,7 @@ public class HomeActivity extends ToolBarActivity {
     }
 
     public void buttonGoToWithdrawActivity(View view)   {
-        Intent intent = new Intent(this, DepositActivity.class);
+        Intent intent = new Intent(this, WithdrawActivity.class);
         intent.putExtra(USER_BALANCE, currentBalance);
         startActivity(intent);
     }
