@@ -3,7 +3,7 @@ package wallit_app.activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.example.wallit_app.R;
 import com.jjoe64.graphview.GraphView;
@@ -27,10 +27,18 @@ import wallit_app.utilities.ServiceMessages;
 public class FundInfoActivity extends ToolBarActivity {
 
     private ImageView timeScaleImage;
+    private ImageView dataPointSelectionImage;
+    private GraphView graph;
+    private TextView selectedDate;
+    private TextView selectedValue;
 
     private ArrayList<FundInfoEntryChunk> fundInfoEntries;
+    private LineGraphSeries<DataPoint> highlightedDataPoint;
     private int currentTimeScale;
-    private GraphView graph;
+    private int currentDataPoint;
+
+    private boolean hasPreviousDataPoint;
+    private boolean hasNextDataPoint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +49,13 @@ public class FundInfoActivity extends ToolBarActivity {
         setupToolbar();
 
         timeScaleImage = findViewById(R.id.pageSystemImage);
+        dataPointSelectionImage = findViewById(R.id.datapoint_selection_image);
+        selectedDate = findViewById(R.id.datapoint_selection_date);
+        selectedValue = findViewById(R.id.datapoint_selection_value);
         graph = findViewById(R.id.graph);
+
         currentTimeScale = 0;
+        currentDataPoint = 0;
         setupGraph(0, 20, 0, 1500);
         fundInfoEntries = new ArrayList<>();
     }
@@ -57,9 +70,6 @@ public class FundInfoActivity extends ToolBarActivity {
 
     @Override
     protected void handleAck(ServiceMessages ackCode, Object rawData) {
-        // TODO Add local object variable to store fund information received from the server. TBD what class it is and how it's constructed
-        // TODO Add time scales chunks data class and change this to handle it instead of just one graph
-        // TODO Implement time scales changing display on graph
         if(ackCode == ServiceMessages.MSG_ACK_FUND_DATA)    {
             fundInfoEntries = new ArrayList<>((ArrayList<FundInfoEntryChunk>)rawData);
             updateGraphData();
@@ -72,20 +82,16 @@ public class FundInfoActivity extends ToolBarActivity {
     // Called to update the data to be displayed on the graph view, based on the current selected time scale
     private void updateGraphData()   {
         DataPoint[] dp = new DataPoint[fundInfoEntries.get(currentTimeScale).getFundInfoEntryList().size()];
-        double viewportLimit = 0;
         for(int i = 0; i < dp.length; i++)  {
-            // TODO Date isn't set here properly. Find out how and replace it once the fundinfo data is being delivered from the files
-            // TODO Add page-like system to change time scales
-            dp[i] = new DataPoint(fundInfoEntries.get(currentTimeScale).getFundInfoEntryList().get(i).getDate(), fundInfoEntries.get(currentTimeScale).getFundInfoEntryList().get(i).getValue());
-            if(dp[i].getY() > viewportLimit)
-                viewportLimit = dp[i].getY();
+            dp[i] = new DataPoint(fundInfoEntries.get(currentTimeScale).getFundInfoEntryList().get(i).getDate().getTime(), fundInfoEntries.get(currentTimeScale).getFundInfoEntryList().get(i).getValue());
         }
-        setupSeries(dp, viewportLimit);
+        setupSeries(dp);
+        highlightDataPoint(fundInfoEntries.get(currentTimeScale).getFundInfoEntryList().size()-1);
     }
 
     // Adds the data (dp) to be displayed in the graph, draws the lines and data points, including the background visuals.
     // viewportLimit is Y axis limit to the data, which is the highest value on the dp array (calculated previously on the updateGraphData() method)
-    private void setupSeries(DataPoint[] dp, double viewportLimit)    {
+    private void setupSeries(DataPoint[] dp)    {
         // TODO Remove duplicated code
         // Adds the background first
         graph.removeAllSeries();
@@ -104,13 +110,13 @@ public class FundInfoActivity extends ToolBarActivity {
         series.setOnDataPointTapListener(new OnDataPointTapListener() {
             @Override
             public void onTap(Series series, DataPointInterface dataPoint) {
-                // TODO Add a way to highlight the selected datapoint on the graph view
-                displayDataPointToastMessage(dataPoint);
+                // TODO Tapping on the object causes it to crash ConcurrentModificationException. Find a workaround, this is a bug with the framework GraphView
+                //highlightDataPoint(getDataPointIndex(dataPoint));
             }
         });
         graph.addSeries(series);
 
-        setupGraph(0, viewportLimit, dp[0].getX(), dp[dp.length-1].getX());
+        setupGraph(0, series.getHighestValueY(), dp[0].getX(), dp[dp.length-1].getX());
     }
 
     // Configures the viewport, visuals and labels of the graph, taking as inputs the viewport bounds
@@ -132,7 +138,7 @@ public class FundInfoActivity extends ToolBarActivity {
         // Locks the viewport to manual bounds
         graph.getViewport().setYAxisBoundsManual(true);
         graph.getViewport().setMinY(minY);
-        graph.getViewport().setMaxY(maxY);
+        graph.getViewport().setMaxY(maxY+(maxY/5));
         graph.getViewport().setXAxisBoundsManual(true);
         graph.getViewport().setMinX(minX);
         graph.getViewport().setMaxX(maxX);
@@ -171,12 +177,62 @@ public class FundInfoActivity extends ToolBarActivity {
         }
     }
 
-    // Called to display the selected datapoint's information on the screen after the user selects it
-    private void displayDataPointToastMessage(DataPointInterface dp)    {
-        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date((long)dp.getX()));
-        String value = new DecimalFormat("#.##").format(dp.getY());
-        String message = "Value at " + date + " is " + value + " €.";
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    // Called to display the selected data point's information on the screen after the user selects it
+    private void highlightDataPoint(int index)    {
+        currentDataPoint = index;
+        selectedDate.setText(new SimpleDateFormat("yyyy-MM-dd").format(fundInfoEntries.get(currentTimeScale).getFundInfoEntryList().get(index).getDate()));
+        selectedValue.setText(new DecimalFormat("#.##").format(fundInfoEntries.get(currentTimeScale).getFundInfoEntryList().get(index).getValue()) + " €");
+        if(highlightedDataPoint != null) {
+            // Remove the old highlighted point
+            graph.removeSeries(highlightedDataPoint);
+        }
+        highlightedDataPoint = new LineGraphSeries<>(new DataPoint[]{
+                new DataPoint(fundInfoEntries.get(currentTimeScale).getFundInfoEntryList().get(index).getDate(), fundInfoEntries.get(currentTimeScale).getFundInfoEntryList().get(index).getValue()),
+        });
+        highlightedDataPoint.setColor(getResources().getColor(R.color.colorAccent));
+        highlightedDataPoint.setDrawDataPoints(true);
+        highlightedDataPoint.setDataPointsRadius(10);
+        graph.addSeries(highlightedDataPoint);
+        updateDataPointSelectionDisplay();
+    }
+
+    // On a given data point, returns the index of the fundInfoEntries array-list, assuming it belongs to the current time scale being displayed
+    private int getDataPointIndex(DataPointInterface dp)   {
+        for(int i = 0; i<fundInfoEntries.get(currentTimeScale).getFundInfoEntryList().size(); i++)  {
+            if((long)dp.getX() == fundInfoEntries.get(currentTimeScale).getFundInfoEntryList().get(i).getDate().getTime())
+                return i;
+        }
+        return -1;
+    }
+
+    private void updateDataPointSelectionDisplay()    {
+        hasPreviousDataPoint = (currentDataPoint - 1) >= 0;
+        hasNextDataPoint = (currentDataPoint + 1) < fundInfoEntries.get(currentTimeScale).getFundInfoEntryList().size();
+        if(hasPreviousDataPoint) {
+            if(hasNextDataPoint)
+                dataPointSelectionImage.setImageDrawable(getResources().getDrawable(R.drawable.datapoint_selection_on_on));
+            else
+                dataPointSelectionImage.setImageDrawable(getResources().getDrawable(R.drawable.datapoint_selection_on_off));
+        }   else    {
+            if(hasNextDataPoint)
+                dataPointSelectionImage.setImageDrawable(getResources().getDrawable(R.drawable.datapoint_selection_off_on));
+            else
+                dataPointSelectionImage.setImageDrawable(getResources().getDrawable(R.drawable.datapoint_selection_off_off));
+        }
+    }
+
+    // Called when user clicks on the left button in the data point selection display panel
+    public void displayLeftDataPoint(View view) {
+        if(hasPreviousDataPoint)    {
+            highlightDataPoint(currentDataPoint-1);
+        }
+    }
+
+    // Called when user clicks on the right button in the data point selection display panel
+    public void displayRightDataPoint(View view)    {
+        if(hasNextDataPoint)    {
+            highlightDataPoint(currentDataPoint+1);
+        }
     }
 
     // All the buttons to display each time scale on the graph view
