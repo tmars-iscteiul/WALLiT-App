@@ -10,6 +10,7 @@ import com.example.wallit_app.R;
 
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
+import wallit_app.utilities.Formatter;
 import wallit_app.utilities.ServiceMessages;
 
 public class WithdrawActivity extends ToolBarActivity {
@@ -36,7 +37,7 @@ public class WithdrawActivity extends ToolBarActivity {
         et = findViewById(R.id.current_balance);
         et.setInputType(InputType.TYPE_NULL);
         et.setKeyListener(null);
-        et.setText("" + currentBalance);
+        et.setText(Formatter.doubleToEuroString(currentBalance));
 
         et = findViewById(R.id.withdraw_value);
     }
@@ -65,5 +66,12 @@ public class WithdrawActivity extends ToolBarActivity {
         withdrawButton.setVisibility(View.VISIBLE);
         loadingAnimation.setVisibility(View.INVISIBLE);
         showMessageDialog("Couldn't withdraw.");
+    }
+
+    @Override
+    protected void handleOfflineAck()    {
+        withdrawButton.setVisibility(View.VISIBLE);
+        loadingAnimation.setVisibility(View.INVISIBLE);
+        super.handleOfflineAck();
     }
 }

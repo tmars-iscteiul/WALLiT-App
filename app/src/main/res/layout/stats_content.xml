@@ -542,19 +542,18 @@
         tools:text="Current Amount:" />
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/current_balance_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
         android:gravity="right"
-        android:text="614,98€"
+        android:text="0.00 €"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8"
-        tools:text="614,98€" />
+        tools:text="614.98 €" />
 
     <TextView
         android:id="@+id/textView9"
@@ -576,15 +575,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="34dp"
-        android:layout_marginRight="34dp"
         android:gravity="right"
-        android:text="-0,14€"
+        android:text="-1,40 €"
         android:textColor="@android:color/holo_red_dark"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7"
-        tools:text="-0,14€" />
+        app:layout_constraintTop_toBottomOf="@+id/current_balance_value" />
 
     <TextView
         android:id="@+id/textView11"
@@ -606,14 +603,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="34dp"
-        android:layout_marginRight="34dp"
         android:gravity="right"
-        android:text="+15,12€"
+        android:text="+15.12 €"
         android:textColor="@android:color/holo_green_dark"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView10"
-        tools:text="+15,12€" />
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
 </android.support.constraint.ConstraintLayout>

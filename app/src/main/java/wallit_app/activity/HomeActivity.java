@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import com.example.wallit_app.R;
 
+import wallit_app.utilities.Formatter;
+
 public class HomeActivity extends ToolBarActivity {
 
     @Override
@@ -30,7 +32,7 @@ public class HomeActivity extends ToolBarActivity {
             tv.setText("You currently have " + "null" + " in the WALLiT Fund.");
         else    {
             currentBalance = currentBalanceAux;
-            tv.setText("You currently have " + currentBalance + "€ in the WALLiT Fund.");
+            tv.setText("You currently have " + Formatter.doubleToEuroString(currentBalance) + " in the WALLiT Fund.");
         }
 
         if(!host.equals("offline"))

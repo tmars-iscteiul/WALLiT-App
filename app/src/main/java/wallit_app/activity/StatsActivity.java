@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.example.wallit_app.R;
 
 import wallit_app.data.MovementEntryChunk;
+import wallit_app.utilities.Formatter;
 import wallit_app.utilities.ServiceMessages;
 
 import java.util.ArrayList;
@@ -54,6 +55,7 @@ public class StatsActivity extends ToolBarActivity {
             dataChunkPages = (ArrayList<MovementEntryChunk>)rawData;
             currentPageDisplay = 0;
             insertDataOnTableFromPage(currentPageDisplay);
+            updateCurrentBalanceValue();
             progressDialog.hide();
         }   else
             super.handleAck(ackCode, rawData);
@@ -85,8 +87,8 @@ public class StatsActivity extends ToolBarActivity {
         for(; i >= 0; i--)    {
             boolean isDeposit = dataChunkPages.get(pageNumber).getMovementEntryList().get(i).getAmount() > 0;
             insertDataOnCell("date" + (i+1), dataChunkPages.get(pageNumber).getMovementEntryList().get(i).getDate(), isDeposit);
-            insertDataOnCell("amount" + (i+1), dataChunkPages.get(pageNumber).getMovementEntryList().get(i).getAmount() + " €", isDeposit);
-            insertDataOnCell("balance" + (i+1), dataChunkPages.get(pageNumber).getMovementEntryList().get(i).getBalance() + " € ", isDeposit);
+            insertDataOnCell("amount" + (i+1), Formatter.doubleToEuroString(dataChunkPages.get(pageNumber).getMovementEntryList().get(i).getAmount()), isDeposit);
+            insertDataOnCell("balance" + (i+1), Formatter.doubleToEuroString(dataChunkPages.get(pageNumber).getMovementEntryList().get(i).getBalance()), isDeposit);
         }
         updatePageSystemDisplay();
     }
@@ -107,6 +109,11 @@ public class StatsActivity extends ToolBarActivity {
             else
                 pageImageDisplay.setImageDrawable(getResources().getDrawable(R.drawable.stats_page_off_off));
         }
+    }
+
+    private void updateCurrentBalanceValue()    {
+        TextView tv = findViewById(R.id.current_balance_value);
+        tv.setText(Formatter.doubleToEuroString(dataChunkPages.get(0).getMovementEntryList().get(0).getBalance()));
     }
 
     //Inserts data on a specific cell (by String)

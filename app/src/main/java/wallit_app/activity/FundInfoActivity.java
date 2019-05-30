@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import wallit_app.data.FundInfoEntryChunk;
+import wallit_app.utilities.Formatter;
 import wallit_app.utilities.ServiceMessages;
 
 // Using this library for the graph view: https://github.com/jjoe64/GraphView
@@ -74,6 +75,7 @@ public class FundInfoActivity extends ToolBarActivity {
             fundInfoEntries = new ArrayList<>((ArrayList<FundInfoEntryChunk>)rawData);
             updateGraphData();
             updateScaleImage();
+            updateCurrentWallitValue();
             progressDialog.hide();
         }   else
             super.handleAck(ackCode, rawData);
@@ -142,7 +144,7 @@ public class FundInfoActivity extends ToolBarActivity {
         graph.getViewport().setXAxisBoundsManual(true);
         graph.getViewport().setMinX(minX);
         graph.getViewport().setMaxX(maxX);
-        graph.getGridLabelRenderer().setNumHorizontalLabels(3);
+        graph.getGridLabelRenderer().setNumHorizontalLabels(2);
 
         // Removes grid lines
         graph.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.NONE);
@@ -181,7 +183,7 @@ public class FundInfoActivity extends ToolBarActivity {
     private void highlightDataPoint(int index)    {
         currentDataPoint = index;
         selectedDate.setText(new SimpleDateFormat("yyyy-MM-dd").format(fundInfoEntries.get(currentTimeScale).getFundInfoEntryList().get(index).getDate()));
-        selectedValue.setText(new DecimalFormat("#.##").format(fundInfoEntries.get(currentTimeScale).getFundInfoEntryList().get(index).getValue()) + " €");
+        selectedValue.setText(Formatter.doubleToEuroString(fundInfoEntries.get(currentTimeScale).getFundInfoEntryList().get(index).getValue()));
         if(highlightedDataPoint != null) {
             // Remove the old highlighted point
             graph.removeSeries(highlightedDataPoint);
@@ -219,6 +221,11 @@ public class FundInfoActivity extends ToolBarActivity {
             else
                 dataPointSelectionImage.setImageDrawable(getResources().getDrawable(R.drawable.datapoint_selection_off_off));
         }
+    }
+
+    private void updateCurrentWallitValue() {
+        TextView tv = findViewById(R.id.current_wallit_value);
+        tv.setText(Formatter.doubleToEuroString(fundInfoEntries.get(0).getFundInfoEntryList().get(fundInfoEntries.get(0).getFundInfoEntryList().size()-1).getValue()));
     }
 
     // Called when user clicks on the left button in the data point selection display panel

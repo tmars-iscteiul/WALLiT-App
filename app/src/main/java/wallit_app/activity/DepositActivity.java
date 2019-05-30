@@ -10,6 +10,7 @@ import com.example.wallit_app.R;
 
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
+import wallit_app.utilities.Formatter;
 import wallit_app.utilities.ServiceMessages;
 
 public class DepositActivity extends ToolBarActivity {
@@ -36,7 +37,7 @@ public class DepositActivity extends ToolBarActivity {
         et = findViewById(R.id.current_balance);
         et.setInputType(InputType.TYPE_NULL);
         et.setKeyListener(null);
-        et.setText("" + currentBalance);
+        et.setText(Formatter.doubleToEuroString(currentBalance));
 
         et = findViewById(R.id.deposit_value);
     }
@@ -66,6 +67,13 @@ public class DepositActivity extends ToolBarActivity {
         depositButton.setVisibility(View.VISIBLE);
         loadingAnimation.setVisibility(View.INVISIBLE);
         showMessageDialog("Couldn't deposit.");
+    }
+
+    @Override
+    protected void handleOfflineAck()    {
+        depositButton.setVisibility(View.VISIBLE);
+        loadingAnimation.setVisibility(View.INVISIBLE);
+        super.handleOfflineAck();
     }
 
 }
