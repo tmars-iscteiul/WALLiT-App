@@ -51,6 +51,10 @@ public class WithdrawActivity extends ToolBarActivity {
             showMessageDialog("Withdraw value cannot be empty.");
             return;
         }
+        if(Double.parseDouble(withdrawValueInput.getText().toString()) <= 0)   {
+            showMessageDialog("Withdraw value needs to be above 0.");
+            return;
+        }
         loadingAnimation.setVisibility(View.VISIBLE);
         withdrawButton.setVisibility(View.INVISIBLE);
         redirectDataToServer(ServiceMessages.REQUEST_WITHDRAW.getMessageString() + "," + username + "," + withdrawValueInput.getText().toString(), ServiceMessages.REQUEST_WITHDRAW);

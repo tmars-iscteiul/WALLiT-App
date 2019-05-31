@@ -52,6 +52,10 @@ public class DepositActivity extends ToolBarActivity {
             showMessageDialog("Deposit value cannot be empty.");
             return;
         }
+        if(Double.parseDouble(depositValueInput.getText().toString()) <= 0)   {
+            showMessageDialog("Deposit value needs to be above 0.");
+            return;
+        }
         depositButton.setVisibility(View.INVISIBLE);
         loadingAnimation.setVisibility(View.VISIBLE);
         redirectDataToServer(ServiceMessages.REQUEST_DEPOSIT.getMessageString() + "," + username + ","  + depositValueInput.getText().toString(), ServiceMessages.REQUEST_DEPOSIT);
