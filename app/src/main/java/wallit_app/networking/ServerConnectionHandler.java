@@ -30,9 +30,6 @@ public class ServerConnectionHandler extends Thread {
         serverSocket = new Socket();
     }
 
-    /* Current problems with the connection thread
-     * TODO: App doesn't fully close after prompt to close.
-     */
     public synchronized void run()   {
         try {
             serverSocket.connect(new InetSocketAddress(host, 4201), 5000);  // Works only for this static port, while the host is provided by an input field from the user
@@ -48,7 +45,7 @@ public class ServerConnectionHandler extends Thread {
             if(!dataToSend.isEmpty() && connected)   {
                 try {
                     String query = dataToSend.poll();
-                    objectOut.writeObject(query);   // TODO Crashes the app if the server is offline (nullpointerexception). Fix this by creating a catch
+                    objectOut.writeObject(query);
                     objectOut.reset();
                     System.out.println("Sent to server: \"" + query + "\".");
                     // TODO: Waiting forever on an ack. Set a timeout

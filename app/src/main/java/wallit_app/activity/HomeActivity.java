@@ -13,6 +13,8 @@ import wallit_app.utilities.Formatter;
 
 public class HomeActivity extends ToolBarActivity {
 
+    private TextView topMessageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,22 +25,26 @@ public class HomeActivity extends ToolBarActivity {
 
         Intent intent = getIntent();
         host = intent.getStringExtra(BindingActivity.CONNECTION_HOST);
-        this.username = intent.getStringExtra(BindingActivity.LOGIN_USER);
+        username = intent.getStringExtra(BindingActivity.LOGIN_USER);
+        currentBalance = intent.getDoubleExtra(BindingActivity.USER_BALANCE, 0);
         getSupportActionBar().setTitle("Welcome " + username);
-        double currentBalanceAux = intent.getDoubleExtra(BindingActivity.USER_BALANCE, 0);
-        // TODO Add a way to change this every time user deposits a value.
-        TextView tv = findViewById(R.id.current_value_text);
-        if(currentBalanceAux == -1.0)
-            tv.setText("You currently have " + "null" + " in the WALLiT Fund.");
-        else    {
-            currentBalance = currentBalanceAux;
-            tv.setText("You currently have " + Formatter.doubleToEuroString(currentBalance) + " in the WALLiT Fund.");
-        }
+        topMessageView = findViewById(R.id.current_value_text);
+        topMessageView.setText("You currently have " + Formatter.doubleToEuroString(currentBalance) + " in the WALLiT Fund.");
 
         if(!host.equals("offline"))
             Toast.makeText(this, "Connected to server.", Toast.LENGTH_SHORT).show();
         else
             showMessageDialog("You are using the application in OFFLINE mode.");
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK) {
+                currentBalance = Double.parseDouble(data.getStringExtra(USER_BALANCE));
+                topMessageView.setText("You currently have " + Formatter.doubleToEuroString(currentBalance) + " in the WALLiT Fund.");
+            }
+        }
     }
 
     @Override
@@ -49,25 +55,30 @@ public class HomeActivity extends ToolBarActivity {
         return true;
     }
 
-
     public void buttonGoToDepositActivity(View view)    {
         Intent intent = new Intent(this, DepositActivity.class);
         intent.putExtra(USER_BALANCE, currentBalance);
-        startActivity(intent);
+        intent.putExtra(LOGIN_USER, username);
+        startActivityForResult(intent, 1);
     }
 
     public void buttonGoToWithdrawActivity(View view)   {
         Intent intent = new Intent(this, WithdrawActivity.class);
         intent.putExtra(USER_BALANCE, currentBalance);
-        startActivity(intent);
+        intent.putExtra(LOGIN_USER, username);
+        startActivityForResult(intent, 1);
     }
 
     public void buttonGoToFundInfoActivity(View view)   {
-        startActivity(new Intent(this, FundInfoActivity.class));
+        Intent intent = new Intent(this, FundInfoActivity.class);
+        intent.putExtra(LOGIN_USER, username);
+        startActivity(intent);
     }
 
     public void buttonGoToStatsActivity(View view)   {
-        startActivity(new Intent(this, StatsActivity.class));
+        Intent intent = new Intent(this, StatsActivity.class);
+        intent.putExtra(LOGIN_USER, username);
+        startActivity(intent);
     }
 
 }

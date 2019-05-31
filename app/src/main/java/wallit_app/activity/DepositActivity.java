@@ -1,7 +1,9 @@
 package wallit_app.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,7 +17,8 @@ import wallit_app.utilities.ServiceMessages;
 
 public class DepositActivity extends ToolBarActivity {
 
-    private EditText et;
+    private EditText currentBalanceTextView;
+    private EditText depositValueInput;
     private GifImageView loadingAnimation;
     private Button depositButton;
 
@@ -28,37 +31,39 @@ public class DepositActivity extends ToolBarActivity {
         setupToolbar();
 
         currentBalance = getIntent().getDoubleExtra(BindingActivity.USER_BALANCE, -1.0);
+        username = getIntent().getStringExtra(LOGIN_USER);
 
         loadingAnimation = findViewById(R.id.deposit_button_animation);
         GifDrawable gifDrawable = (GifDrawable) loadingAnimation.getDrawable();
         gifDrawable.setLoopCount(0);
         depositButton = findViewById(R.id.deposit_button);
 
-        et = findViewById(R.id.current_balance);
-        et.setInputType(InputType.TYPE_NULL);
-        et.setKeyListener(null);
-        et.setText(Formatter.doubleToEuroString(currentBalance));
+        currentBalanceTextView = findViewById(R.id.current_balance);
+        currentBalanceTextView.setInputType(InputType.TYPE_NULL);
+        currentBalanceTextView.setKeyListener(null);
+        currentBalanceTextView.setText(Formatter.doubleToEuroString(currentBalance));
 
-        et = findViewById(R.id.deposit_value);
+        depositValueInput = findViewById(R.id.deposit_value);
     }
 
     // Called when the user presses the deposit button
     public void buttonSendDepositData(View view)  {
-        // TODO Make sure can't send empty value to server
-        if(et.getText().toString().isEmpty())   {
+        if(depositValueInput.getText().toString().isEmpty())   {
             showMessageDialog("Deposit value cannot be empty.");
             return;
         }
         depositButton.setVisibility(View.INVISIBLE);
         loadingAnimation.setVisibility(View.VISIBLE);
-        redirectDataToServer(ServiceMessages.REQUEST_DEPOSIT.getMessageString() + "," + et.getText().toString(), ServiceMessages.REQUEST_DEPOSIT);
-        // TODO: Add a timeout to the progress dialog.
+        redirectDataToServer(ServiceMessages.REQUEST_DEPOSIT.getMessageString() + "," + username + ","  + depositValueInput.getText().toString(), ServiceMessages.REQUEST_DEPOSIT);
+        // TODO: Update balance on HomeActivity and DepositActivity
     }
 
     @Override
     protected void handlePositiveAck()    {
         depositButton.setVisibility(View.VISIBLE);
         loadingAnimation.setVisibility(View.INVISIBLE);
+        currentBalance += Double.parseDouble(depositValueInput.getText().toString());
+        currentBalanceTextView.setText(Formatter.doubleToEuroString(currentBalance));
         showMessageDialog("Deposit operation successful.");
     }
 
@@ -74,6 +79,15 @@ public class DepositActivity extends ToolBarActivity {
         depositButton.setVisibility(View.VISIBLE);
         loadingAnimation.setVisibility(View.INVISIBLE);
         super.handleOfflineAck();
+    }
+
+    @Override
+    public void onBackPressed() {
+        System.out.println("Pressed back;");
+        Intent intent = new Intent();
+        intent.putExtra(USER_BALANCE, ""+currentBalance);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
 }

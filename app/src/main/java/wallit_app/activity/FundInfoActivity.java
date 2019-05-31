@@ -49,6 +49,7 @@ public class FundInfoActivity extends ToolBarActivity {
         toolbar = findViewById(R.id.toolbar);
         setupToolbar();
 
+        username = getIntent().getStringExtra(LOGIN_USER);
         timeScaleImage = findViewById(R.id.pageSystemImage);
         dataPointSelectionImage = findViewById(R.id.datapoint_selection_image);
         selectedDate = findViewById(R.id.datapoint_selection_date);

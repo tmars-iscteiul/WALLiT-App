@@ -13,6 +13,7 @@ import wallit_app.data.MovementEntryChunk;
 import wallit_app.utilities.Formatter;
 import wallit_app.utilities.ServiceMessages;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class StatsActivity extends ToolBarActivity {
@@ -28,7 +29,6 @@ public class StatsActivity extends ToolBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO There's a bug in offline mode, when the user exits from stats activity to the home activity, it shows the offline dialog for some reason. Find out why and fix it
         super.onCreate(savedInstanceState);
         setContentView(R.layout.stats_main);
 
@@ -37,6 +37,7 @@ public class StatsActivity extends ToolBarActivity {
 
         currentPageDisplayTextView = findViewById(R.id.pageText);
         pageImageDisplay = findViewById(R.id.pageSystemImage);
+        username = getIntent().getStringExtra(LOGIN_USER);
 
         res = getResources();
     }
@@ -44,7 +45,7 @@ public class StatsActivity extends ToolBarActivity {
     @Override
     protected void runAfterConnectedToService()    {
         // TODO username isn't set here, transfer from previous intent (just like the host)
-        redirectDataToServer(ServiceMessages.REQUEST_MOVEMENT_HISTORY.getMessageString(), ServiceMessages.REQUEST_MOVEMENT_HISTORY);
+        redirectDataToServer(ServiceMessages.REQUEST_MOVEMENT_HISTORY.getMessageString() + "," + username, ServiceMessages.REQUEST_MOVEMENT_HISTORY);
         progressDialog.setMessage("Downloading movement history...");
         progressDialog.show();
     }
@@ -79,16 +80,27 @@ public class StatsActivity extends ToolBarActivity {
 
     // Updates the table to display  data from a specific page in the dataChunkPages list
     private void insertDataOnTableFromPage(int pageNumber)  {
-        int i = 8;
-        // If there's rows left, clear them from previous inserted entries
-        for(; i > dataChunkPages.get(pageNumber).getMovementEntryList().size() - 1; i--)    {
-            clearTableRow(i);
-        }
-        for(; i >= 0; i--)    {
+        for(int i = 0; i < dataChunkPages.get(pageNumber).getMovementEntryList().size(); i++)    {
             boolean isDeposit = dataChunkPages.get(pageNumber).getMovementEntryList().get(i).getAmount() > 0;
-            insertDataOnCell("date" + (i+1), dataChunkPages.get(pageNumber).getMovementEntryList().get(i).getDate(), isDeposit);
-            insertDataOnCell("amount" + (i+1), Formatter.doubleToEuroString(dataChunkPages.get(pageNumber).getMovementEntryList().get(i).getAmount()), isDeposit);
-            insertDataOnCell("balance" + (i+1), Formatter.doubleToEuroString(dataChunkPages.get(pageNumber).getMovementEntryList().get(i).getBalance()), isDeposit);
+            insertDataOnCell(
+                    "date" + (i+1),
+                    new SimpleDateFormat("yyyy-MM-dd").format(dataChunkPages.get(pageNumber).getMovementEntryList().get(i).getDate()),
+                    isDeposit
+            );
+            insertDataOnCell(
+                    "amount" + (i+1),
+                    Formatter.doubleToEuroString(dataChunkPages.get(pageNumber).getMovementEntryList().get(i).getAmount()),
+                    isDeposit
+            );
+            insertDataOnCell(
+                    "balance" + (i+1),
+                    Formatter.doubleToEuroString(dataChunkPages.get(pageNumber).getMovementEntryList().get(i).getBalance()),
+                    isDeposit
+            );
+        }
+        // If there's rows left, clear them from previous inserted entries
+        for(int i = dataChunkPages.get(pageNumber).getMovementEntryList().size(); i < 9; i++)    {
+            clearTableRow(i);
         }
         updatePageSystemDisplay();
     }
@@ -113,7 +125,7 @@ public class StatsActivity extends ToolBarActivity {
 
     private void updateCurrentBalanceValue()    {
         TextView tv = findViewById(R.id.current_balance_value);
-        tv.setText(Formatter.doubleToEuroString(dataChunkPages.get(0).getMovementEntryList().get(0).getBalance()));
+        tv.setText(Formatter.doubleToEuroString(dataChunkPages.get(0).getMovementEntryList().get(dataChunkPages.get(0).getMovementEntryList().size()-1).getBalance()));
     }
 
     //Inserts data on a specific cell (by String)
