@@ -124,7 +124,10 @@ public class StatsActivity extends ToolBarActivity {
     // Updates current user balance value display
     private void updateCurrentBalanceValue()    {
         TextView tv = findViewById(R.id.current_balance_value);
-        tv.setText(Formatter.doubleToEuroString(dataChunkPages.get(0).getMovementEntryList().get(0).getBalance()));
+        if(!dataChunkPages.get(0).getMovementEntryList().isEmpty())
+            tv.setText(Formatter.doubleToEuroString(dataChunkPages.get(0).getMovementEntryList().get(0).getBalance()));
+        else
+            tv.setText(Formatter.doubleToEuroString(0.0));
     }
 
     //Inserts data on a specific cell (by String)
