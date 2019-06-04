@@ -7,7 +7,6 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
-import android.support.design.widget.Snackbar;
 import android.widget.Toast;
 
 import wallit_app.activity.BindingActivity;

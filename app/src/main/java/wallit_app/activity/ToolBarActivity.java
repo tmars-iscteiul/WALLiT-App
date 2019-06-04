@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import com.example.wallit_app.R;
 import wallit_app.utilities.ServiceMessages;
 
-public class ToolBarActivity extends BindingActivity {
+public abstract class ToolBarActivity extends BindingActivity {
 
     protected Toolbar toolbar;
     protected AlertDialog.Builder logoutDialog;

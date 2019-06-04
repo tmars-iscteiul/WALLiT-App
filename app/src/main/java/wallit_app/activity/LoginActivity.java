@@ -5,10 +5,8 @@ import android.content.Intent;
 import android.os.StrictMode;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.app.AlertDialog;
@@ -56,7 +54,6 @@ public class LoginActivity extends BindingActivity {
                     }
                 });
 
-        // TODO Replace this with Async tasks for socket connection (Staying like this is a really bad practice)
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
@@ -78,11 +75,9 @@ public class LoginActivity extends BindingActivity {
         // It's important to follow this sequence and only login after the activity is bound to the service, because the service takes time to establish a connection to the server.
         // If the activity attempts to login here, the bound and server connection isn't completed yet.
         // Thus we wait for the binding to be completed, and only then we can be sure that the connection is online.
-        // TODO: Add a timeout to the progress dialog.
     }
 
     // Launch the options dialog, updates the host variable with the defined text
-    // TODO Add a host type check (to counter invalid hosts inserted by the user)
     public void launchConnectionOptionsDialog()    {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Connection settings");
@@ -130,7 +125,6 @@ public class LoginActivity extends BindingActivity {
 
     // Called when activity receives a positive ACK from the Networking Service
     private void handlePositiveAck(double balance)    {
-        // Positive login confirmation
         userLoggedIn = true;
         Intent intent = new Intent(this, HomeActivity.class);
         intent.putExtra(BindingActivity.LOGIN_USER, username);
@@ -142,21 +136,17 @@ public class LoginActivity extends BindingActivity {
 
     // Called when activity receives a negative ACK from the Networking Service
     private void handleNegativeAck()    {
-        // Negative login confirmation
         unbindToNetworkingService();
         progressDialog.hide();
         showMessageDialog("Login failed. Please, try again.");
     }
 
-
     @Override
-    protected void runAfterConnectedToService()    {
-    }
+    protected void runAfterConnectedToService()    {}
 
     // Overrides the back button's function, to make it ask to exit the app
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event){
-        //Changes 'back' button action
         if(keyCode==KeyEvent.KEYCODE_BACK)
         {
             exitingDialog.show();

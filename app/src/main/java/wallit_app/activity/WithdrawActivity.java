@@ -84,6 +84,7 @@ public class WithdrawActivity extends ToolBarActivity {
         super.handleOfflineAck();
     }
 
+    // Sends back the updated balance to the HomeActivity, in case a withdraw operation has been made
     @Override
     public void onBackPressed() {
         System.out.println("Pressed back;");

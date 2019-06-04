@@ -2,7 +2,6 @@ package wallit_app.activity;
 
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -44,7 +43,6 @@ public class StatsActivity extends ToolBarActivity {
 
     @Override
     protected void runAfterConnectedToService()    {
-        // TODO username isn't set here, transfer from previous intent (just like the host)
         redirectDataToServer(ServiceMessages.REQUEST_MOVEMENT_HISTORY.getMessageString() + "," + username, ServiceMessages.REQUEST_MOVEMENT_HISTORY);
         progressDialog.setMessage("Downloading movement history...");
         progressDialog.show();
@@ -123,6 +121,7 @@ public class StatsActivity extends ToolBarActivity {
         }
     }
 
+    // Updates current user balance value display
     private void updateCurrentBalanceValue()    {
         TextView tv = findViewById(R.id.current_balance_value);
         tv.setText(Formatter.doubleToEuroString(dataChunkPages.get(0).getMovementEntryList().get(0).getBalance()));

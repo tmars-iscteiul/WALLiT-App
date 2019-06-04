@@ -48,7 +48,6 @@ public class ServerConnectionHandler extends Thread {
                     objectOut.writeObject(query);
                     objectOut.reset();
                     System.out.println("Sent to server: \"" + query + "\".");
-                    // TODO: Waiting forever on an ack. Set a timeout
                     try {
                         AckMessage ack = (AckMessage)objectIn.readObject();
                         System.out.println("Received from server: \"" + ack.getAckMessageType() + "\".");
@@ -79,14 +78,13 @@ public class ServerConnectionHandler extends Thread {
     }
 
     // Called by the service, when an activity prompted it to send data to the server
-    public synchronized void sendDataToServer(String data)   {
+    protected synchronized void sendDataToServer(String data)   {
         dataToSend.add(data);
         notifyAll();
     }
 
     // Called when no activity is bound to the service (after user logout, app exit or any connection timeout/termination) which will close the socket to avoid memory and networking leaks
-    // TODO This is being called if we minimize the application
-    public synchronized void terminateConnection()   {
+    protected synchronized void terminateConnection()   {
         try {
 
             if(objectOut != null)
@@ -104,7 +102,7 @@ public class ServerConnectionHandler extends Thread {
         notifyAll();
     }
 
-    public boolean isConnected()    {
+    protected boolean isConnected()    {
         return connected;
     }
 }

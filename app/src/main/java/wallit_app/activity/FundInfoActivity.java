@@ -15,10 +15,8 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.OnDataPointTapListener;
 import com.jjoe64.graphview.series.Series;
 
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import wallit_app.data.FundInfoEntryChunk;
 import wallit_app.utilities.Formatter;
@@ -64,7 +62,6 @@ public class FundInfoActivity extends ToolBarActivity {
 
     @Override
     protected void runAfterConnectedToService()    {
-        // TODO username isn't set here, transfer from previous intent (just like the host)
         redirectDataToServer(ServiceMessages.REQUEST_FUND_INFO.getMessageString(), ServiceMessages.REQUEST_FUND_INFO);
         progressDialog.setMessage("Downloading fund information...");
         progressDialog.show();
@@ -95,7 +92,6 @@ public class FundInfoActivity extends ToolBarActivity {
     // Adds the data (dp) to be displayed in the graph, draws the lines and data points, including the background visuals.
     // viewportLimit is Y axis limit to the data, which is the highest value on the dp array (calculated previously on the updateGraphData() method)
     private void setupSeries(DataPoint[] dp)    {
-        // TODO Remove duplicated code
         // Adds the background first
         graph.removeAllSeries();
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dp);
@@ -113,7 +109,8 @@ public class FundInfoActivity extends ToolBarActivity {
         series.setOnDataPointTapListener(new OnDataPointTapListener() {
             @Override
             public void onTap(Series series, DataPointInterface dataPoint) {
-                // TODO Tapping on the object causes it to crash ConcurrentModificationException. Find a workaround, this is a bug with the framework GraphView
+                // Tapping on the object causes it to crash ConcurrentModificationException. This is a bug with the framework GraphView and couldn't be resolved by us.
+                // So, we decided to exclude this functionality from the final MVP until an update to the framework is released with a fix.
                 //highlightDataPoint(getDataPointIndex(dataPoint));
             }
         });
@@ -208,6 +205,7 @@ public class FundInfoActivity extends ToolBarActivity {
         return -1;
     }
 
+    // Updates the visual display for the data point selection image
     private void updateDataPointSelectionDisplay()    {
         hasPreviousDataPoint = (currentDataPoint - 1) >= 0;
         hasNextDataPoint = (currentDataPoint + 1) < fundInfoEntries.get(currentTimeScale).getFundInfoEntryList().size();
@@ -224,6 +222,7 @@ public class FundInfoActivity extends ToolBarActivity {
         }
     }
 
+    // Updates current fund total value display
     private void updateCurrentWallitValue() {
         TextView tv = findViewById(R.id.current_wallit_value);
         tv.setText(Formatter.doubleToEuroString(fundInfoEntries.get(0).getFundInfoEntryList().get(fundInfoEntries.get(0).getFundInfoEntryList().size()-1).getValue()));

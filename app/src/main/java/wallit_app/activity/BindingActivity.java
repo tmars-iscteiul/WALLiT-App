@@ -31,13 +31,13 @@ public abstract class BindingActivity extends AppCompatActivity {
     private boolean boundToNetworkingService = false;
     protected boolean loginOnBind = false;
     protected boolean userLoggedIn = false;
-    protected String username = "%NOT_SET%";
+    protected String username = "default";
     protected String host = "192.168.1.8";
     protected double currentBalance = -1.0;
 
     protected AlertDialog.Builder alertDialogBuilder;
     protected AlertDialog alertDialog;
-    protected ProgressDialog progressDialog;    // TODO Progress dialogs can be clicked out, find a way to block it
+    protected ProgressDialog progressDialog;
 
     // Handles message sent from the service
     class IncomingHandler extends Handler {
@@ -68,8 +68,8 @@ public abstract class BindingActivity extends AppCompatActivity {
             runAfterConnectedToService();
         }
 
+        // This is called when the connection with the service has been unexpectedly disconnected -- that is, its process crashed.
         public void onServiceDisconnected(ComponentName className) {
-            // This is called when the connection with the service has been unexpectedly disconnected -- that is, its process crashed.
             mService = null;
             System.out.println(this.toString() + " activity's messaging system disconnected to the networking service.");
         }
@@ -139,6 +139,7 @@ public abstract class BindingActivity extends AppCompatActivity {
         }
     }
 
+    // Displays a message dialog with the input text
     public void showMessageDialog(String text) {
         alertDialogBuilder.setMessage(text)
                 .setCancelable(false)

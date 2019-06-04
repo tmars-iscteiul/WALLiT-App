@@ -3,7 +3,6 @@ package wallit_app.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -85,6 +84,7 @@ public class DepositActivity extends ToolBarActivity {
         super.handleOfflineAck();
     }
 
+    // Sends back the updated balance to the HomeActivity, in case a deposit operation has been made
     @Override
     public void onBackPressed() {
         System.out.println("Pressed back;");

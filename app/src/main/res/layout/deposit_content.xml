@@ -53,7 +53,6 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_marginEnd="32dp"
-            android:layout_marginRight="32dp"
             android:layout_marginBottom="32dp"
             app:layout_constraintBottom_toTopOf="@+id/deposit_button_animation"
             app:layout_constraintEnd_toEndOf="parent"
@@ -94,7 +93,7 @@
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:textAllCaps="false"
-            app:layout_constraintBottom_toTopOf="@+id/deposit_button"
+            app:layout_constraintBottom_toTopOf="@+id/deposit_button_animation"
             app:layout_constraintEnd_toStartOf="@+id/euro_icon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/current_balance" />

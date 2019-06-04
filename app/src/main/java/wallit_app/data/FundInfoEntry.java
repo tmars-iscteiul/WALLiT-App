@@ -1,6 +1,8 @@
 package wallit_app.data;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class FundInfoEntry implements Serializable	{
@@ -15,8 +17,15 @@ public class FundInfoEntry implements Serializable	{
         this.value = value;
     }
 
-    // TODO Add a constructor that generates date from a string.
-    // TODO See how we can store a variable of type java.util.Date on a JSON (If we can just store it and load it afterwards directly)
+    // Constructor to initialize an object, with a String for the date
+    public FundInfoEntry(String date, double value)	{
+        try {
+            this.date = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        this.value = value;
+    }
 
     // Constructor to add a value, setting the associated date to today
     public FundInfoEntry(double value)	{
