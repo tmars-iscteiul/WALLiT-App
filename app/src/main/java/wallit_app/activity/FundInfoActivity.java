@@ -22,7 +22,11 @@ import wallit_app.data.FundInfoEntryChunk;
 import wallit_app.utilities.Formatter;
 import wallit_app.utilities.ServiceMessages;
 
-// Using this library for the graph view: https://github.com/jjoe64/GraphView
+/**
+ * This activity will allow the user to see all the information about the fund, displayed in 5 different time scales, including a data point selection system, to see all the information in depth.
+ * Uses this library for the graph view: https://github.com/jjoe64/GraphView
+ * @author skner
+ */
 public class FundInfoActivity extends ToolBarActivity {
 
     private ImageView timeScaleImage;
@@ -79,7 +83,10 @@ public class FundInfoActivity extends ToolBarActivity {
             super.handleAck(ackCode, rawData);
     }
 
-    // Called to update the data to be displayed on the graph view, based on the current selected time scale
+    /**
+     * Called to update the data to be displayed on the graph view, based on the current selected time scale
+     * @see FundInfoActivity#selectTimeScale(int)
+     */
     private void updateGraphData()   {
         DataPoint[] dp = new DataPoint[fundInfoEntries.get(currentTimeScale).getFundInfoEntryList().size()];
         for(int i = 0; i < dp.length; i++)  {
@@ -89,8 +96,10 @@ public class FundInfoActivity extends ToolBarActivity {
         highlightDataPoint(fundInfoEntries.get(currentTimeScale).getFundInfoEntryList().size()-1);
     }
 
-    // Adds the data (dp) to be displayed in the graph, draws the lines and data points, including the background visuals.
-    // viewportLimit is Y axis limit to the data, which is the highest value on the dp array (calculated previously on the updateGraphData() method)
+    /**
+     * Adds the data dp to be displayed in the graph, draws the lines and data points, including the background visuals.
+     * @param dp The data point array, sent previously by the {@link FundInfoActivity#updateGraphData} method
+     */
     private void setupSeries(DataPoint[] dp)    {
         // Adds the background first
         graph.removeAllSeries();
@@ -99,6 +108,7 @@ public class FundInfoActivity extends ToolBarActivity {
         series.setDrawBackground(true);
         series.setBackgroundColor(getResources().getColor(R.color.colorGraphBackground));
         graph.addSeries(series);
+
         // Adds the lines second (so the lines stay on top of the background)
         series = new LineGraphSeries<>(dp);
         series.setColor(getResources().getColor(R.color.colorPrimary));
@@ -119,7 +129,13 @@ public class FundInfoActivity extends ToolBarActivity {
         setupGraph(0, series.getHighestValueY(), dp[0].getX(), dp[dp.length-1].getX());
     }
 
-    // Configures the viewport, visuals and labels of the graph, taking as inputs the viewport bounds
+    /**
+     * Configures the viewport, visuals and labels of the graph, taking as inputs the viewport bounds
+     * @param minY Minimum y limit
+     * @param maxY Maximum y limit
+     * @param minX Minimum x limit
+     * @param maxX Maximum x limit
+     */
     private void setupGraph(double minY, double maxY, double minX, double maxX)   {
         // Custom label formatter to show currency "EUR" and Date
         graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(this) {
@@ -148,16 +164,20 @@ public class FundInfoActivity extends ToolBarActivity {
         graph.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.NONE);
     }
 
-    // Called by the button click listeners, to change and update the graph to the selected time scale
+    /**
+     * Called by the button click listeners, to change and update the graph to the selected time scale
+     * @param scale The scale selected by the user, called by the button linked functions
+     */
     private void selectTimeScale(int scale) {
         currentTimeScale = scale;
         updateGraphData();
         updateScaleImage();
     }
 
-    // Updates the scale selection image under the graph view, based on the current selected time scale
+    /**
+     * Updates the scale selection image under the graph view, based on the current selected time scale
+     */
     private void updateScaleImage() {
-        // TODO Optimize this
         switch(currentTimeScale)    {
             case 0:
                 timeScaleImage.setImageDrawable(getResources().getDrawable(R.drawable.fund_timescale_selection1));
@@ -177,7 +197,10 @@ public class FundInfoActivity extends ToolBarActivity {
         }
     }
 
-    // Called to display the selected data point's information on the screen after the user selects it
+    /**
+     * Called to display the selected data point's information on the screen after the user selects it
+     * @param index New data point's index on the selected {@link wallit_app.utilities.TimeScaleType}'s {@link wallit_app.data.FundInfoEntry}'s list.
+     */
     private void highlightDataPoint(int index)    {
         currentDataPoint = index;
         selectedDate.setText(new SimpleDateFormat("yyyy-MM-dd").format(fundInfoEntries.get(currentTimeScale).getFundInfoEntryList().get(index).getDate()));
@@ -196,7 +219,12 @@ public class FundInfoActivity extends ToolBarActivity {
         updateDataPointSelectionDisplay();
     }
 
-    // On a given data point, returns the index of the fundInfoEntries array-list, assuming it belongs to the current time scale being displayed
+    /**
+     * On a given data point, returns the index of the fundInfoEntries array-list, assuming it belongs to the current time scale being displayed.
+     * Not being used, since the framework is broken in this version.
+     * @param dp Data point to be searched
+     * @return The selected data point's index on the selected {@link wallit_app.utilities.TimeScaleType}'s {@link wallit_app.data.FundInfoEntry}'s list.
+     */
     private int getDataPointIndex(DataPointInterface dp)   {
         for(int i = 0; i<fundInfoEntries.get(currentTimeScale).getFundInfoEntryList().size(); i++)  {
             if((long)dp.getX() == fundInfoEntries.get(currentTimeScale).getFundInfoEntryList().get(i).getDate().getTime())
@@ -205,7 +233,9 @@ public class FundInfoActivity extends ToolBarActivity {
         return -1;
     }
 
-    // Updates the visual display for the data point selection image
+    /**
+     * Updates the visual display for the data point selection image.
+     */
     private void updateDataPointSelectionDisplay()    {
         hasPreviousDataPoint = (currentDataPoint - 1) >= 0;
         hasNextDataPoint = (currentDataPoint + 1) < fundInfoEntries.get(currentTimeScale).getFundInfoEntryList().size();
@@ -222,20 +252,26 @@ public class FundInfoActivity extends ToolBarActivity {
         }
     }
 
-    // Updates current fund total value display
+    /**
+     * Updates current fund total value display
+     */
     private void updateCurrentWallitValue() {
         TextView tv = findViewById(R.id.current_wallit_value);
         tv.setText(Formatter.doubleToEuroString(fundInfoEntries.get(0).getFundInfoEntryList().get(fundInfoEntries.get(0).getFundInfoEntryList().size()-1).getValue()));
     }
 
-    // Called when user clicks on the left button in the data point selection display panel
+    /**
+     * Called when user clicks on the left button in the data point selection display panel
+     */
     public void displayLeftDataPoint(View view) {
         if(hasPreviousDataPoint)    {
             highlightDataPoint(currentDataPoint-1);
         }
     }
 
-    // Called when user clicks on the right button in the data point selection display panel
+    /**
+     * Called when user clicks on the right button in the data point selection display panel
+     */
     public void displayRightDataPoint(View view)    {
         if(hasNextDataPoint)    {
             highlightDataPoint(currentDataPoint+1);

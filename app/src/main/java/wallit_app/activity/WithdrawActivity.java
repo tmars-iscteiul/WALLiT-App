@@ -14,6 +14,10 @@ import pl.droidsonroids.gif.GifImageView;
 import wallit_app.utilities.Formatter;
 import wallit_app.utilities.ServiceMessages;
 
+/**
+ * This activity will allow the user to withdraw values to the WALLiT fund.
+ * @author skner
+ */
 public class WithdrawActivity extends ToolBarActivity {
 
     private EditText currentBalanceTextView;
@@ -45,7 +49,10 @@ public class WithdrawActivity extends ToolBarActivity {
         withdrawValueInput = findViewById(R.id.withdraw_value);
     }
 
-    // Called when the user presses the withdraw button
+    /**
+     * Called when the user presses the withdraw button.
+     * @param view Android view from button.
+     */
     public void buttonSendWithdrawData(View view)  {
         if(withdrawValueInput.getText().toString().isEmpty())   {
             showMessageDialog("Withdraw value cannot be empty.");
@@ -58,7 +65,6 @@ public class WithdrawActivity extends ToolBarActivity {
         loadingAnimation.setVisibility(View.VISIBLE);
         withdrawButton.setVisibility(View.INVISIBLE);
         redirectDataToServer(ServiceMessages.REQUEST_WITHDRAW.getMessageString() + "," + username + "," + withdrawValueInput.getText().toString(), ServiceMessages.REQUEST_WITHDRAW);
-        // TODO: Update balance on HomeActivity and WithdrawActivity
     }
 
     @Override
@@ -84,7 +90,9 @@ public class WithdrawActivity extends ToolBarActivity {
         super.handleOfflineAck();
     }
 
-    // Sends back the updated balance to the HomeActivity, in case a withdraw operation has been made
+    /**
+     * Sends back the updated balance to the {@link HomeActivity}, in case a withdraw operation has been made.
+     */
     @Override
     public void onBackPressed() {
         System.out.println("Pressed back;");

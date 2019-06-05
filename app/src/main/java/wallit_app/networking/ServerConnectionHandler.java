@@ -11,6 +11,10 @@ import java.net.Socket;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * Thread that will have the socket connection to the java server, being responsible for sending any information, and listening to eventual responses.
+ * @author skner
+ */
 public class ServerConnectionHandler extends Thread {
 
     private NetworkingService nService;
@@ -71,19 +75,26 @@ public class ServerConnectionHandler extends Thread {
         }
     }
 
-    // Called when an exception occurs, to timeout the connection, informing the bound activities to terminate client's connection
+    /**
+     * Called when an exception occurs, to timeout the connection, informing the bound activities to terminate client's connection.
+     */
     private void connectionTimeout()    {
         System.out.println("Connection timed out.");
         nService.returnAckToActivity(new AckMessage(ServiceMessages.MSG_CONNECTION_TIMEOUT.getMessageString(), null));
     }
 
-    // Called by the service, when an activity prompted it to send data to the server
+    /**
+     * Called by the service, when an activity prompted it to send data to the server.
+     * @param data Data sent by the {@link NetworkingService}, previously requested by a child of {@link wallit_app.activity.BindingActivity}.
+     */
     protected synchronized void sendDataToServer(String data)   {
         dataToSend.add(data);
         notifyAll();
     }
 
-    // Called when no activity is bound to the service (after user logout, app exit or any connection timeout/termination) which will close the socket to avoid memory and networking leaks
+    /**
+     * Called when no activity is bound to the service (after user logout, app exit or any connection timeout/termination) which will close the socket to avoid memory and networking leaks.
+     */
     protected synchronized void terminateConnection()   {
         try {
 

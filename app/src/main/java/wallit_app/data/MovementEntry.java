@@ -5,6 +5,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * A data class, containing an amount and a balance associated with a date object.
+ * <p>
+ * If the amount is positive, it corresponds to a deposit operation, if it's negative, it corresponds to a withdraw operation.
+ * @see MovementEntryChunk
+ * @author skner
+ *
+ */
 public class MovementEntry implements Serializable	{
 
     private static final long serialVersionUID = 2L;
@@ -48,3 +56,4 @@ public class MovementEntry implements Serializable	{
     }
 
 }
+

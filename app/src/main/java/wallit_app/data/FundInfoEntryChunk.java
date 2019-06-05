@@ -5,6 +5,11 @@ import java.util.ArrayList;
 
 import wallit_app.utilities.TimeScaleType;
 
+/**
+ * A list of {@link FundInfoEntry}'s, that contains an associated {@link TimeScaleType} to it.
+ * @author skner
+ *
+ */
 public class FundInfoEntryChunk implements Serializable {
 
     private static final long serialVersionUID = 5L;

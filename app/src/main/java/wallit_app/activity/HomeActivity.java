@@ -11,6 +11,14 @@ import com.example.wallit_app.R;
 
 import wallit_app.utilities.Formatter;
 
+/**
+ * The home activity is the main screen the user will see after he logs in to the app. From here, he can choose to go to any other main screen.
+ * @see DepositActivity
+ * @see WithdrawActivity
+ * @see FundInfoActivity
+ * @see StatsActivity
+ * @author skner
+ */
 public class HomeActivity extends ToolBarActivity {
 
     private TextView topMessageView;
@@ -31,12 +39,13 @@ public class HomeActivity extends ToolBarActivity {
         topMessageView = findViewById(R.id.current_value_text);
         topMessageView.setText("You currently have " + Formatter.doubleToEuroString(currentBalance) + " in the WALLiT Fund.");
 
-        if(!host.equals("offline"))
-            Toast.makeText(this, "Connected to server.", Toast.LENGTH_SHORT).show();
-        else
+        if(host.equals("offline"))
             showMessageDialog("You are using the application in OFFLINE mode.");
     }
 
+    /**
+     * Sent after deposit/withdraw activities are done, updating the displayed balance if needed.
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
@@ -47,15 +56,20 @@ public class HomeActivity extends ToolBarActivity {
         }
     }
 
+    /**
+     * Changes 'back' button action.
+     */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)   {
-        // Changes 'back' button action
+
         if(keyCode==KeyEvent.KEYCODE_BACK)
             logoutDialog.show();
         return true;
     }
 
-    // Called when the user presses the deposit button
+    /**
+     * Called when the user presses the deposit button.
+     */
     public void buttonGoToDepositActivity(View view)    {
         Intent intent = new Intent(this, DepositActivity.class);
         intent.putExtra(USER_BALANCE, currentBalance);
@@ -63,7 +77,9 @@ public class HomeActivity extends ToolBarActivity {
         startActivityForResult(intent, 1);
     }
 
-    // Called when the user presses the withdraw button
+    /**
+     * Called when the user presses the withdraw button.
+     */
     public void buttonGoToWithdrawActivity(View view)   {
         Intent intent = new Intent(this, WithdrawActivity.class);
         intent.putExtra(USER_BALANCE, currentBalance);
@@ -71,14 +87,20 @@ public class HomeActivity extends ToolBarActivity {
         startActivityForResult(intent, 1);
     }
 
-    // Called when the user presses the fund info button
+    /**
+     * Called when the user presses the fund info button.
+     */
     public void buttonGoToFundInfoActivity(View view)   {
         Intent intent = new Intent(this, FundInfoActivity.class);
         intent.putExtra(LOGIN_USER, username);
         startActivity(intent);
     }
 
-    // Called when the user presses the stats button
+    //
+
+    /**
+     * Called when the user presses the stats button.
+     */
     public void buttonGoToStatsActivity(View view)   {
         Intent intent = new Intent(this, StatsActivity.class);
         intent.putExtra(LOGIN_USER, username);

@@ -1,6 +1,9 @@
 package wallit_app.utilities;
 
-// This will serve as the project's messaging dictionary, where every class can understand each other by having a global unique communication code stored and updated in one single place
+/**
+ * This will serve as the project's messaging dictionary, where every class can understand each other by having a global unique communication code stored and updated in one single place
+ * @author skner
+ */
 public enum ServiceMessages {
     MSG_UNKNOWN(-1),
     MSG_UNBIND(0),

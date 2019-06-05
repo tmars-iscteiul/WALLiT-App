@@ -3,11 +3,13 @@ package wallit_app.data;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * A list of {@link MovementEntry}'s. This list will be restricted to 9 elements only, to facilitate, optimize and speed-up read operations on the android client.
+ * @author skner
+ *
+ */
 public class MovementEntryChunk implements Serializable	{
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 3L;
     private ArrayList<MovementEntry> movementEntryList;
 
@@ -34,3 +36,4 @@ public class MovementEntryChunk implements Serializable	{
         return movementEntryList;
     }
 }
+

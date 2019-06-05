@@ -11,6 +11,10 @@ import android.view.MenuItem;
 import com.example.wallit_app.R;
 import wallit_app.utilities.ServiceMessages;
 
+/**
+ * ToolBar activity is an abstract class activity that will serve as the base for any activity that contains a ToolBar
+ * @author skner
+ */
 public abstract class ToolBarActivity extends BindingActivity {
 
     protected Toolbar toolbar;
@@ -88,26 +92,37 @@ public abstract class ToolBarActivity extends BindingActivity {
         }
     }
 
-    // Called when activity receives a positive ACK from the Networking Service
+    /**
+     * Called when activity receives a positive ACK from the Networking Service
+     */
     protected void handlePositiveAck()  {
     }
 
-    // Called when activity receives a positive ACK from the Networking Service
+    /**
+     * Called when activity receives a positive ACK from the Networking Service
+     */
     protected void handleNegativeAck()  {
     }
 
+    /**
+     * Called when the service has fully connected to this activity (after binding process)
+     */
     @Override
     protected void runAfterConnectedToService()    {
     }
 
-    // Sets up a fade transition when the user clicks the back button to return to the previous activity
+    /**
+     * Sets up a fade transition when the user clicks the back button to return to the previous activity
+     */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
-    // Logs out user, by returning to the login activity, clearing all cache from the app
+    /**
+     * Logs out user, by returning to the login activity, clearing all cache from the app
+     */
     private void logoutUser()   {
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -115,7 +130,9 @@ public abstract class ToolBarActivity extends BindingActivity {
         startActivity(intent);
     }
 
-    // Update's toolbar's visuals and functionalities
+    /**
+     * Update's toolbar's visuals and functionalities
+     */
     protected void setupToolbar()   {
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorAccent));
         setSupportActionBar(toolbar);
