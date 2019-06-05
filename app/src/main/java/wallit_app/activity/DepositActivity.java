@@ -64,7 +64,6 @@ public class DepositActivity extends ToolBarActivity {
         depositButton.setVisibility(View.INVISIBLE);
         loadingAnimation.setVisibility(View.VISIBLE);
         redirectDataToServer(ServiceMessages.REQUEST_DEPOSIT.getMessageString() + "," + username + ","  + depositValueInput.getText().toString(), ServiceMessages.REQUEST_DEPOSIT);
-        // TODO: Update balance on HomeActivity and DepositActivity
     }
 
     @Override

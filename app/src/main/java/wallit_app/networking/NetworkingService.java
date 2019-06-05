@@ -81,9 +81,6 @@ public class NetworkingService extends Service {
     @Override
     public void onDestroy() {
         if(connectionHandler != null) {
-            // TODO Remove this for final release
-            if(connectionHandler.isConnected())
-                Toast.makeText(this, "Disconnected from server.", Toast.LENGTH_SHORT).show();
             connectionHandler.terminateConnection();
         }
     }

@@ -65,7 +65,6 @@ public class WithdrawActivity extends ToolBarActivity {
         loadingAnimation.setVisibility(View.VISIBLE);
         withdrawButton.setVisibility(View.INVISIBLE);
         redirectDataToServer(ServiceMessages.REQUEST_WITHDRAW.getMessageString() + "," + username + "," + withdrawValueInput.getText().toString(), ServiceMessages.REQUEST_WITHDRAW);
-        // TODO: Update balance on HomeActivity and WithdrawActivity
     }
 
     @Override

@@ -39,9 +39,7 @@ public class HomeActivity extends ToolBarActivity {
         topMessageView = findViewById(R.id.current_value_text);
         topMessageView.setText("You currently have " + Formatter.doubleToEuroString(currentBalance) + " in the WALLiT Fund.");
 
-        if(!host.equals("offline"))
-            Toast.makeText(this, "Connected to server.", Toast.LENGTH_SHORT).show();
-        else
+        if(host.equals("offline"))
             showMessageDialog("You are using the application in OFFLINE mode.");
     }
 
