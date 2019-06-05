@@ -14,6 +14,10 @@ import pl.droidsonroids.gif.GifImageView;
 import wallit_app.utilities.Formatter;
 import wallit_app.utilities.ServiceMessages;
 
+/**
+ * This activity will allow the user to deposit values to the WALLiT fund.
+ * @author skner
+ */
 public class DepositActivity extends ToolBarActivity {
 
     private EditText currentBalanceTextView;
@@ -45,7 +49,9 @@ public class DepositActivity extends ToolBarActivity {
         depositValueInput = findViewById(R.id.deposit_value);
     }
 
-    // Called when the user presses the deposit button
+    /**
+     * Called when the user presses the deposit button.
+     */
     public void buttonSendDepositData(View view)  {
         if(depositValueInput.getText().toString().isEmpty())   {
             showMessageDialog("Deposit value cannot be empty.");
@@ -84,7 +90,9 @@ public class DepositActivity extends ToolBarActivity {
         super.handleOfflineAck();
     }
 
-    // Sends back the updated balance to the HomeActivity, in case a deposit operation has been made
+    /**
+     * Sends back the updated balance to the {@link HomeActivity}, in case a deposit operation has been made.
+     */
     @Override
     public void onBackPressed() {
         System.out.println("Pressed back;");

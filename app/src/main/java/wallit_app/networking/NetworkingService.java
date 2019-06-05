@@ -15,6 +15,10 @@ import wallit_app.utilities.ServiceMessages;
 
 import java.util.ArrayList;
 
+/**
+ * This is the android {@link @Service} that will handle all the {@link ServerConnectionHandler}'s thread and communication between the handler and the bound activity.
+ * @author skner
+ */
 public class NetworkingService extends Service {
 
 
@@ -24,7 +28,9 @@ public class NetworkingService extends Service {
     private ServerConnectionHandler connectionHandler;
     final Messenger mMessenger = new Messenger(new IncomingHandler());
 
-    // Handles message sent from activities
+    /**
+     * Handles message sent from activities
+     */
     class IncomingHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
@@ -82,7 +88,10 @@ public class NetworkingService extends Service {
         }
     }
 
-    // Handles ack sent from the server, redirecting it to any bound activities (only one SHOULD BE bound at a time)
+    /**
+     * Handles ack sent from the server, redirecting it to any bound activities (only one SHOULD BE bound at a time).
+     * @param ackMessage {@link AckMessage} sent by the server.
+     */
     public void returnAckToActivity(AckMessage ackMessage)    {
         Message msg = getMessageFromAck(ackMessage);
         for (int i = mClients.size()-1; i>=0; i--) {
@@ -94,7 +103,10 @@ public class NetworkingService extends Service {
         }
     }
 
-    // Gateway to send information to the connection handler, or, if in offline-mode, generates an offline ack, letting the activity know it can't perform said operation
+    /**
+     * Gateway to send information to the connection handler, or, if in offline-mode, generates an offline ack, letting the activity know it can't perform said operation
+     * @param data Data sent by the activity
+     */
     private void handleMessageFromActivity(String data) {
         if(!offlineMode) {
             connectionHandler.sendDataToServer(data);
@@ -103,7 +115,11 @@ public class NetworkingService extends Service {
         }
     }
 
-    // Consults the ServiceMessages enum to convert a ackMessage's ackCode string into a Message object, to be sent to the activity, annexing objects to it if necessary.
+    /**
+     * Converts a ackMessage's ackCode string into a Message object, by consulting the ServiceMessages enum, to be sent to the activity, annexing objects to it if necessary.
+     * @param ackMessage The ack message previously received by the connection handler.
+     * @return A complete message ready to be sent to the correspondent activity.
+     */
     private Message getMessageFromAck(AckMessage ackMessage)    {
         int ackCode = ServiceMessages.getMessageByString(ackMessage.getAckMessageType()).getMessageID();
         Message msg = Message.obtain();

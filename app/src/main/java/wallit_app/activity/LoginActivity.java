@@ -14,6 +14,10 @@ import android.app.AlertDialog;
 import com.example.wallit_app.R;
 import wallit_app.utilities.ServiceMessages;
 
+/**
+ * The main screen of the application, where the user will be able to access the private area, by providing his/her login credentials.
+ * @author skner
+ */
 public class LoginActivity extends BindingActivity {
 
     private AlertDialog.Builder exitingDialog;
@@ -54,13 +58,16 @@ public class LoginActivity extends BindingActivity {
                     }
                 });
 
+        // Allows the service to communicate freely in the current LAN
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
     }
 
-    // Called by pressing the LOGIN button in LoginActivity
+    /**
+     * Called by pressing the LOGIN button in LoginActivity
+     */
     public void buttonLoginUser(View view) {
         if(usernameInputField.getText().toString().isEmpty())   {
             showMessageDialog("Username cannot be empty.");
@@ -77,7 +84,9 @@ public class LoginActivity extends BindingActivity {
         // Thus we wait for the binding to be completed, and only then we can be sure that the connection is online.
     }
 
-    // Launch the options dialog, updates the host variable with the defined text
+    /**
+     * Launch the options dialog, updates the host variable with the defined text
+     */
     public void launchConnectionOptionsDialog()    {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Connection settings");
@@ -123,7 +132,10 @@ public class LoginActivity extends BindingActivity {
         }
     }
 
-    // Called when activity receives a positive ACK from the Networking Service
+    /**
+     * Called when activity receives a positive ACK from the Networking Service
+     * @param balance The balance sent by the server, after receiving the positive login ACK, that will be sent to {@link HomeActivity} to display that balance on screen.
+     */
     private void handlePositiveAck(double balance)    {
         userLoggedIn = true;
         Intent intent = new Intent(this, HomeActivity.class);
@@ -134,7 +146,9 @@ public class LoginActivity extends BindingActivity {
         startActivity(intent);
     }
 
-    // Called when activity receives a negative ACK from the Networking Service
+    /**
+     * Called when activity receives a negative ACK from the Networking Service
+     */
     private void handleNegativeAck()    {
         unbindToNetworkingService();
         progressDialog.hide();
@@ -144,7 +158,9 @@ public class LoginActivity extends BindingActivity {
     @Override
     protected void runAfterConnectedToService()    {}
 
-    // Overrides the back button's function, to make it ask to exit the app
+    /**
+     * Overrides the back button's function, to make it ask to exit the app
+     */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event){
         if(keyCode==KeyEvent.KEYCODE_BACK)

@@ -18,7 +18,10 @@ import android.support.v7.app.AppCompatActivity;
 import wallit_app.networking.NetworkingService;
 import wallit_app.utilities.ServiceMessages;
 
-
+/**
+ * Binding activity is an abstract class activity that will serve as the base for any activity that binds to the {@link NetworkingService} service.
+ * @author skner
+ */
 public abstract class BindingActivity extends AppCompatActivity {
 
     public static final String CONNECTION_HOST = "wallit_app.CONNECTIONHOST";
@@ -39,7 +42,9 @@ public abstract class BindingActivity extends AppCompatActivity {
     protected AlertDialog alertDialog;
     protected ProgressDialog progressDialog;
 
-    // Handles message sent from the service
+    /**
+     * Handles message sent from the service.
+     */
     class IncomingHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
@@ -48,6 +53,9 @@ public abstract class BindingActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Handles the service connection and binding operations.
+     */
     protected ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
             // This is called when the connection with the service has been established (after binding request).
@@ -91,22 +99,35 @@ public abstract class BindingActivity extends AppCompatActivity {
         unbindToNetworkingService();
     }
 
-    //Called by ServiceConnection after the connection to the service has been established
+    /**
+     * Called by ServiceConnection after the connection to the service has been established.
+     */
     protected abstract void runAfterConnectedToService();
 
-    // Called by incomingHandler after receiving an ack from the service/server
+    /**
+     * Called by incomingHandler after receiving an ack from the service/server.
+     * @param ackCode ackCode received by the server, that will tell the activity how to handle the rawData object.
+     * @param rawData An abstract object that, based on the ackCode received, will be converted to the correspondent data class, to be handled by the specific Activity.
+     */
     protected abstract void handleAck(ServiceMessages ackCode, Object rawData);
 
-    // Called by incomingHandler after receiving an offline ack, forbidding any server communication
+    /**
+     * Called by incomingHandler after receiving an offline ack, forbidding any server communication.
+     */
     protected void handleOfflineAck()   {
         progressDialog.hide();
         showMessageDialog("Can't execute operation in OFFLINE mode.");
     }
 
-    // Send a message to the service, with the intent of sending data: a constructed string for now.
-    protected void redirectDataToServer(String data, ServiceMessages serviceMessages)   {
+
+    /**
+     * Send a message to the service, with the intent of sending data: a constructed string for now.
+     * @param data Data string to insert in the {@link Message} object, sent to the service.
+     * @param serviceMessage {@link ServiceMessages} object that will be used to identify the message once it is sent to the service.
+     */
+    protected void redirectDataToServer(String data, ServiceMessages serviceMessage)   {
         try {
-            Message msg = Message.obtain(null, serviceMessages.getMessageID());
+            Message msg = Message.obtain(null, serviceMessage.getMessageID());
             msg.obj = data;
             mService.send(msg);
         } catch (RemoteException e) {
@@ -114,6 +135,9 @@ public abstract class BindingActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Called when the application starts the binding process.
+     */
     protected void bindToNetworkingService()    {
         Intent intent = new Intent(this, NetworkingService.class);
         intent.putExtra(CONNECTION_HOST, host);
@@ -122,6 +146,9 @@ public abstract class BindingActivity extends AppCompatActivity {
         System.out.println("Networking service intent bound to " + this.toString());
     }
 
+    /**
+     * Called when the application starts the unbinding process.
+     */
     protected void unbindToNetworkingService()  {
         if(boundToNetworkingService)    {
             if (mService != null) {
@@ -139,7 +166,10 @@ public abstract class BindingActivity extends AppCompatActivity {
         }
     }
 
-    // Displays a message dialog with the input text
+    /**
+     * Displays a message dialog with the input text.
+     * @param text String to be displayed in the dialog message.
+     */
     public void showMessageDialog(String text) {
         alertDialogBuilder.setMessage(text)
                 .setCancelable(false)
