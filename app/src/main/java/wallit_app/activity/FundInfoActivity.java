@@ -158,7 +158,7 @@ public class FundInfoActivity extends ToolBarActivity {
         graph.getViewport().setXAxisBoundsManual(true);
         graph.getViewport().setMinX(minX);
         graph.getViewport().setMaxX(maxX);
-        graph.getGridLabelRenderer().setNumHorizontalLabels(2);
+        graph.getGridLabelRenderer().setNumHorizontalLabels(0);
 
         // Removes grid lines
         graph.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.NONE);
