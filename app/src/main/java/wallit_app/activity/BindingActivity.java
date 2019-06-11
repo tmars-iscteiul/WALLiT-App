@@ -35,7 +35,7 @@ public abstract class BindingActivity extends AppCompatActivity {
     protected boolean loginOnBind = false;
     protected boolean userLoggedIn = false;
     protected String username = "default";
-    protected String host = "192.168.1.8";
+    protected String host = "wallit.ddns.net";
     protected double currentBalance = -1.0;
 
     protected AlertDialog.Builder alertDialogBuilder;
